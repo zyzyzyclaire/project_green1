@@ -1,7 +1,7 @@
 <%@page import="login.UserBean"%>
 <%@page import="login.UserDBBean"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%
 	String user_id = (String)session.getAttribute("user_id");
 	
@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 	<script type="text/javascript" src="script.js" charset="UTF-8"></script>
 </head>
@@ -20,8 +20,8 @@
 		<form name="upd_frm" method="post" action="userUpdateOk.jsp">
 			<tr>
 				<td colspan="2" align="center">
-					<h1>ȸ�� ���� ����</h1>
-					'*' ǥ�� �׸��� �ʼ� �Է� �׸��Դϴ�.
+					<h1>회원 정보 수정</h1>
+					'*' 표시 항목은 필수 입력 항목입니다.
 				</td>
 			</tr>
 			<tr>
@@ -42,7 +42,7 @@
 			</tr>
 			<tr>
 				<td width="80">
-					��ȣ Ȯ��
+					암호 확인
 				</td>
 				<td>
 					<input type="password" size="20" name="pwd_check">*
@@ -50,7 +50,7 @@
 			</tr>
 			<tr>
 				<td width="80">
-					��    ��
+					이    름
 				</td>
 				<td>
 					<%= user.getUser_name() %>
@@ -67,7 +67,16 @@
 			</tr>
 			<tr>
 				<td width="80">
-					��    ��
+					휴대폰 번호
+				</td>
+				<td>
+					<input type="text" size="40" name="user_phone"
+					value="<%= user.getUser_phone() %>">
+				</td>
+			</tr>
+			<tr>
+				<td width="80">
+					주    소
 				</td>
 				<td>
 					<input type="text" size="40" name="user_addr"
@@ -76,11 +85,11 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<input type="button" value="����" onclick="update_check_ok()">
+					<input type="button" value="수정" onclick="update_check_ok()">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="reset" value="�ٽ��Է�">
+					<input type="reset" value="다시입력">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" value="��������" onclick="javascript:window.location='main.jsp'">
+					<input type="button" value="수정안함" onclick="javascript:window.location='main.jsp'">
 				</td>
 			</tr>			
 		</form>
