@@ -1,4 +1,4 @@
-<%@page import="goods.CartDBBean"%>
+<%@page import="cart.CartDBBean"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%
