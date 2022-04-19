@@ -32,7 +32,9 @@
 					<input type="button" value="회원정보변경" 
 					onclick="javascript:window.location='userUpdate.jsp'">
 					<input type="button" value="회원탈퇴" 
-					onclick="javascript:window.location='userOut.jsp'">					
+					onclick="javascript:window.location='userOut.jsp'">
+					
+					<input type="button" value="임시" onclick="javascript:window.location='../cart/goodsDisplay.jsp'">					
 				</td>			
 			</tr>
 		</form>		

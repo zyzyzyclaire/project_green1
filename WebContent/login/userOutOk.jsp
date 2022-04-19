@@ -1,13 +1,10 @@
 <%@page import="login.UserDBBean"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<jsp:useBean id="user" class="login.UserBean"></jsp:useBean>
-<jsp:setProperty property="*" name="user"/>
 <%	
 	String user_id = (String)session.getAttribute("user_id");
-	user.setUser_id(user_id);	// user_id는 세팅 안되어있으니까 - 0415 근지
 	UserDBBean db = UserDBBean.getInstance();
-	int re = db.outUser(user);
+	int re = db.outUser(user_id);
 %>
 <%
 	if(re==1) {

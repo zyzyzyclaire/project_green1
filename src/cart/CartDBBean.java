@@ -100,7 +100,7 @@ public class CartDBBean {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String query = "select product_number, product_count from cart where user_id=?";
+		String query = "select cart_number, product_number, product_count from cart where user_id=?";
 		
 		ArrayList<CartBean> cartArr = new ArrayList<CartBean>();
 		CartBean cart = null;
@@ -113,6 +113,7 @@ public class CartDBBean {
 			
 			while (rs.next()) {
 				cart = new CartBean();
+				cart.setCart_number(rs.getInt("cart_number"));
 				cart.setProduct_number(rs.getInt("product_number"));
 				cart.setProduct_count(rs.getInt("product_count"));
 				cartArr.add(cart);
@@ -126,6 +127,31 @@ public class CartDBBean {
 			if(conn!=null) conn.close();
 		}
 		return cartArr;
+	}
+	
+	// cart_number 열을 삭제하는 메서드 - 0418 근지
+	public int deleteCart(int cart_number) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String query = "delete from cart where cart_number=?";
+		int re = -1;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cart_number);
+			re = pstmt.executeUpdate();
+			re = 1;
+			
+			System.out.println("삭제 성공");
+		} catch(Exception e) {
+			System.out.println("삭제 실패");
+			e.printStackTrace();
+		} finally {
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return re;
 	}
 	
 }

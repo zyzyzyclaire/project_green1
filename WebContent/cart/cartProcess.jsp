@@ -2,22 +2,20 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%
-	
+	String user_id = (String)session.getAttribute("user_id");
 	int product_number = Integer.parseInt(request.getParameter("product_number"));
-	String user_id = request.getParameter("user_id");
 	int product_count = Integer.parseInt(request.getParameter("product_count"));
-
-	
 	
 	// 회원이 아닐 때는 장바구니 등록이 불가능함 - 0418 근지
-	if(user_id.equals("null")) {	// 쿼리스트링으로 넘어와서 문자열 null로 확인 -0418근지
+	if(user_id==null) {
 %>
 		<script>
 			alert("회원만 장바구니 등록이 가능합니다.");
-			history.back();
+			location.href="../login/login.jsp"
 		</script>
 <%
 	}
+	
 %>
 <!DOCTYPE html>
 <html>

@@ -35,23 +35,21 @@ public class UserDBBean {
 			pstmt.setString(1, user.getUser_id());
 			pstmt.setString(2, user.getUser_pwd());
 			pstmt.setString(3, user.getUser_name());
-			pstmt.setString(4, user.getUser_email());
-			pstmt.setString(5, user.getUser_phone());
+			pstmt.setString(4, user.getUser_phone());
+			pstmt.setString(5, user.getUser_email());
 			pstmt.setString(6, user.getUser_addr());
 			
 			re = pstmt.executeUpdate();
 			re = 1;
 			
-			pstmt.close();
-			conn.close();
-			
 			System.out.println("추가 성공");
 		} catch(Exception e) {
 			System.out.println("추가 실패");
 			e.printStackTrace();
+		} finally {
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
 		}
-		
-		if(pstmt!=null) pstmt.close();
 
 		return re;
 	}
@@ -76,11 +74,12 @@ public class UserDBBean {
 				re = -1;
 			}
 		
-			rs.close();
-			pstmt.close();
-			conn.close();
 		} catch(Exception e) {
 			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
 		}
 		return re;
 	}
@@ -112,11 +111,12 @@ public class UserDBBean {
 				re = -1;
 			}
 		
-			rs.close();
-			pstmt.close();
-			conn.close();
 		} catch(Exception e) {
 			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
 		}
 		return re;
 	}
@@ -140,15 +140,16 @@ public class UserDBBean {
 				user.setUser_id(rs.getString("user_id"));
 				user.setUser_pwd(rs.getString("user_pwd"));
 				user.setUser_name(rs.getString("user_name"));
-				user.setUser_email(rs.getString("user_email"));
 				user.setUser_phone(rs.getString("user_phone"));
+				user.setUser_email(rs.getString("user_email"));
 				user.setUser_addr(rs.getString("user_addr"));
 			}
-			rs.close();
-			pstmt.close();
-			conn.close();
 		} catch(Exception e) {
 			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
 		}
 		return user;
 	}
@@ -159,30 +160,31 @@ public class UserDBBean {
 		PreparedStatement pstmt = null;
 		int re = -1;
 
-		String query = "update user_table set user_pwd=?, user_email=?, user_addr=? where user_id=?";
+		String query = "update user_table set user_pwd=?, user_email=?, user_phone=?, user_addr=? where user_id=?";
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1,user.getUser_pwd());
 			pstmt.setString(2,user.getUser_email());
-			pstmt.setString(3,user.getUser_addr());
-			pstmt.setString(4,user.getUser_id());
+			pstmt.setString(3,user.getUser_phone());
+			pstmt.setString(4,user.getUser_addr());
+			pstmt.setString(5,user.getUser_id());
 			re = pstmt.executeUpdate();
-			
-			pstmt.close();
-			conn.close();
 			
 			System.out.println("변경 성공");
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("변경 실패");
+		} finally {
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
 		}
 		return re;
 	}
 	
 	// 회원 탈퇴 메서드 - 0415 근지
-	public int outUser(UserBean user) throws Exception {
+	public int outUser(String user_id) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int re = -1;
@@ -192,16 +194,16 @@ public class UserDBBean {
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1,user.getUser_id());
+			pstmt.setString(1,user_id);
 			re = pstmt.executeUpdate();
-			
-			pstmt.close();
-			conn.close();
 			
 			System.out.println("삭제 성공");
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("삭제 실패");
+		} finally {
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
 		}
 		return re;
 	}
@@ -227,11 +229,12 @@ public class UserDBBean {
 				user_id = null;
 			}
 			
-			rs.close();
-			pstmt.close();
-			conn.close();
 		} catch(Exception e) {
 			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
 		}
 		return user_id;
 	}
@@ -258,11 +261,12 @@ public class UserDBBean {
 				user_pwd = null;
 			}
 			
-			rs.close();
-			pstmt.close();
-			conn.close();
 		} catch(Exception e) {
 			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
 		}
 		return user_pwd;
 	}
