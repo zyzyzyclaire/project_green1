@@ -52,10 +52,21 @@
 				</td>
 			</tr>	
 		<%
-			// 추가로 상품 정보가 더 필요하다면 DAO에서 goods랑 join해서 받아오기 / 아니면 goodsBean으로 goods정보 받아오기! -0418근지
+			// 장바구니가 비었다면	-0419 근지
+			if(cartArr.size()==0) {
+		%>
+				<script>
+					alert("장바구니가 비었습니다.");
+					location.href="../login/main.jsp";
+				</script>
+		<%
+			}
+			
+			// 장바구니 출력 -0419 근지
 			for(int i=0; i<cartArr.size(); i++) {
 				CartBean cart = cartArr.get(i);
 				GoodsBean goods = goodsDb.getGoods(cart.getProduct_number());
+
 		%>
 			<form method="post" action="editCart.jsp?cart_number=<%= cart.getCart_number()%>" name="edit_frm">
 				<tr>
@@ -66,7 +77,8 @@
 						<input type="text" name="product_count" value="<%= cart.getProduct_count() %>">
 					</td>
 					<td>
-						가격 넣기
+						<%= goods.getProduct_price() %>원 * <%= cart.getProduct_count() %>개 = 
+						<%= goods.getProduct_price()*cart.getProduct_count() %>원
 					</td>
 					<td>
 						<input type="submit" value="수정" onclick="editCart()">
