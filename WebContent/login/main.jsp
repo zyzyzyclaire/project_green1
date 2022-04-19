@@ -34,7 +34,8 @@
 					<input type="button" value="회원탈퇴" 
 					onclick="javascript:window.location='userOut.jsp'">
 					
-					<input type="button" value="임시" onclick="javascript:window.location='../cart/goodsDisplay.jsp'">					
+					<!-- 임시로 product_number를 들고가 장바구니 확인하기 위해서 생성 -0419근지 -->
+					<input type="button" value="임시" onclick="javascript:window.location='../cart/goodsDisplay.jsp?product_number=1'">					
 				</td>			
 			</tr>
 		</form>		

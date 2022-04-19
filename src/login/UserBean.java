@@ -9,7 +9,14 @@ public class UserBean {
 	private String user_email;
 	private String user_phone;
 	private String user_addr;
+	private String user_grade;
 	
+	public String getUser_grade() {
+		return user_grade;
+	}
+	public void setUser_grade(String user_grade) {
+		this.user_grade = user_grade;
+	}
 	public String getUser_id() {
 		return user_id;
 	}

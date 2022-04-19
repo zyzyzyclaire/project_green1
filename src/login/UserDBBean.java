@@ -3,6 +3,7 @@ package login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -26,7 +27,8 @@ public class UserDBBean {
 	public int insertUser(UserBean user) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String query = "insert into user_table values(?,?,?,?,?,?)";
+		String query = "insert into user_table(user_id,user_pwd,user_name,user_phone,user_email,user_addr,user_grade)"
+					 + " values(?,?,?,?,?,?,?)";
 		int re = -1;
 		
 		try {
@@ -38,6 +40,7 @@ public class UserDBBean {
 			pstmt.setString(4, user.getUser_phone());
 			pstmt.setString(5, user.getUser_email());
 			pstmt.setString(6, user.getUser_addr());
+			pstmt.setString(7, "B");
 			
 			re = pstmt.executeUpdate();
 			re = 1;
@@ -269,6 +272,34 @@ public class UserDBBean {
 			if(conn!=null) conn.close();
 		}
 		return user_pwd;
+	}
+	
+	//로그인한 회원이 관리자인지 확인하는 메서드 - 0419 진용
+	public boolean isAdmin(String user_id) throws SQLException {
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+
+		String SQL = "SELECT user_grade FROM user_table WHERE user_id = ?";
+		boolean isAdmin = false;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, user_id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				isAdmin = (rs.getString("user_grade") =="C" );
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+
+		return isAdmin;
 	}
 }
 

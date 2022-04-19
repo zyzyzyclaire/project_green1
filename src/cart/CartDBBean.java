@@ -68,8 +68,6 @@ public class CartDBBean {
 				re = 1;
 				
 			} else {	//  새 상품을 추가한 것일 때 -0418근지
-				count = product_count;
-			
 				query = "insert into cart"
 						+ "(cart_number, user_id, product_number, product_count)"
 						+ "values(?,?,?,?)";
@@ -146,6 +144,32 @@ public class CartDBBean {
 			System.out.println("삭제 성공");
 		} catch(Exception e) {
 			System.out.println("삭제 실패");
+			e.printStackTrace();
+		} finally {
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return re;
+	}
+	
+	// cart_number 열 구매 개수를 수정하는 메서드 - 0419 근지
+	public int editCart(int cart_number, int product_count) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String query = "Update cart set product_count=? where cart_number=?";
+		int re = -1;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, product_count);
+			pstmt.setInt(2, cart_number);
+			re = pstmt.executeUpdate();
+			re = 1;
+			
+			System.out.println("수정 성공");
+		} catch(Exception e) {
+			System.out.println("수정 실패");
 			e.printStackTrace();
 		} finally {
 			if(pstmt!=null) pstmt.close();

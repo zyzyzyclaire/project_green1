@@ -3,8 +3,26 @@
     pageEncoding="EUC-KR"%>
 <%	
 	int cart_number = Integer.parseInt(request.getParameter("cart_number"));
+	int product_count = Integer.parseInt(request.getParameter("product_count"));
 	CartDBBean db = CartDBBean.getInstance();
-	int re = db.deleteCart(cart_number);
+	int re = db.editCart(cart_number, product_count);
+%>
+<%
+	if(re==1) {
+%>
+		<script>
+			alert("수정 되었습니다.");
+			location.href="viewCart.jsp";
+		</script>
+<%
+	} else {
+%>
+		<script>
+			alert("수정 실패");
+			history.go(-1);
+		</script>
+<%
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -13,22 +31,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%
-		if(re==1) {
-	%>
-			<script>
-				alert("해당 상품이 장바구니에서 삭제 되었습니다.");
-				location.href="viewCart.jsp";
-			</script>
-	<%
-		} else {
-	%>
-			<script>
-				alert("장바구니 삭제 실패");
-				history.go(-1);
-			</script>
-	<%
-		}
-	%>
+
 </body>
 </html>
