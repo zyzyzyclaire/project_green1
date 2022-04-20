@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -91,11 +92,14 @@ public class UserDBBean {
 	public int userCheck(String user_id, String user_pwd) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		
 		ResultSet rs = null;
 		String query = "select user_pwd from user_table where user_id=?";
 		
+		
 		int re = -1;
 		String db_pwd;
+		
 		
 		try {
 			conn = getConnection();
@@ -103,12 +107,16 @@ public class UserDBBean {
 			pstmt.setString(1,user_id);	// 매개변수로 받은 user_id값 넣기 - 0415 근지
 			rs = pstmt.executeQuery();
 			
+			
 			if (rs.next()) {	// 아이디가 일치하는 로우 존재 - 0415 근지
 				db_pwd = rs.getString("user_pwd");
+				
 				if (db_pwd.equals(user_pwd)) {	// 패스워드도 일치 - 0415 근지
 					re = 1;
+				
 				} else {	// 패스워드가 불일치 - 0415 근지
 					re = 0;
+					
 				}
 			} else {	// 해당 아이디가 존재하지 않음 - 0415 근지
 				re = -1;
@@ -187,27 +195,49 @@ public class UserDBBean {
 	}
 	
 	// 회원 탈퇴 메서드 - 0415 근지
-	public int outUser(String user_id) throws Exception {
+	public int outUser(String user_id,String user_pwd) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int re = -1;
-
-		String query = "delete from user_table where user_id=?";
 		
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1,user_id);
-			re = pstmt.executeUpdate();
+		
+	
+		int check = userCheck(user_id,user_pwd);
+		
+		String query = "delete from cart where user_id=?";
+		
+	
+		
+		if(check!=0) {
+			try {
+				conn = getConnection();
 			
-			System.out.println("삭제 성공");
-		} catch(Exception e) {
-			e.printStackTrace();
-			System.out.println("삭제 실패");
-		} finally {
-			if(pstmt!=null) pstmt.close();
-			if(conn!=null) conn.close();
+				pstmt = conn.prepareStatement(query);
+			
+				pstmt.setString(1,user_id);
+			
+				re = pstmt.executeUpdate();
+				
+				
+			
+				query = "delete from user_table where user_id=?";
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1,user_id);
+				re = pstmt.executeUpdate();
+				
+				
+				System.out.println("삭제 성공");
+			} catch(Exception e) {
+				e.printStackTrace();
+				System.out.println("삭제 실패");
+			} finally {
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			}
+		}else {
+			re=0;
 		}
+		
 		return re;
 	}
 	

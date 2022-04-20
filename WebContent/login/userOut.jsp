@@ -3,7 +3,14 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%
-	String user_id = (String)session.getAttribute("user_id");
+	String user_id = null;
+    
+    
+	if(((String)session.getAttribute("user_id"))!=null){
+		user_id =(String)session.getAttribute("user_id");
+		
+	}
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -39,7 +46,7 @@
 				<td colspan="2" align="center">
 					<input type="submit" value="Å»Åð">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" value="Å»Åð¾ÈÇÔ" onclick="javascript:window.location='main.jsp'">
+					<input type="button" value="Å»Åð¾ÈÇÔ" onclick="javascript:window.location='../userPage/userPage.jsp'">
 				</td>
 			</tr>			
 		</form>

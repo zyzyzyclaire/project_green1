@@ -178,4 +178,94 @@ public class CartDBBean {
 		return re;
 	}
 	
+	// 재고수량을 확인해 장바구니 추가 가능 여부를 확인하는 메서드(장바구니에 추가할 때) - 0420 근지
+	public int checkStock(int product_number, int product_count, String user_id) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "";
+		int cnt = 0;
+		int stock = 0;
+		int re = -1;
+		
+		try {
+			conn = getConnection();
+			// 해당 아이디가 장바구니에 해당 물건을 담아놓은 총 개수를 cnt에 담음 - 0420 근지
+			query = "select sum(product_count) from cart where product_number=? and user_id=?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, product_number);
+			pstmt.setString(2, user_id);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				cnt = rs.getInt(1) + product_count;
+			} else {
+				cnt = product_count;
+			}
+			
+			// 해당 상품 재고를 확인 - 0420 근지
+			query = "select product_stock from product where product_number=?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, product_number);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				stock = rs.getInt(1);				
+			}
+			
+			if (stock >= cnt) {
+				re = 1;
+			} else {
+				re = -1;
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return re;
+	}
+	
+	// 재고수량을 확인해 장바구니 추가 가능 여부를 확인하는 메서드(장바구니에서  수정할 때) - 0420 근지
+	public int checkStockEdit(int product_number, int product_count) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "";
+		int cnt = 0;
+		int stock = 0;
+		int re = -1;
+		
+		try {
+			conn = getConnection();
+			
+			// 해당 상품 재고를 확인 - 0420 근지
+			query = "select product_stock from product where product_number=?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, product_number);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				stock = rs.getInt(1);				
+			}
+			
+			if (stock >= product_count) {
+				re = 1;
+			} else {
+				re = -1;
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return re;
+	}
+	
 }

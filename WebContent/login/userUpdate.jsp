@@ -89,7 +89,7 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="reset" value="다시입력">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" value="수정안함" onclick="javascript:window.location='main.jsp'">
+					<input type="button" value="수정안함" onclick="javascript:window.location='../userPage/userPage.jsp'">
 				</td>
 			</tr>			
 		</form>

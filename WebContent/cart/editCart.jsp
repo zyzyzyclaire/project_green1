@@ -2,26 +2,38 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%	
+	String user_id = (String)session.getAttribute("user_id");
 	int cart_number = Integer.parseInt(request.getParameter("cart_number"));
 	int product_count = Integer.parseInt(request.getParameter("product_count"));
+	int product_number = Integer.parseInt(request.getParameter("product_number"));
+	
 	CartDBBean db = CartDBBean.getInstance();
-	int re = db.editCart(cart_number, product_count);
-%>
-<%
-	if(re==1) {
-%>
+
+	// 재고 수량 확인 - 0420 근지
+	if(db.checkStockEdit(product_number, product_count) == -1) {	// 재고 부족 -0420근지
+%>		
 		<script>
-			alert("수정 되었습니다.");
-			location.href="viewCart.jsp";
+		alert("재고 부족. 상품 수량을 다시 선택해주세요.");
+		history.back();
 		</script>
-<%
-	} else {
+<%		
+		} else {	// 재고 여유 -0420근지
+
+		if(db.editCart(cart_number, product_count)==1) {
 %>
-		<script>
-			alert("수정 실패");
-			history.go(-1);
-		</script>
+			<script>
+				alert("수정 되었습니다.");
+				location.href="viewCart.jsp";
+			</script>
 <%
+		} else {
+%>
+			<script>
+				alert("수정 실패");
+				history.go(-1);
+			</script>
+<%
+		}
 	}
 %>
 <!DOCTYPE html>

@@ -35,7 +35,7 @@
 				session.setAttribute("user_id", user_id);
 				session.setAttribute("user_name", user_name);
 				session.setAttribute("user", "yes");	// url로 접속할 수 없도록 - 0415 근지
-				response.sendRedirect("main.jsp");
+				response.sendRedirect("../main/main.jsp");
 			} else if(check==0) {
 	%>
 				<script>

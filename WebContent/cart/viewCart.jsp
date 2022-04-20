@@ -7,6 +7,11 @@
     pageEncoding="EUC-KR"%>
 <%
 	String user_id = (String)session.getAttribute("user_id");
+	if(user_id ==null){
+		System.out.println("장바구니 로그인 해라");
+		response.sendRedirect("../login/login.jsp");
+	}
+
 	CartDBBean db = CartDBBean.getInstance();
 	ArrayList<CartBean> cartArr = db.getCart(user_id);
 	
@@ -57,7 +62,7 @@
 		%>
 				<script>
 					alert("장바구니가 비었습니다.");
-					location.href="../login/main.jsp";
+					location.href="../main/main.jsp";
 				</script>
 		<%
 			}
@@ -68,23 +73,25 @@
 				GoodsBean goods = goodsDb.getGoods(cart.getProduct_number());
 
 		%>
-			<form method="post" action="editCart.jsp?cart_number=<%= cart.getCart_number()%>" name="edit_frm">
-				<tr>
-					<td>
-						<%= goods.getProduct_name() %>
-					</td>
-					<td>
-						<input type="text" name="product_count" value="<%= cart.getProduct_count() %>">
-					</td>
-					<td>
-						<%= goods.getProduct_price() %>원 * <%= cart.getProduct_count() %>개 = 
-						<%= goods.getProduct_price()*cart.getProduct_count() %>원
-					</td>
-					<td>
-						<input type="submit" value="수정" onclick="editCart()">
-						<input type="button" value="삭제" onclick="deleteCart('<%= cart.getCart_number() %>')">
-					</td>
-				</tr>
+			<form method="post" action="editCart.jsp" name="edit_frm">
+				<input type="hidden" name="cart_number" value="<%= cart.getCart_number()%>">
+				<input type="hidden" name="product_number" value="<%= cart.getProduct_number()%>">
+					<tr>
+						<td>
+							<%= goods.getProduct_name() %>
+						</td>
+						<td>
+							<input type="text" name="product_count" value="<%= cart.getProduct_count() %>">
+						</td>
+						<td>
+							<%= goods.getProduct_price() %>원 * <%= cart.getProduct_count() %>개 = 
+							<%= goods.getProduct_price()*cart.getProduct_count() %>원
+						</td>
+						<td>
+							<input type="submit" value="수정">
+							<input type="button" value="삭제" onclick="deleteCart('<%= cart.getCart_number() %>')">
+						</td>
+					</tr>
 			</form>
 		<%
 			}

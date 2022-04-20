@@ -19,7 +19,7 @@
 %>
 		<script>
 			alert("입력하신대로 회원 정보가 수정되었습니다.");
-			document.location.href="main.jsp";	// sendRedirect써도 됨 -  0415 근지
+			document.location.href="../userPage/userPage.jsp";	// sendRedirect써도 됨 -  0415 근지
 		</script>
 <%
 	} else {
