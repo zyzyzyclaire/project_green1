@@ -24,7 +24,25 @@
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 
+<script src="../js/jquery.js"></script>
 <script type="text/javascript">
+
+	$(function() {
+		$("#editCart").on("click", function() {
+			confirm("해당 상품을 수정하시겠습니까?");
+			
+			var count = $('#product_count').val();
+			var pnum = $('#product_number').val();
+			var cnum = $('#cart_number').val();
+			
+			if(count <= 0) {
+				alert("상품 수량을 선택해주세요.");
+			} else {
+				location.href="editCart.jsp?product_count="+count+"&product_number="+pnum+"&cart_number="+cnum;
+			}
+		});
+	});
+	
 	function deleteCart(cart_number) { 
 		if(confirm("해당 상품을 장바구니에서 삭제하시겠습니까?")){ 
 			location.href = "deleteCart.jsp?cart_number="+cart_number; 
@@ -73,22 +91,22 @@
 				GoodsBean goods = goodsDb.getGoods(cart.getProduct_number());
 
 		%>
-			<form method="post" action="editCart.jsp" name="edit_frm">
-				<input type="hidden" name="cart_number" value="<%= cart.getCart_number()%>">
-				<input type="hidden" name="product_number" value="<%= cart.getProduct_number()%>">
+			<form method="post" action="#">
+				<input type="hidden" name="cart_number" value="<%= cart.getCart_number()%>" id="cart_number">
+				<input type="hidden" name="product_number" value="<%= cart.getProduct_number()%>" id="product_number">
 					<tr>
 						<td>
 							<%= goods.getProduct_name() %>
 						</td>
 						<td>
-							<input type="text" name="product_count" value="<%= cart.getProduct_count() %>">
+							<input type="text" name="product_count" value="<%= cart.getProduct_count() %>" id="product_count">
 						</td>
 						<td>
 							<%= goods.getProduct_price() %>원 * <%= cart.getProduct_count() %>개 = 
 							<%= goods.getProduct_price()*cart.getProduct_count() %>원
 						</td>
 						<td>
-							<input type="submit" value="수정">
+							<input type="button" value="수정" id="editCart">
 							<input type="button" value="삭제" onclick="deleteCart('<%= cart.getCart_number() %>')">
 						</td>
 					</tr>
