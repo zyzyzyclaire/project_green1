@@ -44,6 +44,18 @@
 		});
 	});
 	
+	// 0개를 구매할 시 알림창 띄우도록 함 -0421근지
+	$(function () {
+		$("#buyCount").on("click",function() {
+			var value = $('#product_count').val();
+			if(value == 0) {
+				alert("상품 수량을 선택해주세요.");
+			} else {
+				document.goods_frm.submit();
+			}
+		});
+	});
+	
 	
 	function viewCart(user_id) { 
 		if(confirm("장바구니를 보시겠습니까?")){ 
@@ -60,7 +72,7 @@
 	상품 가격 :  <%= product_price %> <br>
 	상품 재고 : <%=product_stock %><br>
 	수량 : <br>
-	<form method="post" action="buy.jsp">
+	<form method="post" action="../buy/buy.jsp" name="goods_frm">
 		<input type="hidden" name="product_number" value="<%= product_number %>">
 			<select name="product_count" id="product_count">
 				<option value="0" selected>수량을 선택하세요.</option>
@@ -71,7 +83,7 @@
 				<option value="5">5</option>
 			</select>
 		<input type="button" value="장바구니 담기" id="setCart">
-		<input type="submit" value="구매하기">
+		<input type="button" value="구매하기" id="buyCount">
 	</form>
 	<br><br>
 	장바구니 보기 : <br>

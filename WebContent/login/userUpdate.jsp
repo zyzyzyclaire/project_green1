@@ -13,7 +13,56 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<script type="text/javascript" src="script.js" charset="UTF-8"></script>
+	<script>
+		// 도로명 주소 찾기 API 수정 -0421근지
+		function goPopup(){
+			// 주소검색을 수행할 팝업 페이지를 호출합니다.
+			// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
+			var pop = window.open("../addrApi/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
+			
+			// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
+		    //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
+		}
+		
+		function jusoCallBack(roadFullAddr){
+			// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
+			document.upd_frm.user_addr.value = roadFullAddr;
+		}
+	
+		// 입력값 체크 -0421근지
+		function update_check_ok(){
+			if(document.upd_frm.user_pwd.value.length == 0){
+				alert("패스워드는 반드시 입력해야 합니다.");
+				document.upd_frm.user_pwd.focus();
+				return;
+			}	
+			
+			if(document.upd_frm.user_pwd.value != document.upd_frm.pwd_check.value){
+				alert("패스워드가 일치하지 않습니다.");
+				upd_frm.pwd_check.focus();
+				return;
+			}	
+			
+			if(document.upd_frm.user_email.value.length == 0){
+				alert("Email을 써주세요.");
+				document.upd_frm.user_email.focus();
+				return;
+			}
+			
+			if(document.upd_frm.user_phone.value.length == 0){
+				alert("휴대폰번호를 써주세요.");
+				document.upd_frm.user_phone.focus();
+				return;
+			}
+			
+			if(document.upd_frm.user_addr.value.length == 0){
+				alert("주소를 써주세요.");
+				document.upd_frm.user_addr.focus();
+				return;
+			}
+			document.upd_frm.submit();
+		}
+	</script>
 </head>
 <body>
 	<table border="1" align="center">
@@ -80,7 +129,7 @@
 				</td>
 				<td>
 					<input type="text" size="40" name="user_addr"
-					value="<%= user.getUser_addr()%>">
+					value="<%= user.getUser_addr()%>" onclick="goPopup()">
 				</td>
 			</tr>
 			<tr>

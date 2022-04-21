@@ -7,8 +7,12 @@
     pageEncoding="EUC-KR"%>
 <%
 	String user_id = (String)session.getAttribute("user_id");
-	if(user_id ==null){
-		System.out.println("장바구니 로그인 해라");
+	if(user_id == null){
+%>	
+		<script>
+			alert("로그인이 필요한 페이지입니다.");
+		</script>
+<%
 		response.sendRedirect("../login/login.jsp");
 	}
 
