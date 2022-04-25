@@ -12,6 +12,72 @@ public class GoodsBean {
      private Timestamp product_date;
      private int product_hits;
      
+ 	private  int file_number;
+ 	private  String orgin_file_name;
+ 	private  String stored_file_name;
+ 	private  String stored_thumbnail;
+ 	private  String delegate_thumbnail;
+ 	private  int file_size;
+ 	private  Timestamp create_date;
+ 	private  String delete_check;
+
+	public String getString_file_size() {
+		return String_file_size;
+	}
+	public void setString_file_size(String string_file_size) {
+		String_file_size = string_file_size;
+	}
+	private  String String_file_size;
+	
+     
+	public int getFile_number() {
+		return file_number;
+	}
+	public void setFile_number(int file_number) {
+		this.file_number = file_number;
+	}
+	public String getOrgin_file_name() {
+		return orgin_file_name;
+	}
+	public void setOrgin_file_name(String orgin_file_name) {
+		this.orgin_file_name = orgin_file_name;
+	}
+	public String getStored_file_name() {
+		return stored_file_name;
+	}
+	public void setStored_file_name(String stored_file_name) {
+		this.stored_file_name = stored_file_name;
+	}
+	public String getStored_thumbnail() {
+		return stored_thumbnail;
+	}
+	public void setStored_thumbnail(String stored_thumbnail) {
+		this.stored_thumbnail = stored_thumbnail;
+	}
+	public String getDelegate_thumbnail() {
+		return delegate_thumbnail;
+	}
+	public void setDelegate_thumbnail(String delegate_thumbnail) {
+		this.delegate_thumbnail = delegate_thumbnail;
+	}
+	public int getFile_size() {
+		return file_size;
+	}
+	public void setFile_size(int file_size) {
+		this.file_size = file_size;
+	}
+	public Timestamp getCreate_date() {
+		return create_date;
+	}
+	public void setCreate_date(Timestamp create_date) {
+		this.create_date = create_date;
+	}
+	public String getDelete_check() {
+		return delete_check;
+	}
+	public void setDelete_check(String delete_check) {
+		this.delete_check = delete_check;
+	}
 	public int getProduct_number() {
 		return product_number;
 	}

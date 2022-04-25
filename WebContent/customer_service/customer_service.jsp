@@ -51,7 +51,7 @@
     <div class="col">
         <a href="fqa.jsp" target="_self">FAQ 자주묻는 질문</a><br>
 		<a href="notice_list.jsp" target="_self">Notice 공지사항</a><br>
-		<a href="qna.jsp" target="_self">Q&A</a>
+		<a href="qnaList.jsp" target="_self">Q&A</a>
     </div>
   </div>
 </div>
@@ -65,7 +65,7 @@
 		<button type="button" onclick="location.href='notice_list.jsp'"> Notice <br>공지사항<br></button>
     </div>
     <div class="col">
-		<button type="button" onclick="location.href='qna.jsp'"> Q&A <br>문의하기<br></button>
+		<button type="button" onclick="location.href='qnaList.jsp'"> Q&A <br>문의하기<br></button>
     </div>
   </div>
 </div>

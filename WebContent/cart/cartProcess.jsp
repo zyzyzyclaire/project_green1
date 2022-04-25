@@ -23,8 +23,7 @@
 			location.href="../login/login.jsp";
 		</script>
 <%	
-	}
-	else {	// 회원일 때 - 0420 근지
+	} else {	// 회원일 때 - 0420 근지
 		user_id = (String)session.getAttribute("user_id");
 		
 		// 재고 수량 확인 - 0420 근지

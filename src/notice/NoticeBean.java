@@ -11,7 +11,6 @@ public class NoticeBean {
 //	,N_HIT NUMBER(5,0)
 //	,N_PWD VARCHAR2(12)
 //	,N_IP VARCHAR2(15)
-//	,USER_ID VARCHAR2(50)
 //	);
 		
 	private int n_num;
@@ -23,30 +22,32 @@ public class NoticeBean {
 	private String n_pwd;
 	private String n_ip;
 	
-	public static int pageSize = 10; 
-	public static int pageCount = 1; 
-	public static int pageNum = 1; 
+	public static int pageSize = 10; //한페이지에 10개를 보여주기 위한 변수
+	public static int pageCount = 1; //페이지 개수 카운트, 페이지가 많을수록 늘어남
+	public static int pageNum = 1;	//페이지 번호
 	
-	public static String pageNumer(int limit) {
-		String str="";
-		int temp = (pageNum-1) % limit;
-		int startPage=pageNum - temp;
+	//페이지 목록을 만들어주는 메소드
+	//int limit 몇개의 페이지에 대한 로직을 처리할 것인지 설정
+	public static String pageNumber(int limit) {
+		String str="";	//return값
+		int temp = (pageNum-1) % limit;	//시작페이지를 구하기 위함
+		int startPage=pageNum - temp;	//시작페이지 설정 1-0 = 1
 		
 		if ((startPage - limit) > 0) {
-			str="<a href='list.jsp?pageNum="+(startPage-1)+"'>[<<]</a>&nbsp;&nbsp;";
+			str="<a href='notice_list.jsp?pageNum="+(startPage-1)+"'>[<<]</a>&nbsp;&nbsp;";
 		}
 		
 		for (int i = startPage; i < (startPage+limit); i++) {
 			if (i == pageNum) {
 				str += "["+i+"]&nbsp;&nbsp;";
 			} else {
-				str += "<a href='list.jsp?pageNum="+i+"'>"+"["+i+"]</a>&nbsp;&nbsp;";
+				str += "<a href='notice_list.jsp?pageNum="+i+"'>"+"["+i+"]</a>&nbsp;&nbsp;";
 			}
 			if(i >= pageCount) break;
 		}
 
 		if ((startPage + limit) <= pageCount) {
-			str +="<a href='list.jsp?pageNum="+(startPage+limit)+"'>[>>]</a>";
+			str +="<a href='notice_list.jsp?pageNum="+(startPage+limit)+"'>[>>]</a>";
 		}
 		
 		return str;

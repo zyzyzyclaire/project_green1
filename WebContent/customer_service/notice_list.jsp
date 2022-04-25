@@ -35,25 +35,15 @@
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	
 %>
-<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
-	if(user_id.equals("admin")){	
-%>
-<nav>
-  <ol>
-    <li><a href="customer_service.html">고객센터</a></li>
-    <li>1:1문의하기</li>
+<!-- 구분자 -->
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="customer_service.jsp">고객센터</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Notice</li>
   </ol>
 </nav>
-		
-<table width="600">
-	<tr>
-		<td align="right">
-			<input type="button" value="글쓰기" onclick="location.href='notice_write.jsp?pageNum=<%= pageNum %>'"></input>
-		</td>
-	</tr>
-</table>
-<% }} %>
 
+<!-- 상단 부분 시작-->
 <div class="container" style="font-size:1.0em;  color: black;">
   <div class="row">
     <div class="col">
@@ -64,14 +54,25 @@
     </div>
     <div class="col">
 		<a href="customer_service.jsp" target="_self">고객센터 홈</a><br>
-        <a href="fqa.jsp" target="_self">FAQ 자주묻는 질문</a><br>
-		<a href="notice_list.jsp" target="_self">Notice 공지사항</a><br>
+        <a href="faq.jsp" target="_self">FAQ 자주묻는 질문</a><br>
+		<a href="qnaList.jsp" target="_self">QnA 질문게시판</a><br>
     </div>
   </div>
 </div>
 	<center>
 		<h1>Notice</h1>
 			
+	<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
+	if(user_id.equals("admin")){	
+	%>
+	<table width="600">
+		<tr>
+			<td align="right">
+				<input type="button" value="글쓰기" onclick="location.href='notice_write.jsp?pageNum=<%= pageNum %>'"></input>
+			</td>
+		</tr>
+	</table>
+	<% }} %>
 	</center>
 	<center>
 		<table border="1" width="800" cellspacing="0">
@@ -81,7 +82,6 @@
 				<td width="120" align="center">작성자</td>
 				<td width="130" align="center">작성일</td>
 				<td width="60" align="center">조회수</td>
-			</tr>
 			</tr>
 			<%
 			if(boardList.size()==0) {
@@ -109,7 +109,15 @@
 					</a>
 				</td>
 				<td align="center">
+				<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
+						if(user_id.equals("admin")){	
+				%>
 						<%= user_id %>	<!-- 세션을 통해 id받아와 입력  -->
+				<% }else {%>
+						admin
+				<% }} else { %>
+						admin
+				<% } %>
 				</td>
 				<td align="center">
 					<%= sdf.format(n_date) %>
@@ -123,7 +131,7 @@
 				}
 			%>
 		</table>
-		<%= NoticeBean.pageNumer(4) %>
+		<%= NoticeBean.pageNumber(4) %>
 	</center>
 </body>
 </html>

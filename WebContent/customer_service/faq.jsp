@@ -52,7 +52,7 @@
     <div class="col">
         <a href="customer_service.jsp" target="_self">고객센터 홈</a><br>
 		<a href="notice_list.jsp" target="_self">Notice 공지사항</a><br>
-		<a href="qna.jsp" target="_self">Q&A 1:1문의</a>
+		<a href="qnaList.jsp" target="_self">Q&A 질문게시판</a>
     </div>
   </div>
 </div>

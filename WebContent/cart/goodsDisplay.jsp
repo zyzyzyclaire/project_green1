@@ -44,7 +44,7 @@
 		});
 	});
 	
-	// 0개를 구매할 시 알림창 띄우도록 함 -0421근지
+	// 구매하기 버튼 눌렀을 때 실행됨 -0421근지
 	$(function () {
 		$("#buyCount").on("click",function() {
 			var value = $('#product_count').val();

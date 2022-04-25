@@ -268,4 +268,36 @@ public class CartDBBean {
 		return re;
 	}
 	
+	// cart_number와 일치하는 cart의 정보를 얻어오는 메서드 - 0418 근지
+	public CartBean getCart_one(int cart_number) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select * from cart where cart_number=?";
+		
+		CartBean cart = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cart_number);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				cart = new CartBean();
+				cart.setCart_number(cart_number);
+				cart.setUser_id(rs.getString("user_id"));
+				cart.setProduct_number(rs.getInt("product_number"));
+				cart.setProduct_count(rs.getInt("product_count"));
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return cart;
+	}
 }

@@ -7,10 +7,23 @@
 	int product_count = Integer.parseInt(request.getParameter("product_count"));
 	int product_number = Integer.parseInt(request.getParameter("product_number"));
 	
+	System.out.println("cart_number@@@###===>"+cart_number);
+	System.out.println("product_count@@@###===>"+product_count);
+	System.out.println("product_number@@@###===>"+product_number);
+	
 	CartDBBean db = CartDBBean.getInstance();
-
+	
+	if(product_count <= 0) {	// 수량을 잘못 기입시
+%>		
+		<script>
+		alert("올바른 상품 수량을 선택해주세요.");
+		history.back();
+		</script>
+<%		
+	}
+	
 	// 재고 수량 확인 - 0420 근지
-	if(db.checkStockEdit(product_number, product_count) == -1) {	// 재고 부족 -0420근지
+	else if(db.checkStockEdit(product_number, product_count) == -1) {	// 재고 부족 -0420근지
 %>		
 		<script>
 		alert("재고 부족. 상품 수량을 다시 선택해주세요.");

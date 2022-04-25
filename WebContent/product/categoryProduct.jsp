@@ -1,17 +1,20 @@
+<%@page import="goods.GoodsBean"%>
+<%@page import="goods.GoodsDBBean"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="product.ProductBean"%>
-<%@page import="product.ProductDBBean"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 <%
+	request.setCharacterEncoding("UTF-8");
+	String path = request.getRealPath("upload");
 	int product_number = 0;
 	String category_code = null;
 	String product_name = null;
@@ -33,21 +36,25 @@
 %>
 
 <%
-  category_code = request.getParameter("category");
+  	category_code = request.getParameter("category");
+	System.out.println("@@@@@@@@@@@@@"+category_code);
 	if(category_code.equals("1")){
-		out.println("»óÀÇ");
+		out.println("ìƒì˜");
+		category_code = "ìƒì˜";
 	}else if(category_code.equals("2")){
-		out.println("ÇÏÀÇ");
+		out.println("í•˜ì˜");
+		category_code = "í•˜ì˜";
 	}else{
-		out.println("½Å¹ß");
+		out.println("ì‹ ë°œ");
+		category_code = "ì‹ ë°œ";
 	}
 %>
 	<%=category_code%>
 	<%
-	ProductDBBean productdb = new ProductDBBean();
+	GoodsDBBean productdb = new GoodsDBBean();
 	
-	ArrayList<ProductBean> CategoryProductList =productdb.getCategoryProductList(category_code);
-	ArrayList<ProductBean> productlistArr  =  productdb.getProductimg(CategoryProductList);
+	ArrayList<GoodsBean> CategoryProductList =productdb.getCategoryProductList(category_code);
+	ArrayList<GoodsBean> productlistArr  =  productdb.getProductimg(CategoryProductList);
 	for(int i=0; i<CategoryProductList.size(); i++){
 		product_number= CategoryProductList.get(i).getProduct_number();
  		category_code = CategoryProductList.get(i).getCategory_code();
@@ -67,20 +74,20 @@
 		  file_size = productlistArr.get(i).getFile_size();
 		  create_date = productlistArr.get(i).getCreate_date();
 		  delete_check = productlistArr.get(i).getDelete_check(); 
-		  System.out.print("@@ÀÌ¹ÌÁöÀÌ¸§"+orgin_file_name);
+		  System.out.print("@@ì´ë¯¸ì§€ì´ë¦„"+orgin_file_name);
   %>	  
 		   <table border="1" >
 			        <tr>
 						<td colspan="6">
-							<a href="./../cart/goodsDisplay.jsp?product_number=<%=orgin_file_name%>"><img src="./../images/products/<%=stored_file_name%>.jpg" style="width: 300px; height: 300px;" ><a>
+							<a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>"><img src="<%=path%>/<%=stored_file_name%>" style="width: 300px; height: 300px;" ><a>
 						</td>
 					</tr>
 					<tr>
-						<td>»óÇ°ÀÌ¸§</td>
+						<td>ìƒí’ˆì´ë¦„</td>
 						<td><%=orgin_file_name%></td>
-						<td>»óÇ°°¡°İ</td>
+						<td>ìƒí’ˆê°€ê²©</td>
 						<td><%=product_price %></td>
-						<td>»óÇ°Àç°í·®</td>
+						<td>ìƒí’ˆì¬ê³ ëŸ‰</td>
 						<td><%=product_stock%></td>
 					</tr>
 			</table>

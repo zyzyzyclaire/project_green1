@@ -4,16 +4,19 @@ x<%@page import="goods.GoodsBean"%>
 <%@page import="login.UserDBBean"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%
+<%	
+	// 비회원 튕기기 안되고있음ㅠㅠ 근지
+	String user_id = null;
 	if(session.getAttribute("user")==null) {
 %>		
 		<script>
+		alert("로그인이 필요한 페이지입니다.");
 		location.href = "../login/login.jsp";
+		return;
 		</script>
 <%
 	}
-	
-	String user_id = (String)session.getAttribute("user_id");
+	user_id = (String)session.getAttribute("user_id");
 	
 	int product_number = Integer.parseInt(request.getParameter("product_number"));
 	int product_count = Integer.parseInt(request.getParameter("product_count"));
@@ -24,7 +27,7 @@ x<%@page import="goods.GoodsBean"%>
 	GoodsDBBean goodsDb = GoodsDBBean.getInstance();
 	GoodsBean goods = goodsDb.getGoods(product_number);
 	
-	int total_price = goods.getProduct_price() * product_count;
+	int total_price = goods.getProduct_price()*product_count;
 %>
 <!DOCTYPE html>
 <html>
@@ -53,7 +56,7 @@ x<%@page import="goods.GoodsBean"%>
 		<form method="post" name="re_user_frm" action="buyOk.jsp">
 			<input type="hidden" name="product_number" value="<%= product_number %>">
 			<input type="hidden" name="product_count" value="<%= product_count %>">
-			<input type="hidden" name="total_price" value="<%= total_price %>">
+			<input type="hidden" name="product_price" value="<%= total_price %>">
 				<table>
 					<caption>주문 목록</caption>
 						<tr>

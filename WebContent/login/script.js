@@ -55,3 +55,11 @@ function update_check_ok(){
 	// userUpdate.jsp의 form action값으로 submit함
 	document.upd_frm.submit();
 }
+
+function delete_check_admin(u_id) {
+	if(confirm("정말 탈퇴 처리하시겠습니까?")) {
+		location.href = "deleteMember.jsp?delete_uid=" + u_id;
+	} else {
+		location.reload();
+	}
+}
