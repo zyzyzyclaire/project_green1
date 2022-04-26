@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -12,8 +13,8 @@ import cart.CartBean;
 import cart.CartDBBean;
 import goods.GoodsBean;
 import goods.GoodsDBBean;
-
 public class UserOrderDetailDBBean {
+	
 	private static UserOrderDetailDBBean instance = new UserOrderDetailDBBean();
 	
 	public static UserOrderDetailDBBean getInstance() {
@@ -26,7 +27,6 @@ public class UserOrderDetailDBBean {
 		return conn;
 	}
 	
-	// userOrder_detail db에 저장하는 메서드 - 0422 근지
 	public int insertUserOrderDetail(UserOrderDetailBean userOrderDetail) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -50,8 +50,9 @@ public class UserOrderDetailDBBean {
 				number=1;
 			}
 			
-			query = "insert into userOrder_detail(order_detail_number,order_number,product_number,product_count,product_price,order_detail_status)"
-					+ " values(?,?,?,?,?,?)";
+			query = "insert into userOrder_detail(order_detail_number,order_number,product_number"
+					+ ",product_count,product_price,order_detail_status,refund_check)"
+					+ " values(?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(query);
 			
 			pstmt.setInt(1, number);
@@ -60,6 +61,7 @@ public class UserOrderDetailDBBean {
 			pstmt.setInt(4, userOrderDetail.getProduct_count());
 			pstmt.setInt(5, userOrderDetail.getProduct_price());
 			pstmt.setString(6, "입금 대기");
+			pstmt.setString(7, "no");
 			pstmt.executeUpdate();
 			
 			// 주문 상품 재고 줄이는 쿼리	-0422근지
@@ -119,8 +121,9 @@ public class UserOrderDetailDBBean {
 					number=1;
 				}
 				
-				query = "insert into userOrder_detail(order_detail_number,order_number,product_number,product_count,product_price,order_detail_status)"
-						+ " values(?,?,?,?,?,?)";
+				query = "insert into userOrder_detail(order_detail_number,order_number,product_number"
+						+ ",product_count,product_price,order_detail_status,refund_check)"
+						+ " values(?,?,?,?,?,?,?)";
 				pstmt = conn.prepareStatement(query);
 				
 				
@@ -130,6 +133,7 @@ public class UserOrderDetailDBBean {
 				pstmt.setInt(4, cart.getProduct_count());
 				pstmt.setInt(5, product_price);
 				pstmt.setString(6, "입금 대기");
+				pstmt.setString(7, "no");
 				pstmt.executeUpdate();
 				
 				// 주문 상품 재고 줄이는 쿼리	-0422근지
@@ -160,5 +164,146 @@ public class UserOrderDetailDBBean {
 		
 		return re;
 	}
+	
+	
+	public int getUserRefundCheck(int order_detail_number) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select refund_check from userorder_detail where order_detail_number = ?";
+		int re = 0;
 		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, order_detail_number);
+			rs = pstmt.executeQuery();
+			
+			
+			if (rs.next()) {
+				if(rs.getString(1).equals("check")) re = 1;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return re;
+		}
+	
+	public  ArrayList<UserOrderDetailBean> getUserOrderDetail(String user_id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ResultSet rs1 = null;
+		String sql = "select * from user_order  where user_id = ?";
+		
+		ArrayList<UserOrderDetailBean> detailarr = new ArrayList<UserOrderDetailBean>();
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			rs = pstmt.executeQuery();
+			
+			UserOrderDetailBean uodb = null;
+			while (rs.next()) {
+				
+				
+				sql = "select * from userOrder_detail where order_number = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, rs.getString("order_number"));
+				rs1 = pstmt.executeQuery();
+				if(rs1.next()) {
+					uodb = new UserOrderDetailBean();
+					uodb.setOrder_detail_number(rs1.getInt("order_detail_number"));
+					uodb.setOrder_number(rs1.getString("order_number"));
+					uodb.setProduct_number(	rs1.getInt("product_number"));
+					uodb.setProduct_count(rs1.getInt("product_count"));
+					uodb.setProduct_count(rs1.getInt("product_price"));
+					uodb.setOrder_detail_status(rs1.getString("order_detail_status"));
+					detailarr.add(uodb);	
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return detailarr;
+		}
+	
+	
+	public int goodsRefundRequest(UserOrderDetailBean uodbean) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		//UserOrderDetailBean uodb = new UserOrderDetailBean();
+		int re = -1;
+		String sql = "update userorder_detail set refund_check= ? where order_detail_number=?";
+		//String sql = "select * from userorder_detail  where order_number = ?";
+		int num=1;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "check");
+			pstmt.setInt(2, uodbean.getOrder_detail_number());
+			re = pstmt.executeUpdate();
+			
+			sql = "select max(refund_number) from userorder_refund";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				  num = rs.getInt(1)+1;
+			}else {
+				 num =1;
+			}
+
+			sql = "insert into userOrder_refund VALUES(?,?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.setInt(2, uodbean.getOrder_detail_number());
+			pstmt.setString(3, uodbean.getRefund_reason());
+			pstmt.setString(4, uodbean.getRefund_img());
+			pstmt.setString(5, uodbean.getUser_email());
+			re = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return re;
+	}
+	
+	
+	
 }

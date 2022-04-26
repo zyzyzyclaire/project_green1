@@ -15,7 +15,6 @@
 <meta charset="UTF-8">
 <title>회원관리</title>
 </head>
-<script type="text/javascript" src="../login/script.js" charset="utf-8"></script>
 <body>
        <h4>Members</h4>
 	<%
@@ -42,12 +41,21 @@
 	<%
 		} else {
 	%>
+<script>
+function delete_check_admin(u_id) {
+	if(confirm("정말 탈퇴 처리하시겠습니까?") == true) {
+		location.href = "deleteMember.jsp?delete_uid=" + u_id;
+	} else {
+		location.reload();
+	}
+}
+</script>
 		<table border="1" width="800" cellspacing="0">
 			<thead>
 				<tr>
 					<th>아이디</th>
 					<th>이름</th>
-					<th>번호</th>
+					<th>전화번호</th>
 					<th>이메일</th>
 					<th>주소</th>
 					<th>주문량</th>
@@ -55,14 +63,14 @@
 				</tr>
 			</thead>
 			<tbody>
-			<%
+			<%	
 				ArrayList<UserBean> uList = udb.listUsers();
 				for (UserBean user : uList) {
 					String u_id = user.getUser_id();
 					if (udb.isAdmin(u_id)) {
 			%>
 				<tr style="font-size: small; background-color: aqua;">
-			<%			
+			<%				
 					} else if (udb.defineUserId(u_id).getUser_grade().equals("D")) {
 			%>
 				<tr style="font-size: small; background-color: grey;">

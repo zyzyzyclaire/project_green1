@@ -13,8 +13,7 @@
 <body>
 	<a href="../login/userOut.jsp">탈퇴</a>
 	<a href="../login/userUpdate.jsp">회원정보수정</a>
-		
-	
+	<a href="./userBuygoods.jsp">구매한상품조회</a>
 	
 </body>
 </html>

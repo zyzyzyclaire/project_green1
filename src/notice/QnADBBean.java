@@ -85,8 +85,8 @@ public class QnADBBean {
 		Statement stmt = null;
 		ResultSet rs = null;
 		ResultSet pageSet = null;
-		int dbCount=0;	//페이지 번호 개수를 받기위한 변수
-		int absolutePage=1;	//출력할 페이지
+		int dbCount=0;	//�럹�씠吏� 踰덊샇 媛쒖닔瑜� 諛쏄린�쐞�븳 蹂��닔
+		int absolutePage=1;	//異쒕젰�븷 �럹�씠吏�
 		
 		ArrayList<QnABean> boards = new ArrayList<QnABean>();
 
@@ -263,6 +263,8 @@ public class QnADBBean {
 		}
 		return isWrite;
 	}
+	
+	
 	
 	public int deleteBoard(int b_id, String b_pwd) throws Exception {
 		Connection conn = null;

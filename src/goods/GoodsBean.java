@@ -11,15 +11,24 @@ public class GoodsBean {
      private String product_desc;
      private Timestamp product_date;
      private int product_hits;
+     private  int file_number;
+  	 private  String orgin_file_name;
+  	 private  String stored_file_name;
+  	 private  String stored_thumbnail;
+  	 private  String delegate_thumbnail;
+  	 private  int file_size;
+  	 private  Timestamp create_date;
+  	 private  String delete_check;
+  	
+  	
      
- 	private  int file_number;
- 	private  String orgin_file_name;
- 	private  String stored_file_name;
- 	private  String stored_thumbnail;
- 	private  String delegate_thumbnail;
- 	private  int file_size;
- 	private  Timestamp create_date;
- 	private  String delete_check;
+ 	public Timestamp getProduct_date() {
+		return product_date;
+	}
+	public void setProduct_date(Timestamp product_date) {
+		this.product_date = product_date;
+	}
+	
 
 	public String getString_file_size() {
 		return String_file_size;
@@ -114,12 +123,7 @@ public class GoodsBean {
 	public void setProduct_desc(String product_desc) {
 		this.product_desc = product_desc;
 	}
-	public Timestamp getProduct_date() {
-		return product_date;
-	}
-	public void setProduct_date(Timestamp product_date) {
-		this.product_date = product_date;
-	}
+	
 	public int getProduct_hits() {
 		return product_hits;
 	}

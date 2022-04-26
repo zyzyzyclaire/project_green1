@@ -37,7 +37,7 @@
 
 <%
   	category_code = request.getParameter("category");
-	System.out.println("@@@@@@@@@@@@@"+category_code);
+	//System.out.println("@@@@@@@@@@@@@"+category_code);
 	if(category_code.equals("1")){
 		out.println("상의");
 		category_code = "상의";
@@ -74,7 +74,7 @@
 		  file_size = productlistArr.get(i).getFile_size();
 		  create_date = productlistArr.get(i).getCreate_date();
 		  delete_check = productlistArr.get(i).getDelete_check(); 
-		  System.out.print("@@이미지이름"+orgin_file_name);
+		  //System.out.print("@@이미지이름"+orgin_file_name);
   %>	  
 		   <table border="1" >
 			        <tr>

@@ -33,7 +33,7 @@
 	product_stock = goods.getProduct_stock();
 	product_desc = goods.getProduct_desc();
 	category_code = goods.getCategory_code();
-	System.out.println("category_code@@@>>"+category_code);
+	//System.out.println("category_code@@@>>"+category_code);
 	%>
 	 <script src="../js/jquery.js"></script>
 	<script>

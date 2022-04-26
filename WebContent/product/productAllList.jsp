@@ -55,7 +55,7 @@
 	         	}else{
 	         		size = ProductImgListArr.size()/3;
 	         	} 
-	         	System.out.println(size);
+	         	//System.out.println(size);
 	     		out.print("<table border='1'>");
 	         	for(int i = 0; i<size; i++){
  %>
@@ -89,7 +89,7 @@
 						file_size = ProductImgListArr.get(j).getFile_size();
 						create_date = ProductImgListArr.get(j).getCreate_date();
 						delete_check = ProductImgListArr.get(j).getDelete_check();
-						System.out.println("@@@파일경로는 "+path+"\\"+stored_file_name);
+						//System.out.println("@@@파일경로는 "+path+"\\"+stored_file_name);
 						%> 		 
 			    		 <table border="">	    		 
 							<tr>	 

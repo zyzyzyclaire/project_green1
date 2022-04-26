@@ -202,7 +202,7 @@
 
            
 
-            <div class="border d-flex justify-content-center" id="hearder_title"> 
+            <div class=" d-flex justify-content-center" id="hearder_title" > 
                 <div class="header_title" >
                     shopping mall
                 </div>
@@ -257,7 +257,7 @@
 	            
 	            하의	
 	        		
-	            <div class="d-flex justify-content-center zinde" id="multipleWrap"> 
+	          <!--   <div class="d-flex justify-content-center zinde" id="multipleWrap"> 
 	                <ul class="slide_gallery">
 						<a href="./../cart/goodsDisplay.jsp?product_number=1"><li><img src="../images/serverimgs/pic_1.jpg"> </li></a>
 						<li><a href="./../cart/goodsDisplay.jsp?product_number=2"><img src="../images/serverimgs/pic_2.jpg"></a> </li>
@@ -268,7 +268,7 @@
 						<li><a href="./../cart/goodsDisplay.jsp?product_number=7"><img src="../images/serverimgs/pic_7.jpg"></a> </li>
 						<li><a href="./../cart/goodsDisplay.jsp?product_number=8"><img src="../images/serverimgs/pic_8.jpg"></a> </li>
 	                </ul>
-	            </div>
+	            </div> -->
 	   <%
 	   
 	   	for(int count=1; count<=3; count++){  //상품종류추가시 카운트업

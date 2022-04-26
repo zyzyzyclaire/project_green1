@@ -339,12 +339,13 @@ public class UserDBBean {
 			PreparedStatement pstmt = null;
 			Connection conn = null;
 			
+			System.out.println("????"+u_id);
 			String sql = "SELECT user_id, user_grade FROM user_table WHERE user_id = ?"; 
 			UserBean user = null;
 			
 			try {
 				conn = getConnection();
-				conn.prepareStatement(sql);
+				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, u_id);
 				rs = pstmt.executeQuery();
 				
@@ -369,8 +370,8 @@ public class UserDBBean {
 			ResultSet rs = null;
 			PreparedStatement pstmt = null;
 			Connection conn = null;
-			String sql = "UPDATE user_table SET user_pwd = '-1', user_name = '-Ε»Επ', user_email = 'unknown', "
-					+ "user_phone = '000-0000-0000', user_addr='unknown', user_grade = 'D', WHERE user_id = ?";
+			String sql = "UPDATE user_table SET user_pwd = '-1', user_name = '-Ε»Επ', user_phone = '000-0000-0000', "
+					+ "user_email = 'unknown', user_addr='unknown', user_grade = 'D' WHERE user_id = ?";
 			int isDelete = -1;
 
 			try {
@@ -397,9 +398,9 @@ public class UserDBBean {
 			ResultSet rs = null;
 			ArrayList<UserBean> uList = new ArrayList<UserBean>();
 			String sql ="SELECT "
-					+ "user_id, user_name, user_phone, user_email, user_addr, user_grade, u_count "
-					+ "FROM user_table U, (SELECT user_id, COUNT(*) AS U_COUNT FROM user_order GROUP BY user_id) O "
-					+ "WHERE U.user_id = O.user_id(+) ORDER BY user_grade DESC, user_id DESC";
+					+ "u.user_id, user_name, user_phone, user_email, user_addr, user_grade, o_count "
+					+ "FROM user_table u, (SELECT user_id, COUNT(*) AS o_count FROM user_order GROUP BY user_id) o "
+					+ "WHERE u.user_id = o.user_id(+) ORDER BY user_grade DESC, u.user_id DESC";
 			
 			try {
 				conn = getConnection();
@@ -412,8 +413,8 @@ public class UserDBBean {
 					String userPhone = rs.getString("user_phone");
 					String userEmail = rs.getString("user_email");
 					String userAddr = rs.getString("user_addr");
-					String userGrade = rs.getString("user_garde");
-					int userPurchase = rs.getInt("u_count");
+					String userGrade = rs.getString("user_grade");
+					int userPurchase = rs.getInt("o_count");
 
 					UserBean user = new UserBean( //
 							userId, //
@@ -422,7 +423,7 @@ public class UserDBBean {
 							userPhone, //
 							userEmail, //
 							userAddr, //
-							"D" // userGrade
+							userGrade // 
 							);
 					
 					user.setUserPurchase(userPurchase);

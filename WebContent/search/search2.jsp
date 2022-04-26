@@ -23,7 +23,7 @@ pageEncoding="UTF-8"%>
 		 path = request.getRealPath("upload");
 		request.setCharacterEncoding("UTF-8");
 		String search = request.getParameter("search");
-		System.out.println("@@search>>"+search);
+		//System.out.println("@@search>>"+search);
 		// GoodsDBBean goodb = GoodsDBBean.getInstance();
 		GoodsDBBean goodsDb = GoodsDBBean.getInstance();
 		//GoodsBean goods = goodsDb.getGoods(product_number);

@@ -55,7 +55,7 @@
 		
 		product_desc = multi.getParameter("product_desc");
 		category_code = multi.getParameter("category_code");
-		System.out.print("category_code@@@@"+category_code);
+		//System.out.print("category_code@@@@"+category_code);
 		
 		int count=2;
 	 for(int i=1; i<count; i++){
@@ -118,7 +118,7 @@
 			productBean.setOrgin_file_name(orgin_file_nameArr[0]);
 			productBean.setStored_file_name(stored_file_nameArr[0]);
 		}else{
-			System.out.println("@@@@@@@>>"+path+"\1.png");
+			//System.out.println("@@@@@@@>>"+path+"\1.png");
 			productBean.setOrgin_file_name(path+"\1.png");
 			productBean.setStored_file_name(path+"\1.png");
 		}

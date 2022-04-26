@@ -49,9 +49,19 @@
 			} else {
 				location.href="editCart.jsp?product_count="+count+"&product_number="+pnum+"&cart_number="+cnum;
 			}
+		} else {
+			return false;
 		}
-		 
 	} 
+	
+	function checkForm() {
+		if($("input:checkbox[name='cart_num_arr']").is(":checked") == true) {
+			document.cart_frm.submit();
+		} else {
+			alert("한 가지 이상 선택해주세요.");
+			return false;
+		}
+	}
 	
 </script>
 
@@ -87,7 +97,7 @@
 		<%
 			}
 		%>	
-			<form method="post" action="../buy/buyFromCart.jsp">
+			<form method="post" action="../buy/buyFromCart.jsp" name="cart_frm">
 		<%
 			// 장바구니 출력 -0419 근지
 			for(int i=0; i<cartArr.size(); i++) {
@@ -124,7 +134,7 @@
 		%>
 				<tr>
 					<td>
-						<input type="submit" value="구매하기">
+						<input type="button" value="구매하기" onclick="checkForm()">
 					</td>
 				</tr>
 			</form>

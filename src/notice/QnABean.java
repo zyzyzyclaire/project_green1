@@ -63,8 +63,8 @@ public class QnABean {
 	public String getU_id() {
 		return u_id;
 	}
-	public void setU_id(String m_id) {
-		this.u_id = m_id;
+	public void setU_id(String u_id) {
+		this.u_id = u_id;
 	}
 	public String getB_category() {
 		return b_category;

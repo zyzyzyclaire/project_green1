@@ -47,12 +47,12 @@
 		
 		if( filee.exists() ){
 				if(filee.delete()){ 
-					System.out.println("파일삭제 성공"); 
+					//System.out.println("파일삭제 성공"); 
 				}else{ 
-					System.out.println("파일삭제 실패"); 
+					//System.out.println("파일삭제 실패"); 
 				} 
 		}else{ 
-			System.out.println("파일이 존재하지 않습니다."); 
+			//System.out.println("파일이 존재하지 않습니다."); 
 		} 
 	}
 	
@@ -153,7 +153,7 @@
 		 </script>
 		 <%
 	 }else{
-		 System.out.println("goodsUpdateOk.jsp실패");
+		 //System.out.println("goodsUpdateOk.jsp실패");
 		 %>
 		 <script>
 		 	alert("수정실패");
