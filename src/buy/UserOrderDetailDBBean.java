@@ -223,7 +223,7 @@ public class UserOrderDetailDBBean {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, rs.getString("order_number"));
 				rs1 = pstmt.executeQuery();
-				if(rs1.next()) {
+				while(rs1.next()) {
 					uodb = new UserOrderDetailBean();
 					uodb.setOrder_detail_number(rs1.getInt("order_detail_number"));
 					uodb.setOrder_number(rs1.getString("order_number"));

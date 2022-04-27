@@ -26,9 +26,6 @@
 	int product_price = goods.getProduct_price();
 	int product_stock = goods.getProduct_stock();
 	
-	
-	
-
 %>
 <!DOCTYPE html>
 <html>

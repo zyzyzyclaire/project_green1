@@ -1,121 +1,140 @@
+@charset "EUC-KR";
+*{
+	margin: 0px;
+	padding: 0px;
+	
+}
+body{
+		margin:auto;
+	 	min-width : 1120px;	
+	 	font-family: "Malgun Gothic",µ¸À½;
+}
+
+a:link {
+	 color: rgb(34, 34, 34);
+}
+a:active {
+ color: rgb(34, 34, 34);
+}
+a:visited {
+   color: rgb(34, 34, 34);
+}
+
+.headertop{
+   	margin:auto;
+   		min-width : 1120px;	
+	max-width : 1280px;	
+   	font-size: 11px;
+   	/* border: 1px solid black; */
+ }
+ .headerlinks{
+ 	margin: auto;
+ }
+ 
+ .headerlinks a:hover{
+ 	color:rgb(143, 143, 143);
+ }
+ .headernav li a:hover{
+ 	color:rgb(143, 143, 143);
+ }
+ .headertop span{
+  	font-family: "fontello";
+  	font-size: 18px;
+  	margin-right: 5px;	
+ }
+ 
+ #hearder_title{
+   /*  border: 1px solid black;   */
+ 	line-height: 114px;
+ 	margin: auto;
+ 	font-size: 50px;
+ 	
+ 	font-weight: bold;	
+ 	max-width : 1280px;	
+ 	min-width : 1120px;	
+ 	
+ 	
+ }
+.header_title a{
+	text-decoration: none;
+	color: black;
+}
+ .headersearchbox{
+ 	margin: auto;
+ 	/* border: 1px solid red; */
+ 	max-width : 1280px;	
+ 	min-width : 1120px;	
+ 	display: flex;
+ }
+ .searchbox1{
+ 	flex:9;
+ }
+ .searchbox2{
+ 	flex:1;
+ 	width:180px;
+	/* border: 1px solid red; */
+
+ }
+ .searchform{
+ 	width:180px;
+ 	display: flex;
+ }
+ #searchinput{
+ 	flex: 9;
+ 	outline-style: none;
+ 	border: 1px rgba(0, 0, 0, 0.09) solid;
+ }
+ #searchbutton{
+ 	flex: 1;
+ }
+ 
+ .headernav{
+ 	border-top:  1px rgba(0, 0, 0, 0.09) solid;
+ 	border-bottom:  1px rgba(0, 0, 0, 0.09) solid;
+ 	line-height: 32px;
+
+ }
+  .headernav li{
+ 	margin-right: 50px;
+ }
+
+ 
+ 
+ 
+ /*    header ³¡@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+main{
+	max-width : 1280px;	
+ 	min-width : 1120px;	
+	margin: auto;
+}
+main img{
+ 	  width: 1244px;
+ 	  height: 630px;
+	}
+.mainalinkimg img:hover{
+	opacity:0.5;
+}
+.maintitle{
+	text-align: center;
+	font-size: 20px;
+	font-weight: 700;
+	margin-bottom: 30px;
+}
+
+.goods table{
+	  margin:auto;
+	  border-spacing: 15px;
+ 	  border-collapse: separate;
+ 	  font-size: 12px;
+}
+.goods img{
+	width: 260px;
+	height: 260px;
+}
+
+/*    main ³¡@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 
 
-        .body_div{
-            width: 80%;
-            margin: auto;
-            position: relative;
-            
-        }
-         header {
-            /* border: black solid 1px; */
-            background: white;
-            height: 210px;
-            padding-top: 5px; 
-            
 
-            position: fixed;
-            top: 0;
-            left: 10%;
-            right: 10%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;  
-            z-index: 1;
-        }
-        #up{
-            width: 0px;
-            height: 210px;
-        }
-       
 
-        .navbox{
-            font-family: "fontello";
-        }
 
-        .navbox a{
-            color: black;
-            padding-right: 0px;
-        }
-        .navbox a span{
-            font-size: 25px;
-        }
-        .ulbox li a{
-            color: black;
-        }
-        .ulbox li a span{
-            font-family: "fontello";
-            margin-right: 10px;
-            font-size: 25px;
-        }
-      
-
-        .header_title{
-            font-size: 35px;
-            font-weight: 500;
-            
-        }
-        .border{
-           margin-bottom: 40px;
-        }
-        .searchbox{
-            margin-right: 30px;
-        }
-        #searchbox{
-          display: none;
-        }
-        .search{
-            display: flex;
-            width: 20%;
-            /* border: 1px solid black; */
-            font-family: "fontello";
-        }
-        .search input{
-           flex: 9;
-        }
-        .search a{
-            /* border: 1px solid black; */
-            padding-left: 10px;
-            color: black;
-            font-size: 20px;
-            flex: 1;
-        }
-
-        
-
-        /* main css-----------*/
-        main{
-            /* border: 1px solid black; */
-            
-        }
-        main table{
-            margin: auto;
-            width: 200px;
-            /* width: 80%; */
-         	
-           
-        }
-        main table img{
-            width: 100%;
-            height: 100%;
-        }
-        .zinde{
-            z-index: -1;
-        }
-       
-        /*footer------*/
-        footer {
-            height: 300px;
-            background-color: whitesmoke;
-            clear: both;
-            
-        }
-        footer table{
-            margin: auto;
-            font-size: 20px;
-            border-collapse: separate;
-            border-spacing: 30px 10px;
-        }
-        .footerdiv{
-            margin: auto;
-        }
-      

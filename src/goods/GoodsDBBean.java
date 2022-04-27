@@ -54,6 +54,17 @@ public class GoodsDBBean {
 					goods.setProduct_desc(rs.getString("product_desc"));
 					goods.setProduct_date(rs.getTimestamp("product_date"));
 					goods.setProduct_hits(rs.getInt("product_hits"));
+					/*
+					 * goods.setFile_number(rs.getInt("file_number"));
+					 * goods.setOrgin_file_name(rs.getString("orgin_file_name"));
+					 * goods.setStored_file_name(rs.getString("stored_file_name"));
+					 * goods.setStored_thumbnail(rs.getString("stored_thumbnail"));
+					 * goods.setDelegate_thumbnail(rs.getString("delegate_thumbnail"));
+					 * goods.setFile_size(rs.getInt("file_size"));
+					 * goods.setCreate_date(rs.getTimestamp("create_date"));
+					 * goods.setDelete_check(rs.getString("delete_check"));
+					 */
+					
 				}
 			} catch(Exception e) {
 				e.printStackTrace();
