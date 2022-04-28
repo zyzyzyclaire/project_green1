@@ -166,6 +166,38 @@ public class UserDBBean {
 		return user;
 	}
 	
+	// 탈퇴당한 멤버의 정보를 얻어오는 메서드 - 0415 근지
+	public String bannedUser(String user_id) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select * from user_table where user_id=?";
+		UserBean user = null;
+		String pwd = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1,user_id);	
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {	
+				user = new UserBean();
+				user.setUser_id(rs.getString("user_id"));
+				user.setUser_pwd(rs.getString("user_pwd"));
+			}
+			
+			pwd = user.getUser_pwd();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return pwd;
+	}
+	
 	// 회원 정보 테이블 내의 특정 행의 값을 변경하는 메서드 - 0415 근지
 	public int updateUser(UserBean user) throws Exception {
 		Connection conn = null;

@@ -217,8 +217,6 @@ public class UserOrderDetailDBBean {
 			
 			UserOrderDetailBean uodb = null;
 			while (rs.next()) {
-				
-				
 				sql = "select * from userOrder_detail where order_number = ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, rs.getString("order_number"));
@@ -233,6 +231,8 @@ public class UserOrderDetailDBBean {
 					uodb.setOrder_detail_status(rs1.getString("order_detail_status"));
 					detailarr.add(uodb);	
 				}
+				
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

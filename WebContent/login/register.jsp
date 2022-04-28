@@ -8,13 +8,25 @@
 	if(addr == null) {
 		addr = "클릭하여 주소 입력하기";
 	}
-%>
+%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<script>
+ 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script> <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js">
+    </script> <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap-5.1.3-dist/css/bootstrap-grid.min.css">
+    
+    
+    <link rel="stylesheet" href="../fontstyle/fontello-4581031e/css/fontello.css">
+    <link rel="stylesheet" href="../css/jquery.bxslider.css">	
+
+	
+<script>
 		// 도로명 주소 찾기 API 수정 -0421근지
 		function goPopup(){
 			// 주소검색을 수행할 팝업 페이지를 호출합니다.
@@ -78,82 +90,91 @@
 		}
 		
 	</script>
+<style>
+.table{ width: 25%; }
+.wrapper{
+padding: auto;
+margin: 100px 0px; 
+margin-left: auto; 
+margin-right: auto;
+}
+.width{width: 170px;}
+</style>
 </head>
+
 <body>
-	<table border="1">
-		<form name="reg_frm" method="post" action="registerOk.jsp">
-			<tr>
-				<td colspan="2" align="center">
-					<h1>회원 가입 신청</h1>
-					'*' 표시 항목은 필수 입력 항목입니다.
-				</td>
-			</tr>
-			<tr>
-				<td width="80">
-					ID
-				</td>
-				<td>
-					<input type="text" size="20" name="user_id">*
-				</td>
-			</tr>
-			<tr>
-				<td width="80">
-					PASSWORD
-				</td>
-				<td>
-					<input type="password" size="20" name="user_pwd">*
-				</td>
-			</tr>
-			<tr>
-				<td width="80">
-					PASSWORD 중복 확인
-				</td>
-				<td>
-					<input type="password" size="20" name="pwd_check">*
-				</td>
-			</tr>
-			<tr>
-				<td width="80">
-					이    름
-				</td>
-				<td>
-					<input type="text" size="20" name="user_name">*
-				</td>
-			</tr>
-			<tr>
-				<td width="80">
-					E-mail
-				</td>
-				<td>
-					<input type="text" size="30" name="user_email">*
-				</td>
-			</tr>
-			<tr>
-				<td width="80">
-					휴대폰 번호
-				</td>
-				<td>
-					<input type="text" size="40" name="user_phone">*
-				</td>
-			</tr>
-			<tr>
-				<td width="80">
-					주    소
-				</td>
-				<td>
-					<input type="text" size="40" name="user_addr" onclick="goPopup()">*
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<input type="button" value="등록" onclick="check_ok()">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="reset" value="다시입력">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" value="가입안함" onclick="javascript:window.location='login.jsp'">
-				</td>
-			</tr>
-		</form>
-	</table>
+
+<div class="wrapper">
+ <div style="margin:auto; text-align:center;">
+	<h2><label for="floatingInput">회원 가입 신청<br></label>
+		<!-- <h4>'*' 표시 항목은 필수 입력 항목입니다.</h4> -->
+	</h2>
+	<br>
+	
+ <table class="table" align="center">
+  <form name="reg_frm" method="post" action="registerOk.jsp" style="display:inline-block;">
+	<tr>
+		<td class="width"><label for="user_id">아이디</label></td>
+		<td>
+				<input type="text" size="50" name="user_id" class="form-control form-control-sm">
+		</td>
+	</tr>
+		
+	<tr>
+		<td class="width"><label for="user_pwd">비밀번호</label></td>
+		<td>
+				<input type="password" size="50" name="user_pwd" class="form-control form-control-sm">
+		</td>
+	</tr>
+		
+	<tr>
+		<td class="width"><label for="pwd_check">비밀번호 중복 확인</label></td>
+		<td>
+				<input type="password" size="50" name="pwd_check" class="form-control form-control-sm">
+		</td>
+	</tr>
+		
+	<tr>
+		<td class="width"><label for="user_name">이    름</label></td>
+		<td>
+				<input type="text" size="50" name="user_name" class="form-control form-control-sm">
+		</td>
+	</tr>
+		
+	<tr>
+		<td class="width"><label for="user_email">E-mail</label></td>
+		<td>
+				<input type="text" size="50" name="user_email" class="form-control form-control-sm">
+		</td>
+	</tr>
+		
+	<tr>
+		<td class="width"><label for="user_phone">휴대폰 번호</label></td>
+		<td>
+				<input type="text" size="50" name="user_phone" class="form-control">
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="width"><label for="user_addr">주    소</label></td>
+		<td>
+				<input type="text" size="80" name="user_addr" onclick="goPopup()" class="form-control">
+		</td>
+	</tr>
+	
+	<tr align="center">
+		<td colspan="4"><br>
+			<input type="reset" value="다시입력" class="btn btn-outline-dark">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="button" value="등록" onclick="check_ok()" class="btn btn-outline-dark">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="button" value="가입안함" onclick="javascript:window.location='login.jsp'" class="btn btn-outline-dark">
+		</td>
+	</tr>
+   </form>
+  </table>
+ </div>
+</div>
+
 </body>
 </html>

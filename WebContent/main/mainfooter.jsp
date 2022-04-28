@@ -6,16 +6,17 @@
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 <style>
- 	*{
-
+ 	.footerdiv{
  		color: rgb(136, 136, 136);
+ 		border-top: 1px solid  rgb(136, 136, 136);
+ 		padding-top: 30px;
  	}
  	
-	ul li{
+	.u1 li{
 		list-style: none;
 		font-size: 10px;
 	}
-	ul li span{
+	.u1 ul li span{
 		 color: black;
 		 font-size: 16px;
 	} 
@@ -33,14 +34,14 @@
 		display: flex;
 	}
 	.u1{
-		margin: auto;
+		margin-left: 120px;
 	}
 	
 </style>
 <link rel="stylesheet" href="./../css/main.css" type = "text/css">
 </head>
 <body>
-
+	
 	<div class="footerdiv" >
 		<div class="footerdiv1">
 			<ul class="u1">

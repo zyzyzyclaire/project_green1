@@ -41,7 +41,7 @@
 	String user_name = (String) session.getAttribute("user_name");
 	boolean isAdmin = udb.isAdmin(user_id);
    
-   int b_id = Integer.parseInt(request.getParameter("b_id"));
+   int b_id = Integer.parseInt(multi.getParameter("b_id"));
    board.setB_id(b_id);
    board.setB_title(multi.getParameter("b_title"));
    board.setB_content(multi.getParameter("b_content"));
@@ -55,7 +55,7 @@
 		board.setB_rfname(oriFile);
    }
    
-   if(request.getParameter("b_secret") == null){
+   if(multi.getParameter("b_secret") == null){
       //공개글
       board.setB_secret("0");
    }else{

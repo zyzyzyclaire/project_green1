@@ -5,9 +5,13 @@
 <%@page import="cart.CartBean"%>
 <%@page import="login.UserBean"%>
 <%@page import="login.UserDBBean"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@page import="java.io.File"%>
+<%
+	// ì£¼ì†Œ ë°›ì•„ì˜¬ ë•Œ í•œê¸€ ê¹¨ì§€ì§€ ì•Šê¸° ìœ„í•´ -0421ê·¼ì§€
+	request.setCharacterEncoding("UTF-8");
+%>
 <%
 	String[] cart_num_arr = request.getParameterValues("cart_num_arr");
 	
@@ -25,14 +29,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- ºÎÆ®½ºÆ®·¦	-0426±ÙÁö -->
+<!-- ë¶€íŠ¸ìŠ¤íŠ¸ë©	-0426ê·¼ì§€ -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 	<script src="../js/jquery.js"></script>
 	<script>
+	// ë„ë¡œëª… ì£¼ì†Œ ì°¾ê¸° API ìˆ˜ì • -0421ê·¼ì§€
+	function goPopup(){
+		// ì£¼ì†Œê²€ìƒ‰ì„ ìˆ˜í–‰í•  íŒì—… í˜ì´ì§€ë¥¼ í˜¸ì¶œí•©ë‹ˆë‹¤.
+		// í˜¸ì¶œëœ í˜ì´ì§€(jusopopup.jsp)ì—ì„œ ì‹¤ì œ ì£¼ì†Œê²€ìƒ‰URL(https://www.juso.go.kr/addrlink/addrLinkUrl.do)ë¥¼ í˜¸ì¶œí•˜ê²Œ ë©ë‹ˆë‹¤.
+		var pop = window.open("../addrApi/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
+		
+		// ëª¨ë°”ì¼ ì›¹ì¸ ê²½ìš°, í˜¸ì¶œëœ í˜ì´ì§€(jusopopup.jsp)ì—ì„œ ì‹¤ì œ ì£¼ì†Œê²€ìƒ‰URL(https://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)ë¥¼ í˜¸ì¶œí•˜ê²Œ ë©ë‹ˆë‹¤.
+	    //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
+	}
+	
+	function jusoCallBack(roadFullAddr){
+		// íŒì—…í˜ì´ì§€ì—ì„œ ì£¼ì†Œì…ë ¥í•œ ì •ë³´ë¥¼ ë°›ì•„ì„œ, í˜„ í˜ì´ì§€ì— ì •ë³´ë¥¼ ë“±ë¡í•©ë‹ˆë‹¤.
+		document.buy_frm.receiver_addr.value = roadFullAddr;
+	}
+	
 	$(function () {
 		$("#check").change(function() {
 			if($("#check").is(":checked")) {
@@ -54,17 +73,17 @@
 
       <jsp:include page="../main/mainHeader.jsp"></jsp:include> 
 
-	<h1 class="buyH1">ÁÖ¹®¼­ ÀÛ¼º</h1>
-		<form action="buyOkFromCart.jsp?">
+	<h1 class="buyH1">ì£¼ë¬¸ì„œ ì‘ì„±</h1>
+		<form action="buyOkFromCart.jsp?" name="buy_frm">
 				<table class="table" id="buyTable1">
-					<h2 class="buyH2">ÁÖ¹® ³»¿ª</h2>
+					<h2 class="buyH2">ì£¼ë¬¸ ë‚´ì—­</h2>
 						<tr align="center">
-							<td>ÀÌ¹ÌÁö</td>
-							<td>»óÇ°Á¤º¸</td>
-							<td>ÆÇ¸Å°¡</td>
-							<td>¼ö·®</td>
-							<td>¹è¼Ûºñ</td>
-							<td>ÇÕ°è</td>
+							<td>ì´ë¯¸ì§€</td>
+							<td>ìƒí’ˆì •ë³´</td>
+							<td>íŒë§¤ê°€</td>
+							<td>ìˆ˜ëŸ‰</td>
+							<td>ë°°ì†¡ë¹„</td>
+							<td>í•©ê³„</td>
 						</tr>
 			<%			
 						int total_price = 0;
@@ -72,7 +91,7 @@
 							cart = cartDb.getCart_one(Integer.parseInt(cart_num_arr[i]));
 							goods = goodsDb.getGoods(cart.getProduct_number());
 							
-							//»óÇ°¼¼ºÎÀÌ¹ÌÁö±îÁöºÒ·¯¿À±â
+							//ìƒí’ˆì„¸ë¶€ì´ë¯¸ì§€ê¹Œì§€ë¶ˆëŸ¬ì˜¤ê¸°
 							ArrayList<GoodsBean> getGoodsimg = goodsDb.getGoodsimg(cart.getProduct_number());
 							String stored_file_name = getGoodsimg.get(0).getStored_file_name();
 							System.out.println("@@@@@@"+stored_file_name);
@@ -83,7 +102,7 @@
 							else { System.out.println("No, there is not a no file."); }
 							
 			%>			
-						<!-- °ª ³Ñ±â±â À§ÇØ. ³ªÁß¿¡ ÇØ´ç Ã¼Å©¹Ú½º´Â css·Î º¸ÀÌÁö ¾Ê°Ô ¼³Á¤ÇÏ±â	-0425±ÙÁö -->
+						<!-- ê°’ ë„˜ê¸°ê¸° ìœ„í•´. ë‚˜ì¤‘ì— í•´ë‹¹ ì²´í¬ë°•ìŠ¤ëŠ” cssë¡œ ë³´ì´ì§€ ì•Šê²Œ ì„¤ì •í•˜ê¸°	-0425ê·¼ì§€ -->
 						<div width=0 height=0 style="visibility:hidden">
 						<input type="checkbox" value="<%= cart_num_arr[i] %>" name="cart_num_arr" checked onclick="return false;">
 						</div>
@@ -91,15 +110,15 @@
 							<tr>
 								<td id="buyRow1_1" width="200">
 									<%if(isExists){%>
-										<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name%>"  alt="ÀÌ¹ÌÁö¾øÀ½" class="buyImg">
+										<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name%>"  alt="ì´ë¯¸ì§€ì—†ìŒ" class="buyImg">
 									<%}else{%>
-										<img src="../images/products/noimg.PNG"  alt="ÀÌ¹ÌÁö¾øÀ½"  class="buyImg">
+										<img src="../images/products/noimg.PNG"  alt="ì´ë¯¸ì§€ì—†ìŒ"  class="buyImg">
 									<%}%>
 								</td>							
 								<td id="buyRow1_2"><%= goods.getProduct_name() %></td>
 								<td id="buyRow1_3"><%= goods.getProduct_price() %> won</td>								
 								<td id="buyRow1_4"><%= cart.getProduct_count() %></td>
-								<td id="buyRow1_5">[¹«·á]</td>
+								<td id="buyRow1_5">[ë¬´ë£Œ]</td>
 								<td id="buyRow1_6"><%= goods.getProduct_price()*cart.getProduct_count() %> won</td>
 			<%
 								total_price += goods.getProduct_price()*cart.getProduct_count();
@@ -107,36 +126,36 @@
 			%>				
 							</tr>
 							<tr>
-								<td>[±âº»¹è¼Û]</td>
+								<td>[ê¸°ë³¸ë°°ì†¡]</td>
 								<td colspan="5" align="right">
-									»óÇ°±¸¸Å±İ¾×&nbsp;<%= total_price %>&nbsp;+&nbsp;¹è¼Ûºñ&nbsp;0&nbsp;(¹«·á)&nbsp;=&nbsp;ÇÕ°è&nbsp;:<strong>&nbsp;&nbsp;&nbsp;<%= total_price %> won</strong>
+									ìƒí’ˆêµ¬ë§¤ê¸ˆì•¡&nbsp;<%= total_price %>&nbsp;+&nbsp;ë°°ì†¡ë¹„&nbsp;0&nbsp;(ë¬´ë£Œ)&nbsp;=&nbsp;í•©ê³„&nbsp;:<strong>&nbsp;&nbsp;&nbsp;<%= total_price %> won</strong>
 								</td>
 							</tr>	
 				</table>
 				<div class="buyBlank1"></div>
 				<table class="table">
-					<h2 class="buyH2">¹è¼Û Á¤º¸</h2>
+					<h2 class="buyH2">ë°°ì†¡ ì •ë³´</h2>
 						<tr>
 							<td colspan="2" align="right">
-								<input type="checkbox" id="check">È¸¿øÁ¤º¸¿Í µ¿ÀÏ
+								<input type="checkbox" id="check">&nbsp;íšŒì›ì •ë³´ì™€ ë™ì¼
 							</td>
 						</tr>
 						<tr>
-							<td id="buyRow2_1">ÀÌ¸§</td>
+							<td id="buyRow2_1">ì´ë¦„</td>
 							<td><input type="text" name="receiver_name" id="re_name" class="form-control"></td>
 						</tr>
 						<tr>
-							<td id="buyRow2_2">ÈŞ´ëÆù ¹øÈ£</td>
+							<td id="buyRow2_2">íœ´ëŒ€í° ë²ˆí˜¸</td>
 							<td><input type="text" name="receiver_phone" id="re_phone" class="form-control"></td>
 						</tr>
 						<tr>
-							<td id="buyRow2_3">ÁÖ¼Ò</td>
-							<td><input type="text" name="receiver_addr" id="re_addr" class="form-control"></td>
+							<td id="buyRow2_3">ì£¼ì†Œ</td>
+							<td><input type="text" name="receiver_addr" id="re_addr" class="form-control" onclick="goPopup()"></td>
 						</tr>
 						<tr class="buyBlank2"></tr>
 						<tr class="buyBtnClass">
 							<td colspan="2">
-								<input type="submit" value="ÁÖ¹®ÇÏ±â" id="buyBtn">
+								<input type="submit" value="ì£¼ë¬¸í•˜ê¸°" id="buyBtn">
 							</td>
 						</tr>
 				</table>

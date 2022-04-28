@@ -16,63 +16,14 @@
 </style>
 
 	<script src="../js/jquery.js"></script>
-<script type="text/javascript">
-	/* var count =0
-	var str = null;
-	var checkboxcount = null;
 
-	
-	
-	function check() { 
-		
-		var count =$("input:checkbox[name=checkbox]").length;
-		 checkboxcount =$("input:checkbox[name=checkbox]:checked").length
-		str = "";
-		
-		//var order_number = 0;
-		
-		 for (var i = 0; i < count; i++) {
-			if(i==0){
-				if($("#checkbox"+i).is(":checked")){
-					var order_number = $('#order_detail_number'+i).val();
-					str = "order_number"+i+"="+order_number;
-					
-				}
-			}else{
-				if(checkboxcount==1){
-					if($("#checkbox"+i).is(":checked")){
-						var order_number = $('#order_detail_number'+i).val();
-						str = "order_number"+i+"="+order_number;
-					}
-				}else{
-					if($("#checkbox"+i).is(":checked")){
-						var order_number = $('#order_detail_number'+i).val();
-						str += "&order_number"+i+"="+order_number;
-					}
-				}
-			}
-		}	
-	}
-	
-	
-	
-	function buttonsubmit() {
-		//alert(str+"&checkboxcount="+checkboxcount);
-		location.href="refundgoods.jsp?"+str+"&checkboxcount="+checkboxcount;
-	} */
-	
-
-</script>
 
 <body>
 
 	<%
 		String user_id = null;
-
-	
 		if(!((String)session.getAttribute("user_id") == null)){
 			user_id =(String)session.getAttribute("user_id");
-			//System.out.println("@@@@user_id@@@@@"+user_id);
 		}
 		String order_number =null,order_detail_status=null;
 		int order_detail_number=0,product_number=0,product_count=0,product_price=0;
@@ -80,6 +31,7 @@
 		
 		UserOrderDetailDBBean UODBB =  UserOrderDetailDBBean.getInstance();
 		ArrayList<UserOrderDetailBean> getUserOrderDetail = UODBB.getUserOrderDetail(user_id);
+		System.out.println(getUserOrderDetail.size());
 	%>	
 		<table>
 		<tr>

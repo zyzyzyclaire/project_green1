@@ -11,35 +11,14 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="../fontstyle/fontello-4581031e/css/fontello.css">
+  
 
 	
 </head>
 <script src="../js/jquery.js"></script>
 <script src="../js/jquery.bxslider.js"></script>
 <script>
-		
-	
-		
-		
-	    $(document).mouseup(function (e){  //검색 외클릭시 숨김
-	        if($("#searchbox").has(e.target).length === 0){
-	        	$("#searchinput").val("");
-	        	sendRequest();
-	        	document.getElementById("main_stat_point2").style.display = "none";
-	        	document.getElementById("main_stat_point").style.display = "block";
-	            $("#searchbox").hide();
-	            $("#hearder_title").css("margin-bottom","26px");
-	        }
-	    });
-	   function selectbox(){ //검색 클릭시 ㄴ타남   
-	        const sebox = document.getElementById('searchbox');
-	        const inbox = document.getElementById('searchinput');
-	        const hearder_title = document.getElementById('hearder_title');
-	            sebox.style.display = 'flex';
-	            hearder_title.style.marginBottom = '-2px';
-	            inbox.focus();
-	    }
+	   
 	    $(function(){
 	         $(".slide_gallery").bxSlider({
 	             mainSlides:3,   //열자마자최소 4개
@@ -52,11 +31,16 @@
 	            speed:100
 	         })
 	        });
+	    
         $(window).resize(function() {  
             var a  =   $(".body_div").width();
                 console.log(a);
             document.getElementsByClassName("body_div");
         });
+        
+        
+      
+        
         
         function sendRequest() {
    		  	var send = $("#searchinput").val(); 
@@ -77,7 +61,6 @@
    			document.getElementById("main_stat_point2").innerHTML ="<h3>d fail</h3>";
    			}
    		});
-   		
    	}
 </script>
 
@@ -85,13 +68,12 @@
 <%-- <jsp:include page="mainClass.jsp"></jsp:include> --%> 
 <%@include file= "mainClass.jsp"%>  
 <body>
+	
       <jsp:include page="mainHeader.jsp"></jsp:include> 		
 	  <div class="body_div" >  
-	  
-	  
 		  <div class="main_stat_point2" id="main_stat_point2"></div>
 		  <div class="main_stat_point" id="main_stat_point">
-		      <main>
+		      <div class="maindiv">
 				  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 					  <div class="carousel-indicators">
 					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -230,11 +212,11 @@
 					} //1번for 마지막
 	%>
 		  		  </div>
-			  </main>
+			  </div>
 			</div>  <!-- main_stat_point -->
-			<hr>
 			
-				<jsp:include page="mainfooter.jsp"></jsp:include>
+			
+			<jsp:include page="mainfooter.jsp"></jsp:include>
 			 
       <div><!-- body_div -->    
 </body>

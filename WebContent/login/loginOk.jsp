@@ -20,6 +20,7 @@
 			
 		UserDBBean db = UserDBBean.getInstance();
 		int check = db.userCheck(user_id, user_pwd);
+		String pwd = db.bannedUser(user_id);
 		UserBean user = db.getUser(user_id);
 		
 		if(user==null) {
@@ -37,7 +38,15 @@
 				session.setAttribute("user", "yes");	// url로 접속할 수 없도록 - 0415 근지
 				response.sendRedirect("../main/main.jsp");
 			} else if(check==0) {
-	%>
+				if(pwd.equals("-1")){ //탈퇴한 회원 팝업창 처리 -0426 진용
+	%>			
+				<script>
+				alert("탈퇴처리된 회원입니다.");
+				history.go(-1);
+				</script>
+	<% 
+				}
+	%>				
 				<script>
 				alert("비밀번호가 맞지 않습니다.");
 				history.go(-1);

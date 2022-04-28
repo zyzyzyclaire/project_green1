@@ -1,28 +1,29 @@
 @charset "EUC-KR";
-*{
+/* *{
 	margin: 0px;
 	padding: 0px;
 	
-}
-body{
+} */
+.body_div{
 		margin:auto;
 	 	min-width : 1120px;	
-	 	font-family: "Malgun Gothic",µ¸À½;
+	 	/* font-family: "Malgun Gothic",µ¸À½; */
+	 	font-family: "Nanum Gothic","Malgun Gothic","¸¼Àº °íµñ","µ¸¿ò","Dotum","Apple Gothic","Apple SD Gothic Neo",sans-serif;
 }
 
 a:link {
 	 color: rgb(34, 34, 34);
 }
 a:active {
- color: rgb(34, 34, 34);
+ 	 color: rgb(34, 34, 34);
 }
 a:visited {
-   color: rgb(34, 34, 34);
+  	 color: rgb(34, 34, 34);
 }
 
 .headertop{
    	margin:auto;
-   		min-width : 1120px;	
+   	min-width : 1120px;	
 	max-width : 1280px;	
    	font-size: 11px;
    	/* border: 1px solid black; */
@@ -92,22 +93,30 @@ a:visited {
  	border-top:  1px rgba(0, 0, 0, 0.09) solid;
  	border-bottom:  1px rgba(0, 0, 0, 0.09) solid;
  	line-height: 32px;
+	max-width : 1280px;	
+ 	min-width : 1120px;	
+ 	margin: auto;
 
  }
   .headernav li{
  	margin-right: 50px;
+ 	
+ }
+ .headernav li:last-child{
+ 	margin-right: 0px;
+ 	
  }
 
  
  
  
  /*    header ³¡@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
-main{
+.maindiv{
 	max-width : 1280px;	
  	min-width : 1120px;	
 	margin: auto;
 }
-main img{
+.maindiv img{
  	  width: 1244px;
  	  height: 630px;
 	}

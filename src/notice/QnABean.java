@@ -24,18 +24,21 @@ public class QnABean {
 	private String b_secret;
 	
 	
-	public static int pageSize = 10; 
-	public static int pageCount = 1; 
-	public static int pageNum = 1; 
+	public static int pageSize = 10; //한 페이지에 10개를 보여주기 위한 변수
+	public static int pageCount = 1; //페이지 개수 카운트, 페이지가 많을수록 늘어남
+	public static int pageNum = 1;  //페이지 번호
 	
-	public static String pageNumber(int limit) {
-		String str="";
-		int temp = (pageNum-1) % limit;
-		int startPage=pageNum - temp;
+	//페이지 목록들을 만들어주는 메소드
+	//int limit -> 몇개의 페이지에 대한 로직을 처리할것인지 설정
+	public static String pageNumber(int limit) { 
+		
+		String str="";	//return값
+		int temp = (pageNum-1) % limit;	//시작페이지를 구하기 위함
+		int startPage=pageNum - temp;	//시작페이지 설정 1-0이기 때문에 1이 됨
 		
 		
-		if ((startPage - limit) > 0) {
-			str="<a href='qnaList.jsp?pageNum="+(startPage-1)+"'>[<<]</a>&nbsp;&nbsp;";
+		if ((startPage - limit) > 0) {	//[이전]을 구현하기 위한 if문
+			str="<a href='qnaList.jsp?pageNum="+(startPage-1)+"'>[이전]</a>&nbsp;&nbsp;";
 		}
 		
 		
@@ -48,8 +51,8 @@ public class QnABean {
 			if(i >= pageCount) break;
 		}
 		
-		if ((startPage + limit) <= pageCount) {
-			str +="<a href='qnaList.jsp?pageNum="+(startPage+limit)+"'>[>>]</a>";
+		if ((startPage + limit) <= pageCount) { //[다음]을 구현하기 위한 if문
+			str += "<a href='qnaList.jsp?pageNum="+(startPage+limit)+"'>[다음]</a>";
 		}
 		return str;
 	}

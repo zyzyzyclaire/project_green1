@@ -84,14 +84,35 @@ public class QnADBBean {
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		ResultSet pageSet = null;
-		int dbCount=0;	//�럹�씠吏� 踰덊샇 媛쒖닔瑜� 諛쏄린�쐞�븳 蹂��닔
-		int absolutePage=1;	//異쒕젰�븷 �럹�씠吏�
+		ResultSet pageSet = null;	//페이지번호를 받기위해
+		int dbCount=0;	//페이지 번호의 개수를 받기 위한 변수
+		int absolutePage=1;	//출력할 페이지
 		
 		ArrayList<QnABean> boards = new ArrayList<QnABean>();
 
 		try {
 			conn = getConnection();
+			
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			pageSet = stmt.executeQuery("select count(b_id) from qna_board");
+			
+			if (pageSet.next()) {	//dbcount에 총 개수를 넣음
+				dbCount = pageSet.getInt(1);
+				pageSet.close();
+				stmt.close();
+			}
+			
+			if (dbCount % QnABean.pageSize == 0) {	//80
+				QnABean.pageCount = dbCount / QnABean.pageSize;
+			} else {	//84
+				QnABean.pageCount = dbCount / QnABean.pageSize + 1;
+			}
+			
+			if (pageNumber != null) {
+				QnABean.pageNum = Integer.parseInt(pageNumber);
+				//1: 0*10+1=1, 2: 1*10+1=11
+				absolutePage = (QnABean.pageNum - 1) * QnABean.pageSize + 1;
+			}	
 			
 			pstmt = conn.prepareStatement("SELECT * FROM notice ORDER BY n_num desc");
 			
@@ -115,30 +136,8 @@ public class QnADBBean {
 				count++;
 			}
 			
-			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			pageSet = stmt.executeQuery("select count(b_id) from qna_board");
-			
-			if (pageSet.next()) {
-				dbCount = pageSet.getInt(1);
-				pageSet.close();
-			}
-			
-			if (dbCount % QnABean.pageSize == 0) {	//80
-				QnABean.pageCount = dbCount / QnABean.pageSize;
-			} else {	//84
-				QnABean.pageCount = dbCount / QnABean.pageSize + 1;
-			}
-			
-			if (pageNumber != null) {
-				QnABean.pageNum = Integer.parseInt(pageNumber);
-				//1: 0*10+1=1, 2: 1*10+1=11
-				absolutePage = (QnABean.pageNum - 1) * QnABean.pageSize + 1;
-			}	
-			
-			
-			String sql = "SELECT * FROM qna_board order by b_id desc, b_ref desc, b_step asc";
+			String sql = "SELECT * FROM qna_board order by b_ref desc, b_step asc, b_id desc";
 			pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
@@ -196,32 +195,35 @@ public class QnADBBean {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int isWrite = 0;
+		int isWrite = -1;
+		int number;
+		
 		int id = board.getB_id();
-		int ref = board.getB_ref();
-		int step = board.getB_step();
-		int level = board.getB_level();
+		int ref = board.getB_ref(); //답변글의 번호 출력
+		int step = board.getB_step(); //답변글이면 숫자 1씩 증가
+		int level = board.getB_level();	//답변글이 달리면 1 증가
 		
 		try {
 			conn = getConnection();
 			rs = conn.prepareStatement("SELECT MAX(b_id) FROM qna_board").executeQuery();
 			if (rs.next()) {
-				board.setB_id(rs.getInt(1) + 1);
+				number = rs.getInt(1) + 1;	//값이 있을 경우이기 때문에 +1
 			} else {
-				board.setB_id(1);
+				number = 1;	//값이 없을 경우
 			}
 			
-			if (id != 0) {
-				String sql="update qna_board set b_step=b_step+1"
-						+ " where b_ref=? and b_step > ?";
+			if (id != 0) {	//id가 0이 아니면 답글로 봄
+				String sql="UPDATE qna_board SET b_step = b_step+1"
+						+ " WHERE b_ref=? and b_step > ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, ref);
 				pstmt.setInt(2, step);
 				pstmt.executeUpdate();
+				
 				step=step+1;
 				level=level+1;
-			} else {
-				ref= id;
+			} else {	// 답글이 아닐 때 (글쓰기 일 때)
+				ref= number;	//ref에 글 번호가 들어가게 됨
 				step=0;
 				level=0;
 			}
@@ -233,7 +235,7 @@ public class QnADBBean {
 					+ "b_fname, b_fsize, b_rfname)"
 					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-			pstmt.setInt(1, board.getB_id());
+			pstmt.setInt(1, number);
 			pstmt.setString(2, board.getU_id());
 			pstmt.setString(3, board.getB_category());
 			pstmt.setString(4, board.getB_title());
@@ -248,10 +250,13 @@ public class QnADBBean {
 			pstmt.setString(13, board.getB_fname());
 			pstmt.setInt(14, board.getB_fsize());
 			pstmt.setString(15, board.getB_rfname());
-			isWrite = pstmt.executeUpdate();	
-			//System.out.println("@@@qnalist2>>>");
+			pstmt.executeUpdate();
+			
+			isWrite = 1;
+			System.out.println("글쓰기 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("글쓰기 실패");
 		} finally {
 			try {
 				if(rs != null) rs.close();
@@ -263,8 +268,6 @@ public class QnADBBean {
 		}
 		return isWrite;
 	}
-	
-	
 	
 	public int deleteBoard(int b_id, String b_pwd) throws Exception {
 		Connection conn = null;

@@ -16,7 +16,7 @@ String path = request.getRealPath("./");
 		}        
    }
 	
- path = request.getRealPath("upload");
+path = request.getRealPath("upload");
 //System.out.println("@@@@@@@@@@@@"+path);
 request.setCharacterEncoding("UTF-8");
 int product_number = 0;
@@ -38,9 +38,14 @@ int file_size= 0;
 Timestamp create_date= null;
 String delete_check= null;
 String user_id = null;
+
 if(!((String)session.getAttribute("user_id") == null)){
 	user_id =(String)session.getAttribute("user_id");
 }
+
+
+
+
 %>
 
 

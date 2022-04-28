@@ -2,14 +2,18 @@
 <%@page import="buy.UserOrderDBBean"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.Timestamp"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>   
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	// ì£¼ì†Œ ë°›ì•„ì˜¬ ë•Œ í•œê¸€ ê¹¨ì§€ì§€ ì•Šê¸° ìœ„í•´ -0421ê·¼ì§€
+	request.setCharacterEncoding("UTF-8");
+%>   
 <jsp:useBean id="userOrder" class="buy.UserOrderBean"/>
 <jsp:setProperty property="*" name="userOrder"/>
 <jsp:useBean id="userOrderDetail" class="buy.UserOrderDetailBean"/>
 <jsp:setProperty property="*" name="userOrderDetail"/>
 <%
-	// buy.jsp¿¡¼­ submitÇÒ ¶§ °Ç³Ê¿ÀÁö ¾ÊÀº °ªµé ¼¼ÆÃ(UserOrder¿ë) -0422±ÙÁö
+	// buy.jspì—ì„œ submití•  ë•Œ ê±´ë„ˆì˜¤ì§€ ì•Šì€ ê°’ë“¤ ì„¸íŒ…(UserOrderìš©) -0422ê·¼ì§€
 	String user_id = (String)session.getAttribute("user_id");
 	userOrder.setUser_id(user_id);
 	
@@ -19,7 +23,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -27,9 +31,9 @@
 		UserOrderDBBean order_db = UserOrderDBBean.getInstance();
 		UserOrderDetailDBBean detail_db = UserOrderDetailDBBean.getInstance();
 	
-		// buy.jsp¿¡¼­ submitÇÒ ¶§ °Ç³Ê¿ÀÁö ¾ÊÀº °ªµé ¼¼ÆÃ(UserOrderDetail¿ë) -0425±ÙÁö
+		// buy.jspì—ì„œ submití•  ë•Œ ê±´ë„ˆì˜¤ì§€ ì•Šì€ ê°’ë“¤ ì„¸íŒ…(UserOrderDetailìš©) -0425ê·¼ì§€
 		
-		// order_number°ª Ã£±â -0425±ÙÁö
+		// order_numberê°’ ì°¾ê¸° -0425ê·¼ì§€
 		SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
 		String time = sdf.format(now);
 		String order_number = time+"_"+user_id;
@@ -40,14 +44,14 @@
 		if(order_db.insertUserOrder(userOrder) == 1 && detail_db.insertUserOrderDetail(userOrderDetail) == 1) {
 	%>		
 			<script type="text/javascript">
-			alert("ÁÖ¹® ¼º°ø. ÀÔ±İ ÈÄ ¹ß¼ÛÀÌ ½ÃÀÛµË´Ï´Ù.");
+			alert("ì£¼ë¬¸ ì„±ê³µ. ì…ê¸ˆ í›„ ë°œì†¡ì´ ì‹œì‘ë©ë‹ˆë‹¤.");
 			location.href="../main/main.jsp";
 			</script>
 	<%
 		} else {
 	%>
 				<script>
-				alert("ÁÖ¹® ¿À·ù. ´Ù½Ã ½ÃµµÇØÁÖ¼¼¿ä.");
+				alert("ì£¼ë¬¸ ì˜¤ë¥˜. ë‹¤ì‹œ ì‹œë„í•´ì£¼ì„¸ìš”.");
 				history.back();
 				</script>
 	<%	

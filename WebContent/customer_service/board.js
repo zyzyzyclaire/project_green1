@@ -31,13 +31,4 @@ function doWrite() {
 	document.boardForm.submit();
 }
 
-function delete_ok(){
-	if(del_frm.b_pwd.value.length == 0){
-		alert("비밀번호를 입력해 주세요.");
-		del_frm.b_pwd.focus();
-		return;
-	}	
-	
-	document.del_frm.submit();
-}
 
