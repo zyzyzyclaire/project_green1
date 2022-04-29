@@ -155,6 +155,7 @@ public class UserDBBean {
 				user.setUser_phone(rs.getString("user_phone"));
 				user.setUser_email(rs.getString("user_email"));
 				user.setUser_addr(rs.getString("user_addr"));
+				user.setUser_grade(rs.getString("user_grade"));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

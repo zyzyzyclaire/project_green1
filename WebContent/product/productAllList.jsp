@@ -110,8 +110,8 @@
 					//파일존재확인
 					File file = new File(path+"\\"+stored_file_namearr[0]);
 					boolean isExists = file.exists();
-					if(isExists) { System.out.println("I find the existFile.txt"); } 
-					else { System.out.println("No, there is not a no file."); }
+					/* if(isExists) { System.out.println("I find the existFile.txt"); } 
+					else { System.out.println("No, there is not a no file."); } */
 %>
 	 				
 					   <td>

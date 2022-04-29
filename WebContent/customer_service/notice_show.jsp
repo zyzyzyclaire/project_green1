@@ -7,8 +7,6 @@
 <%
 	String pageNum = request.getParameter("pageNum");
 	
-	
-	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	int num = Integer.parseInt(request.getParameter("n_num"));
 	NoticeDBBean db = NoticeDBBean.getInstance();
@@ -16,14 +14,11 @@
 %>
 
 <%
-
 	String user_id = null;
 
 	if(!((String)session.getAttribute("user_id") == null)){
 		user_id =(String)session.getAttribute("user_id");
 	}
-	
-	
 %>
 <html>
 <head>
@@ -39,6 +34,9 @@
     <link rel="stylesheet" href="../css/jquery.bxslider.css">
 
 <style type="text/css">
+	div{
+		font-family: "Malgun Gothic",돋음;
+	}
 	/* body{font-size: small;} */
 	#scroll{
 		position: sticky;
@@ -57,6 +55,19 @@
 	a:hover { color:mute;}
 	a:active { color:black; }
 </style>
+<script type="text/javascript">
+	function delete_OK() {
+	var pwd = prompt("비밀번호를 입력하세요.");
+	if(<%= board.getN_pwd() %> == pwd){
+		if(confirm("정말 글을 삭제하시겠습니까?") == true){
+			location.href = "notice_delete_ok.jsp?n_num="+<%= board.getN_num() %>+"&pageNum="<%= pageNum %>;
+		}
+	} else {
+		alert("비밀번호가 맞지 않습니다.");
+		history.go(-1);
+	} 
+}
+</script>
 </head>
 <body>
 <!-- 스크롤 네비바 시작 -->
@@ -143,109 +154,58 @@
 <!-- 스크롤 네비바 끝 -->
 <!-- Breadcrumb 시작 -->
 <center>
-<div style="width: 1100px;">
-	<nav aria-label="breadcrumb" style="float: right;">
-		<ol class="breadcrumb">
+	<nav style= "--bs-breadcrumb-divider: '>'; min-width: 1100px; max-width: 1280px;" aria-label="breadcrumb">
+		<ul class="breadcrumb" style= "float: right;">
 			<li class="breadcrumb-item"><a href="../main/main.jsp">Home</a></li>
-			<li class="breadcrumb-item">Board</li>
 			<li class="breadcrumb-item"><a href="../customer_service/notice_list.jsp">Notice</a></li>
 			<li class="breadcrumb-item active" aria-current="page">VIEW</li>
-		</ol>
+		</ul>
 	</nav>
-</div>
 </center>
-<!-- Breadcrumb 끝 -->
-	<%-- <center>
-		
-		<table border="1" width="600" cellspacing="0">
-			<tr height="30" align="center">
-				<td width="100">글번호</td>
-				<td width="200">
-					<%= board.getN_num() %>
-				</td>
-				<td width="100">조회수</td>
-				<td width="200">
-					<%= board.getN_hit() %>
-				</td>
-			</tr>
-			<tr height="30" align="center">
-				<td width="100">작성자</td>
-				<td width="200">
-				<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
-						if(user_id.equals("admin")){	
-				%>
-						<%= user_id %>	<!-- 세션을 통해 id받아와 입력  -->
-				<% }else {%>
-						admin
-				<% }} else { %>
-						admin
-				<% } %>
-				</td>
-				<td width="100">작성일</td>
-				<td width="200">
-					<%= sdf.format(board.getN_date()) %>
-				</td>
-			</tr>
-			<tr height="30" align="center">
-				<td width="100">글제목</td>
-				<td colspan="3" align="left">
-					<%= board.getN_title() %>
-				</td>
-			</tr>
-			<tr height="30" align="center">
-				<td width="100">글내용</td>
-				<td colspan="3" align="left">
-					<%= board.getN_content() %>
-				</td>
-			</tr>
-			<tr height="30">
-				<td colspan="5" align="right">
-					
-					<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
-						if(user_id.equals("admin")){	
-					%>
-					<input type="button" id="editbtn" value="글수정" onclick="location.href='notice_edit.jsp?n_num=<%= board.getN_num() %>&pageNum=<%= pageNum %>'">&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" id="delbtn" value="글삭제" onclick="location.href='notice_delete.jsp?n_num=<%= board.getN_num() %>&pageNum=<%= pageNum %>'">&nbsp;&nbsp;&nbsp;&nbsp;
-					<% }} %>
-					<input type="button" value="글목록" onclick="location.href='notice_list.jsp?pageNum=<%= pageNum %>'">
-				</td>
-			</tr>
-		</table>
-	</center> --%>
-	
 	<br><br><br><br>
 	<center>
 		<div class="table-responsive">
-				<div style="width:900px; padding-right: 700px; text-align: left;">
+				<div style="min-width: 1100px; max-width: 1280px; padding-right: 700px; text-align: left;">
 					<p>
-						<h2>Notice</h2>
+						<h2>NOTICE</h2>
 						구매 전에 꼭 읽어 주세요~
 					</p>
 				</div>	
-			<table class="table" style="width: 900px;">
+			<table class="table" style="min-width: 1100px; max-width: 1280px;">
 				<tr>
 					<td style="width: 120px;">SUBJECT</td><td ><%= board.getN_title() %></td>
 				</tr>
 				<tr>
-					<td style="width: 120px;">NAME</td><td><%= user_id %></td>
+					<td style="width: 120px;">NAME</td>
+					<td>
+					<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
+							if(user_id.equals("admin")){	
+					%>
+							<%= user_id %>	<!-- 세션을 통해 id받아와 입력  -->
+					<% }else {%>
+							admin
+					<% }} else { %>
+							admin
+					<% } %>
+				</td>
 				</tr>
 				<tr>
 					<td colspan="2" height="400px"><%= board.getN_content() %></td>
 				</tr>
 			</table>
-			<div style="width: 900px;">
+			<div style="min-width: 1100px; max-width: 1280px;">
 				<button style="float: left;" class="btn btn-outline-dark" onclick="location.href='notice_list.jsp?pageNum=<%= pageNum %>'">목록</button>
 					<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
 						if(user_id.equals("admin")){	
 					%>
 				<button style="float: right;" class="btn btn-outline-dark" id="editbtn" onclick="location.href='notice_edit.jsp?n_num=<%= board.getN_num() %>&pageNum=<%= pageNum %>'">
 				수정</button>
-				<button style="float: right;" class="btn btn-outline-dark" id="delbtn" onclick="location.href='notice_delete.jsp?n_num=<%= board.getN_num() %>&pageNum=<%= pageNum %>'">
+				<button style="float: right;" class="btn btn-outline-dark" id="delbtn" onclick="delete_OK()">
 				삭제</button>
 				<% }} %>
 			</div>
 			<br><br><br><br>
-			<table class="table" style="width: 900px;">
+			<table class="table" style="min-width: 1100px; max-width: 1280px;">
 				<tr>
 					<td style="width: 120px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
 												<path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>

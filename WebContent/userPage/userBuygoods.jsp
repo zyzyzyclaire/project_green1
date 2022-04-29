@@ -1,3 +1,5 @@
+<%@page import="goods.GoodsBean"%>
+<%@page import="goods.GoodsDBBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="buy.UserOrderDetailBean"%>
 <%@page import="buy.UserOrderDetailDBBean"%>
@@ -31,7 +33,7 @@
 		
 		UserOrderDetailDBBean UODBB =  UserOrderDetailDBBean.getInstance();
 		ArrayList<UserOrderDetailBean> getUserOrderDetail = UODBB.getUserOrderDetail(user_id);
-		System.out.println(getUserOrderDetail.size());
+
 	%>	
 		<table>
 		<tr>
@@ -44,7 +46,7 @@
 			<td>환불처리상태</td>
 		</tr>
 	<%
-		
+	GoodsDBBean goodsdb =GoodsDBBean.getInstance();
 		for(int i =0; i<getUserOrderDetail.size(); i++){
 			order_detail_number =  getUserOrderDetail.get(i).getOrder_detail_number();
 			order_number =  getUserOrderDetail.get(i).getOrder_number();
@@ -54,6 +56,8 @@
 			order_detail_status =  getUserOrderDetail.get(i).getOrder_detail_status();	
 			int re = UODBB.getUserRefundCheck(order_detail_number);
 			
+			GoodsBean goods	= goodsdb.getGoods(product_number);
+			String product_name =  goods.getProduct_name();
 			
 	%>
 			<tr onclick="location.href='userGoodsRefund.jsp?order_detail_number=<%=order_detail_number%>'" class="buygoods" style="cursor:pointer;">

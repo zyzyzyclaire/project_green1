@@ -1,3 +1,4 @@
+<%@page import="goods.GoodsDBBean"%>
 <%@page import="buy.UserOrderDetailDBBean"%>
 <%@page import="buy.UserOrderDBBean"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -30,6 +31,7 @@
 	<%
 		UserOrderDBBean order_db = UserOrderDBBean.getInstance();
 		UserOrderDetailDBBean detail_db = UserOrderDetailDBBean.getInstance();
+		GoodsDBBean goods_db = GoodsDBBean.getInstance();
 	
 		// buy.jsp에서 submit할 때 건너오지 않은 값들 세팅(UserOrderDetail용) -0425근지
 		
@@ -38,6 +40,9 @@
 		String time = sdf.format(now);
 		String order_number = time+"_"+user_id;
 		userOrderDetail.setOrder_number(order_number);
+		
+		// product테이블의 product_ordered_count(구매개수) 증가	-0429근지
+		goods_db.orderedCountUp(userOrderDetail.getProduct_count(), userOrderDetail.getProduct_number());
 		
 	%>
 	<%

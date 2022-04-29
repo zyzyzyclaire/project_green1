@@ -38,12 +38,12 @@
    UserDBBean udb = new UserDBBean();
    
    String user_id = (String) session.getAttribute("user_id");
-	String user_name = (String) session.getAttribute("user_name");
 	boolean isAdmin = udb.isAdmin(user_id);
    
    int b_id = Integer.parseInt(multi.getParameter("b_id"));
    board.setB_id(b_id);
    board.setB_title(multi.getParameter("b_title"));
+   board.setU_id(multi.getParameter(user_id));
    board.setB_content(multi.getParameter("b_content"));
    board.setB_pwd(multi.getParameter("b_pwd"));
    board.setB_category(multi.getParameter("b_category"));
@@ -64,13 +64,13 @@
    }
    
    if(qdb.editBoard(board) == 1){
-      response.sendRedirect("qnaShow.jsp?b_id="+b_id+"&pageNum="+pageNum);
-   }else{
+      response.sendRedirect("qnaShow.jsp?b_id="+ b_id +"&pageNum="+pageNum);
+   }else if(qdb.editBoard(board) == 0){
 %>
       <script>
-         alert("글 수정 실패");
-         history.go(-1);
-      </script>
+			alert("비밀번호가 맞지 않습니다.");
+			history.go(-1);
+	  </script>
 <%
    }
 %>

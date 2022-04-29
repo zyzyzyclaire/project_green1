@@ -227,8 +227,9 @@ public class UserOrderDetailDBBean {
 					uodb.setOrder_number(rs1.getString("order_number"));
 					uodb.setProduct_number(	rs1.getInt("product_number"));
 					uodb.setProduct_count(rs1.getInt("product_count"));
-					uodb.setProduct_count(rs1.getInt("product_price"));
+					uodb.setProduct_price(rs1.getInt("product_price"));
 					uodb.setOrder_detail_status(rs1.getString("order_detail_status"));
+					uodb.setRefund_check(rs1.getString("refund_check"));
 					detailarr.add(uodb);	
 				}
 				

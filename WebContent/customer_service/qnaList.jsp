@@ -19,9 +19,8 @@
 		pageNum = "1";
 	}
 	
-	if(((String)session.getAttribute("pageNum"))!=null){
-		 pageNum = request.getParameter("pageNum");
-	}
+ 	pageNum = request.getParameter("pageNum");
+
 	//System.out.println("@@@>>>>"+pageNum); 
 %>
 <%
@@ -165,7 +164,7 @@
 							for(int j=0; j<list.getB_level(); j++){
 				%>				&nbsp;
 				<% 		} %>
-					<img src='../images/subdirectory_arrow.png'>
+					<img src='../images/outline_subdirectory_arrow_right_black_24dp.png'>
 				<% 	}	%>
 					<a href="qnaShow.jsp?b_id=<%= list.getB_id() %>&pageNum=<%= pageNum %>">
 						<%= list.getB_title() %> 
@@ -213,16 +212,16 @@
 	<div > 
 	<nav id="paging"> 
 		<ul class="pagination justify-content-center"> 
-			<li class="page-item"><a class="page-link" href="">이전</a></li> 
-			<li class="page-item"><a class="page-link" href="">1</a></li> 
-			<li class="page-item"><a class="page-link" href="">2</a></li> 
-			<li class="page-item"><a class="page-link" href="">3</a></li> 
-			<li class="page-item"><a class="page-link" href="">다음</a></li> 
+			<li class="page-item"><a class="page-link" href="#">이전</a></li> 
+			<li class="page-item"><a class="page-link" href="qnaList.jsp?pageNum=1">1</a></li> 
+			<li class="page-item"><a class="page-link" href="qnaList.jsp?pageNum=2">2</a></li> 
+			<li class="page-item"><a class="page-link" href="qnaList.jsp?pageNum=3">3</a></li> 
+			<li class="page-item"><a class="page-link" href="#">다음</a></li> 
 		</ul> 
 	</nav>
 	</div> 
 </div>  
-		<%= QnABean.pageNumber(3) %>
 </body>
 <jsp:include page="../main/mainfooter.jsp"></jsp:include>
 </html>
+<% QnABean.pageNumber(3); %>

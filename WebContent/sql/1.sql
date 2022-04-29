@@ -39,7 +39,6 @@ insert into user_order values (3,'user1','1991-01-01','서울','user1','010-user1'
 insert into user_order values (2,'user2','1992-02-02','대구','user2','010-user2');
 
 
-
 CREATE TABLE product_category (
     category_code     VARCHAR2(30 BYTE) primary key,
     category_name     VARCHAR2(50 BYTE),
@@ -52,8 +51,6 @@ insert into product_category values ('상의','하의','1');
 insert into product_category values ('하의','신발','1');
 
 
-
-
 CREATE TABLE product (
     product_number NUMBER(*, 0)  primary key,   -- 프라이머리키 추가
     category_code  VARCHAR2(30 BYTE)  ,
@@ -63,43 +60,43 @@ CREATE TABLE product (
     product_desc   VARCHAR2(3000 BYTE)  ,
     product_date   DATE  ,
     product_hits   NUMBER(*, 0)  ,
+    product_ordered_count   NUMBER(*, 0)  ,
     constraint category_fk foreign key(category_code) references product_category(category_code) ON DELETE CASCADE
 );  
 
-insert into product values (1,'상의','검은색',1,1,'티셔츠입니다','1990-11-11',1);
-insert into product values (2,'상의','티',2,2,'2티셔츠입니다','1990-11-11',1);
-insert into product values (3,'상의','티셔츠',3,3,'3티셔츠입니다','1990-11-11',1);
-insert into product values (4,'상의','긴팔티',4,4,'4티셔츠입니다','1990-11-11',1);
-insert into product values (5,'상의','반팔티',5,5,'5티셔츠입니다','1990-11-11',1);
-insert into product values (6,'상의','긴팔티',6,6,'6티셔츠입니다','1990-11-11',1);
-insert into product values (7,'상의','긴팔티',7,7,'7티셔츠입니다','1990-11-11',1);
-insert into product values (8,'상의','긴팔티',8,8,'8티셔츠입니다','1990-11-11',1);
-insert into product values (9,'상의','티',8,8,'9티셔츠입니다','1990-11-11',1);
-insert into product values (10,'상의','티',8,8,'10티셔츠입니다','1990-11-11',1);
+insert into product values (1,'상의','[무배]BEST 후드티 모음!',1000,10,'티셔츠입니다','1990-11-11',1,1);
+insert into product values (2,'상의','[무배]BEST 후드티 모음!',1000,10,'2티셔츠입니다','1990-11-11',1,1);
+insert into product values (3,'상의','[무배]BEST 후드티 모음!',1000,10,'3티셔츠입니다','1990-11-11',1,1);
+insert into product values (4,'상의','[무배]BEST 후드티 모음!',1000,10,'4티셔츠입니다','1990-11-11',1,1);
+insert into product values (5,'상의','[무배]BEST 후드티 모음!',1000,10,'5티셔츠입니다','1990-11-11',1,1);
+insert into product values (6,'상의','[무배]BEST 후드티 모음!',1000,10,'6티셔츠입니다','1990-11-11',1,1);
+insert into product values (7,'상의','[무배]BEST 후드티 모음!',1000,10,'7티셔츠입니다','1990-11-11',1,1);
+insert into product values (8,'상의','[무배]BEST 후드티 모음!',1000,10,'8티셔츠입니다','1990-11-11',1,1);
+insert into product values (9,'상의','[무배]BEST 후드티 모음!',1000,10,'여름용 티셔츠입니다 검정,보라','1990-11-11',1,1);
+insert into product values (10,'상의','[기모안감추가]나미 면오버핏가디건',8,10,'10티셔츠입니다','1990-11-11',1,1);
 
-insert into product values (11,'하의','바지',1,1,'바지입니다','1990-11-11',1);
-insert into product values (12,'하의','바지',1,1,'바지입니다','1990-11-11',1);
-insert into product values (13,'하의','바지',1,1,'바지입니다','1990-11-11',1);
-insert into product values (14,'하의','바지',1,1,'바지입니다','1990-11-11',1);
-insert into product values (15,'하의','바지',1,1,'바지입니다','1990-11-11',1);
-insert into product values (16,'하의','바지',1,1,'바지입니다','1990-11-11',1);
-insert into product values (1,1,'검은색',1,1,'티셔츠입니다','1990-11-11',1);
-insert into product values (17,'하의','바지',1,1,'바지입니다','1990-11-11',1);
-insert into product values (18,'하의','바지',1,1,'바지입니다','1990-11-11',1);
+insert into product values (11,'하의','바지',1,10,'바지입니다','1990-11-11',1,1);
+insert into product values (12,'하의','바지',1,10,'바지입니다','1990-11-11',1,1);
+insert into product values (13,'하의','바지',1,10,'바지입니다','1990-11-11',1,1);
+insert into product values (14,'하의','바지',1,10,'바지입니다','1990-11-11',1,1);
+insert into product values (15,'하의','바지',1,10,'바지입니다','1990-11-11',1,1);
+insert into product values (16,'하의','바지',1,10,'바지입니다','1990-11-11',1,1);
+insert into product values (17,'하의','바지',1,10,'바지입니다','1990-11-11',1,1);
+insert into product values (18,'하의','바지',1,10,'바지입니다','1990-11-11',1,1);
 
-insert into product values (19,'신발','신발',1,1,'신발입니다','1990-11-11',1);
-insert into product values (20,'신발','바지',1,1,'바지입니다','1990-11-11',1);
+insert into product values (19,'하의','하의',1,10,'신발입니다','1990-11-11',1,1);
+insert into product values (20,'신발','바지',1,10,'바지입니다','1990-11-11',1,1);
 
-insert into product values (21,'신발','신발',1,1,'신발입니다','1990-11-11',1);
-insert into product values (22,'신발','바지',1,1,'바지입니다','1990-11-11',1);
-insert into product values (23,'신발','신발',1,1,'신발입니다','1990-11-11',1);
-insert into product values (24,'신발','신발',1,1,'신발입니다','1990-11-11',1);
-insert into product values (25,'신발','신발',1,1,'신발입니다','1990-11-11',1);
-insert into product values (26,'신발','신발',1,1,'신발입니다','1990-11-11',1);
-insert into product values (27,'신발','신발',1,1,'신발입니다','1990-11-11',1);
-insert into product values (28,'신발','신발',1,1,'신발입니다','1990-11-11',1);
-insert into product values (29,'신발','신발',1,1,'신발입니다','1990-11-11',1);
-insert into product values (30,'상의','티',1,1,'티입니다','1990-11-11',1);
+insert into product values (21,'신발','신발',1,10,'신발입니다','1990-11-11',1,1);
+insert into product values (22,'신발','바지',1,10,'바지입니다','1990-11-11',1,1);
+insert into product values (23,'신발','신발',1,10,'신발입니다','1990-11-11',1,1);
+insert into product values (24,'신발','신발',1,10,'신발입니다','1990-11-11',1,1);
+insert into product values (25,'신발','신발',1,10,'신발입니다','1990-11-11',1,1);
+insert into product values (26,'신발','신발',1,10,'신발입니다','1990-11-11',1,1);
+insert into product values (27,'신발','신발',1,10,'신발입니다','1990-11-11',1,1);
+insert into product values (28,'신발','신발',1,10,'신발입니다','1990-11-11',1,1);
+insert into product values (29,'신발','신발',1,10,'신발입니다','1990-11-11',1,1);
+insert into product values (30,'신발','티',1,10,'티입니다','1990-11-11',1,1);
 
 
 CREATE TABLE userOrder_detail (
@@ -151,25 +148,31 @@ CREATE TABLE product_imagefile (
     delete_check       VARCHAR2(5 BYTE)
     ,constraint numberfk foreign key(product_number) references product(product_number)ON DELETE CASCADE
 );
-insert into product_imagefile values (1,1,'1.jpg','1.jpg',null,'1',1,'1990-01-01','1');
-insert into product_imagefile values (2,2,'2.jpg','2.jpg',null,'2',2,'1990-02-02','2');
-insert into product_imagefile values (3,3,'3.jpg','3.jpg',null,'3',3,'1990-03-03','3');
-insert into product_imagefile values (4,4,'4.jpg','4.jpg',null,'4',4,'1990-04-04','4');
-insert into product_imagefile values (5,5,'5.jpg','5.jpg',null,'5',5,'1990-05-05','5');
-insert into product_imagefile values (6,6,'6.jpg','6.jpg',null,'6',6,'1990-06-06','6');
-insert into product_imagefile values (7,7,'7.jpg','7.jpg',null,'7',7,'1990-07-07','7');
-insert into product_imagefile values (8,8,'8.jpg','8.jpg',null,'8',8,'1990-08-08','8');
-insert into product_imagefile values (9,9,'8.jpg','9.jpg',null,'9',8,'1990-08-08','8');
-insert into product_imagefile values (10,10,'8.jpg','10.jpg',null,'10',8,'1990-08-08','8');
-insert into product_imagefile values (11,11,'8.jpg','11.jpg',null,'8',8,'1990-08-08','8');
-insert into product_imagefile values (12,12,'8.jpg','12.jpg',null,'8',8,'1990-08-08','8');
-insert into product_imagefile values (13,13,'8.jpg','13.jpg',null,'8',8,'1990-08-08','8');
-insert into product_imagefile values (14,14,'8.jpg','14.jpg',null,'8',8,'1990-08-08','8');
-insert into product_imagefile values (15,15,'8.jpg','15.jpg',null,'8',8,'1990-08-08','8');
-insert into product_imagefile values (16,16,'8.jpg','16.jpg',null,'8',8,'1990-08-08','8');
+
+insert into product_imagefile values (1,1,'1.jpg','2.webp',null,'1',1,'1990-01-01','1');
+insert into product_imagefile values (2,2,'2.jpg','2.webp',null,'2',2,'1990-02-02','2');
+insert into product_imagefile values (3,3,'3.jpg','3.webp',null,'3',3,'1990-03-03','3');
+insert into product_imagefile values (4,4,'4.jpg','4.webp',null,'4',4,'1990-04-04','4');
+insert into product_imagefile values (5,5,'5.jpg','5.webp',null,'5',5,'1990-05-05','5');
+insert into product_imagefile values (6,6,'6.jpg','6.webp',null,'6',6,'1990-06-06','6');
+insert into product_imagefile values (7,7,'7.jpg','7.webp',null,'7',7,'1990-07-07','7');
+insert into product_imagefile values (8,8,'8.jpg','8.webp',null,'8',8,'1990-08-08','8');
+insert into product_imagefile values (9,9,'8.jpg','9.webp',null,'9',8,'1990-08-08','8');
+
+insert into product_imagefile values (31,9,'8.jpg',null,'9.webp','9',8,'1990-08-08','8');
+insert into product_imagefile values (32,9,'8.jpg',null,'9.webp','9',8,'1990-08-08','8');
+insert into product_imagefile values (33,9,'8.jpg',null,'9.webp','9',8,'1990-08-08','8');
+
+insert into product_imagefile values (10,10,'8.jpg','10.webp',null,'10',8,'1990-08-08','8');
+insert into product_imagefile values (11,11,'8.jpg','11.webp',null,'8',8,'1990-08-08','8');
+insert into product_imagefile values (12,12,'8.jpg','12.webp',null,'8',8,'1990-08-08','8');
+insert into product_imagefile values (13,13,'8.jpg','13.webp',null,'8',8,'1990-08-08','8');
+insert into product_imagefile values (14,14,'8.jpg','14.webp',null,'8',8,'1990-08-08','8');
+insert into product_imagefile values (15,15,'8.jpg','15.webp',null,'8',8,'1990-08-08','8');
+insert into product_imagefile values (16,16,'8.jpg','16.webp',null,'8',8,'1990-08-08','8');
 insert into product_imagefile values (17,17,'8.jpg','17.jpg',null,'8',8,'1990-08-08','8');
-insert into product_imagefile values (18,18,'8.jpg','18.jpg',null,'8',8,'1990-08-08','8');
-insert into product_imagefile values (19,19,'8.jpg','19.jpg',null,'8',8,'1990-08-08','8');
+insert into product_imagefile values (18,18,'8.jpg','18.webp',null,'8',8,'1990-08-08','8');
+insert into product_imagefile values (19,19,'8.jpg','19.webp',null,'8',8,'1990-08-08','8');
 insert into product_imagefile values (20,20,'8.jpg','20.jpg',null,'8',8,'1990-08-08','8');
 insert into product_imagefile values (21,21,'8.jpg','21.jpg',null,'8',8,'1990-08-08','8');
 insert into product_imagefile values (22,22,'8.jpg','22.jpg',null,'8',8,'1990-08-08','8');
@@ -196,13 +199,14 @@ N_NUM NUMBER(5,0) PRIMARY KEY
 ,USER_ID VARCHAR2(50)
 );
 
-insert into NOTICE values (1,'1','1','1991-01-01','1','1','1','user1');
-insert into NOTICE values (2,'2','2','1992-02-02','2','2','2','user2');
+insert into NOTICE values (1,'1','1','1991-01-01','1','1','1','admin');
+insert into NOTICE values (2,'2','2','1992-02-02','2','2','2','admin');
+insert into NOTICE values (3,'3','3','1992-02-02','2','2','2','admin');
 
 CREATE TABLE qna_board(
 b_id	NUMBER(10) primary key		
 ,u_id	VARCHAR2(15)	
-,b_category	VARCHAR2(10)		
+,b_category	VARCHAR2(100)		
 ,b_view	NUMBER(10)	DEFAULT 0	
 ,b_title	VARCHAR2(100)		
 ,b_content	VARCHAR2(3000)
@@ -217,6 +221,8 @@ b_id	NUMBER(10) primary key
 ,b_fsize NUMBER(10)
 ,b_rfname VARCHAR2(100)
 );		
+
+
 
 CREATE TABLE userorder_refund(
      refund_number NUMBER PRIMARY KEY 

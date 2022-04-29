@@ -11,7 +11,7 @@
 	int re = db.deleteBoard(n_num, n_pwd);
 	
 	if(re == 1){
-		response.sendRedirect("notice_list.jsp?pageNum="+pageNum);
+		response.sendRedirect("notice_list.jsp?n_num="+n_num+"&pageNum="+pageNum);
 	}else if(re == 0){
 		//비밀번호 틀림
 %>

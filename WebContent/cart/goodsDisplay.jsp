@@ -27,7 +27,14 @@
 
 
 	String user_id = (String)session.getAttribute("user_id");
+
+	
+
+
 	int product_number = Integer.parseInt(request.getParameter("product_number"));	
+	
+	
+	
 	
 	GoodsDBBean db = GoodsDBBean.getInstance();
 	GoodsBean goods = db.getGoods(product_number);
@@ -40,12 +47,15 @@
 	//상품세부이미지까지불러오기
 	ArrayList<GoodsBean> getGoodsimg = db.getGoodsimg(product_number);
 	stored_file_name = getGoodsimg.get(0).getStored_file_name();
-	System.out.println("@@@@@@"+stored_file_name);
+	//System.out.println("@@@@@@"+stored_file_name);
 	String path = request.getRealPath("upload");
 	File file = new File(path+"\\"+stored_file_name);
 	boolean isExists = file.exists();
-	if(isExists) { System.out.println("I find the existFile.txt"); } 
-	else { System.out.println("No, there is not a no file."); }
+/* 	if(isExists) { System.out.println("I find the existFile.txt"); } 
+	else { System.out.println("No, there is not a no file."); } */
+	
+	// 조회수 1 증가시키는 메서드	-0429근지
+	db.hitUp(product_number);
 %>
 <!DOCTYPE html>
 <html>
@@ -60,13 +70,16 @@
 <script type="text/javascript">
 	$(function() {
 		$("#setCart").on("click", function() {
-			confirm("장바구니에 담으시겠습니까?");
 			var value = $('#product_count').val();
-			
-			if(value == 0) {
-				alert("상품 수량을 선택해주세요.");
+			if(confirm("장바구니에 담으시겠습니까?")) {
+				
+				if(value == 0) {
+					alert("상품 수량을 선택해주세요.");
+				} else {
+					location.href="cartProcess.jsp?product_count="+value+"&product_number="+<%= product_number %>;
+				}
 			} else {
-				location.href="cartProcess.jsp?product_count="+value+"&product_number="+<%= product_number %>;
+				return false;
 			}
 		});
 	});
@@ -222,9 +235,21 @@
 <body id="displayBody">
 	
 	<jsp:include page="../main/mainHeader.jsp"></jsp:include> 
-
+		<%
+		if(user_id !=null){
+		if(user_id.equals("admin")){
+			%>
+			<div style="margin-left:88% ; width:100px; ">
+				<a href="../product/goodsUpdate.jsp?product_number=<%=product_number %>">상품수정</a>
+				<a href="../product/goodsDelete.jsp?product_number=<%=product_number %>">상품삭제</a>
+			</div>
+			<%
+		}
+		}
+		 %>
 	<div class="fisrtDiv">
 		<div class="imgDiv">
+<%	out.println(product_number); %>
 			<%if(isExists){%>
 				<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name%>"  alt="이미지없음" class="buyImg">
 			<%}else{%>
@@ -296,6 +321,7 @@
 			for(int i = 0 ; i< getGoodsimg.size(); i++){
 				if(getGoodsimg.get(i).getStored_thumbnail() != null){
 					stored_thumbnail = getGoodsimg.get(i).getStored_thumbnail();
+					//System.out.println("@@@@"+stored_thumbnail);
 	%>
 				<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%= stored_thumbnail%>" class="thumbImg">
 				<div class="thumbBlank"></div>

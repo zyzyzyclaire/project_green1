@@ -1,11 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@include file= "mainClass.jsp"%> 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>elpmis</title>
+<%
+	request.setCharacterEncoding("UTF-8");
+
+%>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap" rel="stylesheet">
 
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -18,17 +25,17 @@
 	$(window).scroll(function(){ 
 		
 		var scroll = $(window).scrollTop();
-		/* $("¼±ÅÃÀÚ").offset().top; *///Æ¯Á¤¿ä¼Ò y ÁÂÇ¥°ª¹ÝÈ¯
+		/* $("ì„ íƒìž").offset().top; *///íŠ¹ì •ìš”ì†Œ y ì¢Œí‘œê°’ë°˜í™˜
 		 console.log(scroll); 
-		var height = 114;
-		height = height-scroll
-		$( ".header_title" ).css("height", height);
+		//var height = 114;
+		//height = height-scroll
+		//$( ".header_title" ).css("height", height);
 		
 		
 		if(scroll>=220 - scroll){
 			$( ".addstyle" ).addClass( "fixed");
 			$( ".addstyle1" ).addClass( "fixed1");
-			//alert("¼û°ÜÁ³À½");
+			//alert("ìˆ¨ê²¨ì¡ŒìŒ");
 		}
 		else if(scroll<=50){
 			
@@ -44,7 +51,7 @@
 	}
 	
 	
-	 $(document).mouseup(function (e){  //°Ë»ö ¿ÜÅ¬¸¯½Ã ¼û±è
+	 $(document).mouseup(function (e){  //ê²€ìƒ‰ ì™¸í´ë¦­ì‹œ ìˆ¨ê¹€
 	        if($("#searchbox").has(e.target).length == 0){
 	        	$("#searchinput").val("");
 	        	sendRequest();
@@ -76,7 +83,7 @@
  		});
  	}
 	  
-	   function selectbox(){ //°Ë»ö Å¬¸¯½Ã ¤¤Å¸³²   
+	   function selectbox(){ //ê²€ìƒ‰ í´ë¦­ì‹œ ã„´íƒ€ë‚¨   
 	        const sebox = document.getElementById('searchbox');
 	        const inbox = document.getElementById('searchinput');
 	        const hearder_title = document.getElementById('hearder_title');
@@ -84,6 +91,9 @@
             hearder_title.style.marginBottom = '-2px';
             inbox.focus();
 	    }
+	   function sub() {
+		   document.search.submit();	
+	}
 	   
 </script>
 <style type="text/css">
@@ -126,7 +136,7 @@ a {
 </style>
 </head>
  
-<body>
+<body >
 			
 			
 			
@@ -137,18 +147,18 @@ a {
 			                <%
 			                	if(user_id==null){
 			                %>
-			                	<a class="nav-link active" aria-current="page" href="../login/login.jsp"> <span>&#xf2c0</span> ·Î±×ÀÎ</a>
-			                    <a class="nav-link" href="../login/register.jsp"><span></span>È¸¿ø°¡ÀÔ</a>
+			                	<a class="nav-link active" aria-current="page" href="../login/login.jsp"> <span>&#xf2c0</span> ë¡œê·¸ì¸</a>
+			                    <a class="nav-link" href="../login/register.jsp"><span></span>íšŒì›ê°€ìž…</a>
 			                <%
 			                	}else{
 			                %>
-			                	<a class="nav-link active" aria-current="page" href="../login/logOut.jsp"> <span>&#xf2c0</span> ·Î±×¾Æ¿ô</a>
-			                    <a class="nav-link" href="../userPage/userPage.jsp"><span></span>¸¶ÀÌÆäÀÌÁö</a>
+			                	<a class="nav-link active" aria-current="page" href="../login/logOut.jsp"> <span>&#xf2c0</span> ë¡œê·¸ì•„ì›ƒ</a>
+			                    <a class="nav-link" href="../userPage/userPage.jsp"><span></span>ë§ˆì´íŽ˜ì´ì§€</a>
 			                <%
 			                   if(user_id.equals("admin")){
 			             	%>
-			             		<a class="nav-link" href="../adminPage/adminPage.jsp"><span></span>°ü¸®ÆäÀÌÁö</a>
-			                    <!-- <a class="nav-link" href="../product/productAdd.jsp"><span></span>»óÇ°µî·Ï</a> -->
+			             		<a class="nav-link" href="../adminPage/adminPage.jsp"><span></span>ê´€ë¦¬íŽ˜ì´ì§€</a>
+			                    <!-- <a class="nav-link" href="../product/productAdd.jsp"><span></span>ìƒí’ˆë“±ë¡</a> -->
 			                <%						
 								}
 			                %>
@@ -163,11 +173,11 @@ a {
 	                <ul class="nav justify-content-end ulbox"  style="margin-bottom: 0px">
 	                	
 	                    <li class="nav-item">
-	                    	<a class="nav-link" href="../cart/viewCart.jsp"><span>&#xf218</span>Àå¹Ù±¸´Ï¸ñ·Ï</a>
+	                    	<a class="nav-link" href="../cart/viewCart.jsp"><span>&#xf218</span>ìž¥ë°”êµ¬ë‹ˆëª©ë¡</a>
 	                    </li>
 	                    
 	                    <li class="nav-item">
-	                    	<a class="nav-link" href="#" onclick="selectbox()"> <span> &#xe800</span>°Ë»ö</a>
+	                    	<a class="nav-link" href="#" onclick="selectbox()"> <span> &#xe800</span>ê²€ìƒ‰</a>
 	                    </li>
 	                
 	                </ul>
@@ -179,7 +189,7 @@ a {
 			<div class="header_titlecheck">
 	            <div class=" d-flex justify-content-center" id="hearder_title" > 
 	                <div class="header_title" style="overflow: hidden;"> 
-	                    <a href="./../main/main.jsp">shopping mall</a>
+	                    <a href="./../main/main.jsp" style="font-size: 50px; ">elpmis</a>
 	                </div>
 	            </div>
             </div>
@@ -187,28 +197,28 @@ a {
             	<div class="searchbox1"></div>
 	            <div class="d-flex justify-content-end searchbox2"> 
 	               <div class="search"  id="searchbox">
-	                	<form action="../search/search.jsp" method="post" style="width: 180px;" class="searchform">
-	                    	<input type="text" id="searchinput" name="searchtext" onkeyup="sendRequest()" style="width: 100px">
-	                   	 	<input type="submit" value="&#xe800" id="searchbutton">
+	                	<form name="search" action="../search/search.jsp" method="post" style="width: 180px; display:flex;	 border: 1px rgba(0, 0, 0, 0.09) solid;" class="searchform">
+	                    	<input type="text" id="searchinput" name="searchtext" onkeyup="sendRequest()" style="flex:9; width: 100px; border: none;">
+	                   	 	<a href="#" onclick="sub()" style="text-decoration:none; flex:1;	font-family: 'fontello';">&#xe800</a>
 	                  	</form>
 	               </div>
 	            </div>
             </div>
 
-            <ul class="nav justify-content-center header_footer headernav addstyle1" style="font-size: 11px; ">
+            <ul class="nav justify-content-center header_footer headernav addstyle1" style="font-size: 13px; ">
               	<li class="nav-item">             		
-              		<a class="nav-link" href="../customer_service/notice_list.jsp">°øÁö»çÇ×</a>
+              		<a class="nav-link" href="../customer_service/notice_list.jsp">ê³µì§€ì‚¬í•­</a>
               	</li>
             	<li class="nav-item">
-                    <a class="nav-link" href="../product/productAllList.jsp">ÀüÃ¼</a>
+                    <a class="nav-link" href="../product/productAllList.jsp">ì „ì²´</a>
                 </li>
                 <li class="nav-item">
-                	<a class="nav-link" href="../product/categoryProduct.jsp?category=1">»óÀÇ</a>
+                	<a class="nav-link" href="../product/categoryProduct.jsp?category=1">ìƒì˜</a>
                 </li>
                 <li class="nav-item">
-                	<a class="nav-link" href="../product/categoryProduct.jsp?category=2">ÇÏÀÇ</a>
+                	<a class="nav-link" href="../product/categoryProduct.jsp?category=2">í•˜ì˜</a>
                 <li class="nav-item">
-                    <a class="nav-link" href="../product/categoryProduct.jsp?category=3">½Å¹ß</a>
+                    <a class="nav-link" href="../product/categoryProduct.jsp?category=3">ì‹ ë°œ</a>
                 </li>
             </ul>  
            
@@ -222,9 +232,9 @@ a {
 				
 				if(request.getParameter("searchCheck")!=null){
 					if(request.getParameter("searchCheck").equals("false")){
-						//System.out.println("°Ë»öÇÑ³»¿ëÀÌ¾ø½À´Ï´Ù.."+request.getParameter("searchCheck"));
+						//System.out.println("ê²€ìƒ‰í•œë‚´ìš©ì´ì—†ìŠµë‹ˆë‹¤.."+request.getParameter("searchCheck"));
 						%>
-						 	alert("°Ë»öÇÑ³»¿ëÀÌ¾ø½À´Ï´Ù..");
+						 	alert("ê²€ìƒ‰í•œë‚´ìš©ì´ì—†ìŠµë‹ˆë‹¤..");
 						
 						<%
 					}

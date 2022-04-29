@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import cart.CartBean;
+import cart.CartDBBean;
+
 
 
 public class GoodsDBBean {
@@ -30,7 +33,6 @@ public class GoodsDBBean {
 	
 	
 	// product_number 일치하는 goods의 정보를 얻어오는 메서드 - 0418 근지
-	
 	public GoodsBean getGoods(int product_number) throws Exception {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
@@ -64,6 +66,42 @@ public class GoodsDBBean {
 			}
 			return goods;
 		}
+	
+	// product_number 일치하는 goods의 이미지를 얻어오는 메서드 - 0429 근지
+	public GoodsBean getGoodsImg(int product_number) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select * from product_imagefile where product_number=?";
+		GoodsBean goods = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, product_number);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				goods = new GoodsBean();
+				goods.setFile_number(rs.getInt("file_number"));
+				goods.setProduct_number(rs.getInt("product_number"));
+				goods.setOrgin_file_name(rs.getString("orgin_file_name"));
+				goods.setStored_file_name(rs.getString("stored_file_name"));
+				goods.setStored_thumbnail(rs.getString("stored_thumbnail"));
+				goods.setDelegate_thumbnail(rs.getString("delegate_thumbnail"));
+				goods.setFile_size(rs.getInt("file_size"));
+				goods.setCreate_date(rs.getTimestamp("create_date"));
+				goods.setDelete_check(rs.getString("delete_check"));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return goods;
+	}
 					
 	public int deleteGoods(int product_number) {
 		Connection conn = null;
@@ -252,7 +290,7 @@ public class GoodsDBBean {
 	/////////////
 	
 	
-	public int insertGoodss(GoodsBean goods,boolean stored_thumbnail) throws Exception { 
+	public int insertGoodss(GoodsBean goods, boolean stored_thumbnail) throws Exception { 
 	  	Connection conn = null;
 		PreparedStatement pstmt = null;
 		 ResultSet rs = null;
@@ -282,8 +320,9 @@ public class GoodsDBBean {
 				  product_number=product_number+1;
 				
 				   query = "insert into product(product_number,category_code,product_name,product_price,product_stock"
-							+ ",product_desc,product_date) "
-							+ " values (?,?,?,?,?,?,?)";
+							+ ",product_desc,product_date,product_hits,product_ordered_count) "
+							+ " values (?,?,?,?,?,?,?,?,?)";
+				   
 				  pstmt = conn.prepareStatement(query);
 				  pstmt.setInt(1, product_number) ;
 				  pstmt.setString(2, goods.getCategory_code());
@@ -292,6 +331,8 @@ public class GoodsDBBean {
 				  pstmt.setInt(5, goods.getProduct_stock());
 				  pstmt.setString(6, goods.getProduct_desc());
 				  pstmt.setTimestamp(7, timestamp);
+				  pstmt.setInt(8, 0);
+				  pstmt.setInt(9, 0);
 			
 				  re = pstmt.executeUpdate(); 
 				  
@@ -356,9 +397,224 @@ public class GoodsDBBean {
 			  return re;
 			 }
 
+	// 상품의 조회수를 올리는 메서드	-0429근지
+	public void hitUp(int product_number) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String query = null;
+		try {
+			conn = getConnection();
+			query = " update product set product_hits=product_hits+1 where product_number = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, product_number);
+			pstmt.executeUpdate();
+			
+			System.out.println("조회수1증가");
+		}catch (Exception e) {
+			System.out.println("조회수증가안됨");
+			e.printStackTrace();
+		}finally {
+				try {
+					if(pstmt!=null) pstmt.close();
+					if(conn!=null) conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+	}	
+	
+	// 상품 구매시 구매 카운트를 증가시키는 메서드	-0429근지
+	public void orderedCountUp(int product_count, int product_number) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String query = null;
+		try {
+			conn = getConnection();
+			query = " update product set product_ordered_count = product_ordered_count + ? where product_number = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, product_count);
+			pstmt.setInt(2, product_number);
+			pstmt.executeUpdate();
+			
+			System.out.println("구매수증가");
+		}catch (Exception e) {
+			System.out.println("구매수증가안됨");
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}	
 	
 	
+	// 상품 구매시 구매 카운트를 증가시키는 메서드	-0429근지
+	public void orderedCountUpArray(String[] cart_num_arr) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String query = null;
+		try {
+			conn = getConnection();
+			
+			// 배열 크기만큼 저장	-0425근지
+			for (int i = 0; i < cart_num_arr.length; i++) {
+				int cart_num = Integer.parseInt(cart_num_arr[i]);
+				CartDBBean cart_db = CartDBBean.getInstance();
+				CartBean cart = cart_db.getCart_one(cart_num);
+				
+			query = " update product set product_ordered_count = product_ordered_count + ? where product_number = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, cart.getProduct_count());
+			pstmt.setInt(2, cart.getProduct_number());
+			pstmt.executeUpdate();
+			}
+			
+			System.out.println("구매수-배열-증가");
+		}catch (Exception e) {
+			System.out.println("구매수-배열-증가안됨");
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}	
 	
+	// 많이 팔린 순으로 상품 들고오기 -0429근지
+	public ArrayList<GoodsBean> getCategoryProductList_best(String category_code) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select product_number"
+							+ ",category_code"
+							+ ",product_name"
+							+ ",product_price"
+							+ ",product_stock"
+							+ ",product_desc"
+							+ ",product_date"
+							+ ",product_hits"
+							+ " from product"
+							+ "	where category_code = ?"
+							+ " order by product_ordered_count desc";
+		
+		ArrayList<GoodsBean> ProductArr = new ArrayList<GoodsBean>();
+		GoodsBean product = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, category_code);
+			rs = pstmt.executeQuery();
+		
+			//System.out.println("여기까지는들어옴?");
+			while (rs.next()) {
+				product = new GoodsBean();
+				product.setProduct_number(rs.getInt("product_number"));
+				product.setCategory_code(rs.getString("category_code"));
+				product.setProduct_name(rs.getString("product_name"));
+				product.setProduct_price(rs.getInt("product_price"));
+				product.setProduct_stock(rs.getInt("product_stock"));
+				product.setProduct_desc(rs.getString("product_desc"));
+				product.setProduct_date(rs.getTimestamp("product_date")); 
+				product.setProduct_hits(rs.getInt("product_hits"));
+				//System.out.println(rs.getInt("product_number"));
+				
+				ProductArr.add(product);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return ProductArr;
+	}
+	
+	
+	// 많이 팔린 순으로 상품 이미지 들고오기 -0429근지 
+	public ArrayList<GoodsBean> getProductimg_best(ArrayList<GoodsBean> ProductlistArr) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		//System.out.println(ProductlistArr.size());
+		if(ProductlistArr.size()!=0) {
+			//System.out.println("@@@@배열의크기는 상품의번호는"+ProductlistArr.get(0).getProduct_number());
+		}
+		
+		
+		String query = "select file_number"
+							+ ",product_number"
+							+ ",orgin_file_name"
+							+ ",stored_file_name"
+							+ ",stored_thumbnail"
+							+ ",delegate_thumbnail"
+							+ ",file_size"
+							+ ",create_date"
+							+ ",delete_check"
+							+ " from product_imagefile"
+							+ " where product_number = ?";
+//		System.out.println(ProductlistArr.size());
+		ArrayList<GoodsBean> ProductimgArr = new ArrayList<GoodsBean>();
+		GoodsBean product = null;
+		
+		try {
+			conn = getConnection();
+			for (int j = 0; j < ProductlistArr.size(); j++) {
+				pstmt = conn.prepareStatement(query);
+				//System.out.println("상품번호는 "+ ProductlistArr.get(j).getProduct_number());
+				int number = ProductlistArr.get(j).getProduct_number();
+				pstmt.setInt(1, number);
+				rs = pstmt.executeQuery();
+				
+				if (rs.next()) {
+					product = new GoodsBean();
+					
+					if(rs.getString("stored_file_name") != null){
+						product.setFile_number(rs.getInt("file_number"));
+						product.setProduct_number(rs.getInt("product_number"));
+						product.setOrgin_file_name(rs.getString("orgin_file_name"));
+						product.setStored_file_name(rs.getString("stored_file_name"));
+						//product.setStored_thumbnail(rs.getString("stored_thumbnail"));
+						//product.setDelegate_thumbnail(rs.getString("delegate_thumbnail"));
+						product.setFile_size(rs.getInt("file_size"));
+						product.setCreate_date(rs.getTimestamp("create_date"));
+						//product.setDelete_check(rs.getString("delete_check"));
+						ProductimgArr.add(product);
+					}else {
+						product.setFile_number(rs.getInt("file_number"));
+						product.setProduct_number(rs.getInt("product_number"));
+						product.setOrgin_file_name("이미지없음");
+						product.setStored_file_name("이미지없음");
+						//product.setStored_thumbnail("이미지없음");
+						//product.setDelegate_thumbnail("이미지없음");
+						product.setFile_size(0);
+						product.setCreate_date(null);
+						//product.setDelete_check("이미지없음");
+						ProductimgArr.add(product);
+						
+					}
+//					System.out.println("");
+					
+				}
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return ProductimgArr;
+	}
 	
 	//아래쪽부터 찬희한거@@@@@@@@@@@@@@@@@@@@@@@@@@@@// 수정하면 다바꿔야해서 수정안함
 	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -452,7 +708,7 @@ public class GoodsDBBean {
 			
 			//System.out.println("여기까지는들어옴?");
 			while (rs.next()) {
-			
+				
 				product = new GoodsBean();
 				product.setProduct_number(rs.getInt("product_number"));
 				product.setCategory_code(rs.getString("category_code"));

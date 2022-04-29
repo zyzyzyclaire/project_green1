@@ -13,7 +13,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
-    <script src="board.js" type="text/javascript"></script> 
 <style> 
 	#container, #ntc, #navi { 
 		min-width: 1100px; 
@@ -47,6 +46,7 @@
     if (session.getAttribute("user_id") != null) {
         user_id = (String) session.getAttribute("user_id");
     }
+   
 %>
 <%
 	QnADBBean ndb = QnADBBean.getInstance();
@@ -70,10 +70,11 @@
 		b_id = Integer.parseInt(request.getParameter("b_id"));
 		board = ndb.getBoard(b_id, true);
 		isMe = board.getU_id().equals(user_id);
+		isRef = (board.getB_ref() != board.getB_id());
 		int b_view =0;
 		String b_title="", b_content = ""; 
 		Timestamp b_date= null;
-
+		
 
 	
 		if (board == null) {
@@ -84,7 +85,12 @@
 			</script>
 		<%
 		} else if (!board.getB_secret().equals("0")) {
-			if (!isMe && !isAdmin) {
+			if (isRef) {
+				QnABean refBoard = ndb.getBoard(board.getB_ref(), false);
+				isMine = refBoard.getU_id().equals(user_id);
+			}
+					
+			 if (!isMe && !isAdmin && !isMine) {
 				%><script>
 					alert("작성자만 볼 수 있는 비공개 글입니다.");
 					location.href = "qnaList.jsp";
@@ -101,7 +107,7 @@
 			var pwd = prompt("비밀번호를 입력하세요.");
 			if(pwd == <%=board.getB_pwd()%>){
 				if(confirm("정말 글을 삭제하시겠습니까?") == true){
-				location.href = "qnaDeleteOK.jsp?b_id="+<%= b_id %>+"&pageNum="+<%= pageNum %>;
+					location.href = "qnaDeleteOK.jsp?b_id="+<%= b_id %>+"&pageNum="+<%= pageNum %>;
 				}
 			} else {
 				alert("비밀번호가 맞지 않습니다.");
@@ -158,7 +164,7 @@
 					<input type="button" value="&nbsp;&nbsp;&nbsp;목록&nbsp;&nbsp;&nbsp;" onClick="location.href='qnaList.jsp?b_id=<%= b_id %>&pageNum=<%= pageNum %>'"  class="btn btn-secondary">
 				</td>
 				<td colspan="3" align="right">
-					<% if (isAdmin) { %>
+					<% if (isRef || isAdmin) { %>
 						<input type="button" value="&nbsp;&nbsp;&nbsp;답글&nbsp;&nbsp;&nbsp;" onClick="location.href='qnaWrite.jsp?b_id=<%= b_id %>&pageNum=<%= pageNum %>'" class="btn btn-dark">
 					<% } %>
 					<% if (isMe || isAdmin) { %>

@@ -25,7 +25,7 @@
 	int product_price = 0;
 	int product_stock = 0;
 	String product_desc = null;
-	int size=1024*1024;
+	int size=3000*3000;
 	String path = request.getRealPath("upload");
 	MultipartRequest multi = new MultipartRequest(request, path, size, "UTF-8", new DefaultFileRenamePolicy());
 	product_number = Integer.parseInt( multi.getParameter("product_number"));

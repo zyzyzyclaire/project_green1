@@ -11,6 +11,7 @@ public class GoodsBean {
      private String product_desc;
      private Timestamp product_date;
      private int product_hits;
+     private int product_ordered_count;
      private  int file_number;
   	 private  String orgin_file_name;
   	 private  String stored_file_name;
@@ -21,8 +22,13 @@ public class GoodsBean {
   	 private  String delete_check;
   	
   	
-     
- 	public Timestamp getProduct_date() {
+ 	public int getProduct_ordered_count() {
+		return product_ordered_count;
+	}
+	public void setProduct_ordered_count(int product_ordered_count) {
+		this.product_ordered_count = product_ordered_count;
+	}
+	public Timestamp getProduct_date() {
 		return product_date;
 	}
 	public void setProduct_date(Timestamp product_date) {

@@ -1,3 +1,4 @@
+<%@page import="goods.GoodsDBBean"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="buy.UserOrderDetailDBBean"%>
 <%@page import="buy.UserOrderDBBean"%>
@@ -24,6 +25,7 @@
 	
 	UserOrderDBBean order_db = UserOrderDBBean.getInstance();
 	UserOrderDetailDBBean detail_db = UserOrderDetailDBBean.getInstance();
+	GoodsDBBean goods_db = GoodsDBBean.getInstance();
 
 	// order_number값 찾기 -0425근지
 	SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
@@ -33,6 +35,8 @@
 	// cart_number 배열 받기 -0425근지
 	String[] cart_num_arr = request.getParameterValues("cart_num_arr");
 	
+	// product테이블의 product_ordered_count(구매개수) 증가	-0429근지
+	goods_db.orderedCountUpArray(cart_num_arr);
 %>
 <!DOCTYPE html>
 <html>

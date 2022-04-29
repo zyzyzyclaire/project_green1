@@ -129,14 +129,14 @@
 								
 							
 					        <td>
-					        	<br><input type="text" name="user_id" value="<%= id %>" class="form-control" id="inputEmail3"><br>
+					        	<br><input type="text" name="user_id" value="<%= id %> " class="form-control" id="inputEmail3"><br>
 					      	</td>
 					<%				
 								} else {	// 일반 로그인 경우 - 0416 근지
 					%>			
 							
 					        <td colspan="3">
-					      	  <br><input type="text" name="user_id" class="form-control " id="inputEmail3" placeholder="아이디를 입력하세요"
+					      	  <br><input value="admin" type="text" name="user_id" class="form-control " id="inputEmail3" placeholder="아이디를 입력하세요"
 					      	  				style=" font-size: 15px; font: 500; font-family: Malgun Gothic,돋움; "><br>
 					        </td>
 					        
@@ -153,7 +153,7 @@
 					  <div class="col-xs-4">
 					  	<tr>
 					      <td colspan="3">
-					    	<input type="password" name="user_pwd" class="form-control" id="inputPassword3" placeholder="비밀번호를 입력하세요"
+					    	<input type="password" value="1234" name="user_pwd" class="form-control" id="inputPassword3" placeholder="비밀번호를 입력하세요"
 					    				style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;"><br>
 					      </td>
 					    </tr>

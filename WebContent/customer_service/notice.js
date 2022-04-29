@@ -20,12 +20,3 @@ function check_ok(){
 	document.reg_frm.submit();
 }
 
-function delete_ok(){
-	if(reg_frm.n_pwd.value.length == 0){
-		alert("비밀번호를 써주세요.");
-		reg_frm.n_pwd.focus();
-		return;
-	}	
-	
-	document.reg_frm.submit();
-}

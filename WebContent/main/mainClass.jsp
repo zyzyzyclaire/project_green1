@@ -9,7 +9,7 @@ String path = request.getRealPath("./");
 	if (!Folder.exists()) {
 		try{
 		    Folder.mkdir(); //폴더 생성합니다.
-		    System.out.println("폴더가 생성되었습니다.");
+		    //System.out.println("폴더가 생성되었습니다.");
 	        } 
 	        catch(Exception e){
 		    e.getStackTrace();
@@ -38,6 +38,32 @@ int file_size= 0;
 Timestamp create_date= null;
 String delete_check= null;
 String user_id = null;
+String user_name = null;
+String user_grade = null;
+String refund_check = null;
+String order_number =null,order_detail_status=null;
+
+ int b_id;
+ String u_id;
+ String b_category;
+ int b_view;
+ String b_title;
+ String b_content;
+ String b_ip;
+ String b_pwd;
+ Timestamp b_date;
+
+ int b_step=0;
+ int b_level=0;
+ int b_ref=0;	
+
+ String b_fname;
+ int b_fsize;
+ String b_rfname;
+
+ String b_secret;
+
+int order_detail_number=0,product_count=0;
 
 if(!((String)session.getAttribute("user_id") == null)){
 	user_id =(String)session.getAttribute("user_id");

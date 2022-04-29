@@ -17,7 +17,7 @@
 	   			//data:{"search":send,"zipcode":"12345"},
 	   			//dataType,
 	   			success:function(data){	
-	   				location.href="userBuygoods.jsp";
+	   				location.href="userPage.jsp";
 	   				//document.getElementById("main_stat_point2").innerHTML =data;
 	   			},
 	   			error:function(){

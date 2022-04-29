@@ -7,23 +7,13 @@
 	
 	UserDBBean db = UserDBBean.getInstance();
 	UserBean user = db.getUser(user_id);
-%>  
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-  
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"> 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-    </script> <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js">
-    </script> <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/bootstrap-5.1.3-dist/css/bootstrap-grid.min.css">
-    
-    
-    <link rel="stylesheet" href="../fontstyle/fontello-4581031e/css/fontello.css">
-    <link rel="stylesheet" href="../css/jquery.bxslider.css">	
-<script>
+	<script>
 		// 도로명 주소 찾기 API 수정 -0421근지
 		function goPopup(){
 			// 주소검색을 수행할 팝업 페이지를 호출합니다.
@@ -73,98 +63,157 @@
 			document.upd_frm.submit();
 		}
 	</script>
-<style>
-.table{ width: 35%; }
-.wrapper{
-padding: auto;
-margin: 100px 0px; 
-margin-left: auto; 
-margin-right: auto;
-}
-</style>
+	<style>
+		#regidiv{
+			
+			margin:auto;
+		   	min-width : 980px;	
+			max-width : 1000px;	
+			height: 600px;
+			
+		}
+		.width_tr{
+			width: 200px;
+			height: 30px;
+			
+		}
+		.title_tr{
+			width: 1000px;
+			height: 15px;
+		 	font-weight: bold;
+		 	font-family: "Nanum Gothic","Malgun Gothic","맑은 고딕","돋움","Dotum","Apple Gothic","Apple SD Gothic Neo",sans-serif;
+		 	
+		 	
+		}
+		input.btn {
+			background: black;
+			color: white;
+		}
+		
+		input.btn:hover{
+			background: white;
+			color: black;
+			border-color: gray;
+		}
+		input.btn1{
+			background:	#A9A9A9;
+			color: white;
+		}
+		input.btn1:hover{
+			background: white;
+			color: black;
+			border-color: gray;
+		}
+	</style>
+	
 </head>
 <body>
-<div class="border d-flex justify-content-center" id="hearder_title"> 
-    <div class="header_title" >
-        <h1><strong>shopping mall</strong></h1>
-    </div>
-</div>
+     <jsp:include page="../main/mainHeader.jsp"></jsp:include> 
+	<hr>    
 
-<div class="wrapper">
- <div style="margin:auto; text-align:center;">
-	<h1><label for="floatingInput">회원 정보 수정<br></label>
-		<h4>'*' 표시 항목은 필수 입력 항목입니다.</h4>
-	</h1>
-	<br><br>
-	
- <table class="table" align="center">
-  <form name="upd_frm" method="post" action="userUpdateOk.jsp" style="display:inline-block;">
-	<tr>
-		<td><label for="user_id">ID</label></td>
-		<td align="left">
-				<%= user.getUser_id() %>
-		</td>
-	</tr>
-		
-	<tr>
-		<td><label for="user_pwd">PASSWORD*</label></td>
-		<td>
-				<input type="password" size="20" name="user_pwd" class="form-control form-control-sm">
-		</td>
-	</tr>
-		
-	<tr>
-		<td><label for="pwd_check">암호 확인*</label></td>
-		<td>
-				<input type="password" size="20" name="pwd_check" class="form-control form-control-sm">
-		</td>
-	</tr>
-		
-	<tr>
-		<td><label for="user_name">이    름</label></td>
-		<td align="left">
-				<%= user.getUser_name() %>
-		</td>
-	</tr>
-		
-	<tr>
-		<td><label for="user_email">E-mail*</label></td>
-		<td>
-				<input type="text" size="30" name="user_email"
-				                    value="<%= user.getUser_email() %>" class="form-control form-control-sm">
-		</td>
-	</tr>
-		
-	<tr>
-		<td><label for="user_phone">휴대폰 번호</label></td>
-		<td>
-				<input type="text" size="40" name="user_phone"
-				                     value="<%= user.getUser_phone() %>" class="form-control">
-		</td>
-	</tr>
-	
-	<tr>
-		<td><label for="user_addr">주    소</label></td>
-		<td>
-				<input type="text" size="40" name="user_addr"
-				value="<%= user.getUser_addr()%>" onclick="goPopup()" class="form-control">
-		</td>
-	</tr>
-		<tr align="center">
-			<td colspan="4"><br><br>
-			
-			<input type="reset" value="다시입력" class="btn btn-outline-dark">
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="button" value="수정" onclick="update_check_ok()" class="btn btn-outline-dark">
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="button" value="수정안함" onclick="javascript:window.location='../userPage/userPage.jsp'"
-			                         class="btn btn-outline-dark">
-			</td>
-		</tr>
-	 </form>
-  </table>
- </div>
-</div>
+<!-- <div class="regidiv"> -->
+	<table class="table" id="regidiv" style="font-size: 15px;">
+		<form name="upd_frm" method="post" action="userUpdateOk.jsp" >
+			<tr class="title_tr">
+				<td colspan="2" style="vertical-align : bottom; border: solid 2px white;"> 
+					<div style="font-size: 25px;">회원 정보 수정</div><br>
+				</td>
+				
+				<!-- <td class="regitd2" style="vertical-align : bottom; border: solid 2px white;">
+					<div align="right" style="font-size: 15px;">'*'필수 입력 사항</div>
+				</td> -->
+			</tr>
+			<tr>
+				<td width="80" class="width_tr" id="boderleft" style="vertical-align: middle; border-top: solid 3px #DCDCDC; background-color: #F5F5F5;">
+					&nbsp;&nbsp;아이디
+				</td>
+				
 
+				<td colspan="2" style="vertical-align: middle; border-top: solid 3px #DCDCDC;" id="boderright" >
+  					<div class="col-5">
+   						<%= user.getUser_id() %>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td width="80" class="width_tr" id="boderleft" style="vertical-align: middle; background-color: #F5F5F5;" >
+					&nbsp;&nbsp;비밀번호
+				</td>
+				<td colspan="2" style="vertical-align: middle;" id="boderright">
+				  <div class="col-5">
+					<input type="password" size="20" name="user_pwd" class="form-control" style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+				  </div>
+				</td>
+			</tr>
+			<tr>
+				<td width="80" class="width_tr" id="boderleft" style="vertical-align: middle; background-color: #F5F5F5;">
+					&nbsp;&nbsp;비밀번호 확인
+				</td>
+				<td colspan="2" style="vertical-align: middle;" id="boderright">
+				  <div class="col-5">
+					<input type="password" size="20" name="pwd_check" class="form-control" style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+				  </div>
+				</td>
+			</tr>
+			<tr>
+				<td width="80" class="width_tr" id="boderleft" style="vertical-align: middle; background-color: #F5F5F5;">
+					&nbsp;&nbsp;이    름
+				</td>
+				<td colspan="2" style="vertical-align: middle;" id="boderright">
+				  <div class="col-5">
+					<%= user.getUser_name() %>
+				  </div>
+				</td>
+			</tr>
+			<tr>
+				<td width="80" class="width_tr" id="boderleft" style="vertical-align: middle; background-color: #F5F5F5;">
+					&nbsp;&nbsp;이메일
+				</td>
+				<td colspan="2" style="vertical-align: middle;" id="boderright">
+				  <div class="col-5">
+					<input type="text" size="30" name="user_email" value="<%= user.getUser_email() %>" class="form-control"
+																		style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+				  </div>
+				</td>
+			</tr>
+			<tr>
+				<td width="80" class="width_tr" id="boderleft" style="vertical-align: middle; background-color: #F5F5F5;">
+					&nbsp;&nbsp;휴대폰 번호
+				</td>
+				<td colspan="2" style="vertical-align: middle;" id="boderright">
+				  <div class="col-5">
+					<input type="text" size="40" name="user_phone" value="<%= user.getUser_phone() %>" class="form-control"
+															style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+				  </div>
+				</td>
+			</tr>
+			<tr>
+				<td width="80" class="width_tr" id="boderleft" style="vertical-align: middle; border-bottom: solid 3px #DCDCDC; background-color: #F5F5F5;">
+					&nbsp;&nbsp;주    소
+				</td>
+				<td colspan="2" style="vertical-align: middle; border-bottom: solid 3px #DCDCDC;" id="boderright">
+				  <div class="col-12">
+					<input type="text" size="40" name="user_addr" value="<%= user.getUser_addr()%>" class="form-control" onclick="goPopup()"
+								                                   style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+				  </div>
+				</td>
+			</tr>
+			<tr class="title_tr">
+				<td colspan="3" align="center" style="vertical-align: middle; border-bottom: none;">
+					<input type="reset" value="다시입력" class="btn btn-outline-gray btn1" style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="button" value="수 정" onclick="update_check_ok()" class="btn btn-outline-dark" style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="button" value="수정안함" onclick="javascript:window.location='../userPage/userPage.jsp'" class="btn btn-outline-gray btn1" 
+																style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+				</td>
+			</tr>
+		</form>
+	</table>
+
+<!-- </div> -->
+ <br><br><br><br>
+	<jsp:include page="../main/mainfooter.jsp"></jsp:include>  
+	
 </body>
 </html>

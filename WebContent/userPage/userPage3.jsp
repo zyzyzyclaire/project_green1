@@ -7,6 +7,7 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
+
 <style type="text/css">
 	*{
 		font-family: "Malgun Gothic",돋음;

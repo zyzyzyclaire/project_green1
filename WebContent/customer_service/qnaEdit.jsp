@@ -19,7 +19,6 @@
     QnADBBean qdb = QnADBBean.getInstance();
 	QnABean board = qdb.getBoard(b_id, false);
 	
-	int b_ref = Integer.parseInt(request.getParameter("b_ref"));
 %>
 <html>
 <head>
@@ -28,7 +27,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
-    <script src="board.js" type="text/javascript"></script> 
 <style> 
 	#container, #ntc, #navi { 
 		min-width: 1100px; 
@@ -68,10 +66,11 @@
 	</div>  
 	<div id="container">
 	<table class="table">
-		<form method="post" action="qnaEditOK.jsp?b_id=<%= b_id %>&pageNum=<%= pageNum %>" enctype="multipart/form-data">
+		<form name="boardForm" method="post" action="qnaEditOK.jsp?b_id=<%= b_id %>&pageNum=<%= pageNum %>" enctype="multipart/form-data">
+				<input type="hidden" name="b_secret" value=<%= board.getB_secret() %>>
 				<tr height="30px">
 					<td style="padding-right: 40px">SUBJECT</td>
-					<td><input name="b_title" type="text" size="60px" value="<%= board.getB_title() %>"></td>
+					<td><input name="b_title" type="text" size="100px" value="<%= board.getB_title() %>"></td>
 				</tr>
 				<tr height="30px">
 						<td>NAME</td>
@@ -90,7 +89,7 @@
 						</td>
 					</tr>
 				<tr>
-					<td colspan="2"><textarea name="b_content" rows="15" cols="160"></textarea></td>
+					<td colspan="2"><textarea name="b_content" placeholder="내용을 입력하세요." rows="15" cols="160" style="height: 500px;"></textarea></td>
 				</tr>
 				<tr>
 					<td>FILE</td>
@@ -101,17 +100,8 @@
 				<tr height="30px">
 					<td>PASSWORD</td>
 					<td>
-						<input type="password" name="b_pwd" size="12" maxlength="12">
+						<input type="password" name="b_pwd" size="100px" maxlength="30" placeholder="암호를 입력하세요." aria-label="default input example">
 					</td>
-				<% if (!udb.isAdmin(user_id) || b_ref != 0) { %>  <!-- 관리자와 작성자가 아니면 글 비공개 설정  -->
-				<tr height="30px">
-					<td>SECRET</td>
-					<td class="btn-group-toggle" data-toggle="buttons" colspan="4">
-						<input type="checkbox" class="btn-check" id="btn-check-outlined" name="b_secret" autocomplete="off" checked>
-						<label class="btn btn-outline-primary" for="btn-check-outlined">비밀글</label>
-					</td>
-				</tr>
-				<% } %>	
 				</tr>
 				<tr height="30px">
 					<td align="left">

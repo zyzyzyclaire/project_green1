@@ -36,7 +36,7 @@
 		String path = request.getRealPath("upload");
 		
 		
-		int size=1024*1024;
+		int size=3000*3000;
 		String file_size="";
 		String file="";
 		String orgin_file_name="";

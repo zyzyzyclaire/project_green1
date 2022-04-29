@@ -10,8 +10,8 @@
 </head>
 <body>
 	<%
-		UserOrderDetailDBBean uodb = UserOrderDetailDBBean.getInstance();
-		UserOrderDetailBean ubean = new UserOrderDetailBean();	
+			UserOrderDetailDBBean uodb = UserOrderDetailDBBean.getInstance();
+			UserOrderDetailBean ubean = new UserOrderDetailBean();	
 			int order_detail_number =  Integer.parseInt( request.getParameter("order_detail_number"));
 			ubean.setOrder_detail_number(order_detail_number);
 			ubean.setRefund_reason("이유없음");

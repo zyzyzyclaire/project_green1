@@ -1,9 +1,12 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="goods.GoodsBean"%>
 <%@page import="goods.GoodsDBBean"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+request.setCharacterEncoding("UTF-8");
+%>
 <html>
 <head>
 <meta charset="EUC-KR">
@@ -18,13 +21,12 @@
 <script src="../js/jquery.js"></script>
 <script src="../js/jquery.bxslider.js"></script>
 <script>
-	   
 	    $(function(){
 	         $(".slide_gallery").bxSlider({
-	             mainSlides:3,   //¿­ÀÚ¸¶ÀÚÃÖ¼Ò 4°³
-	             maxSlides:3,    // ¿­ÀÚ¸¶ÀÚ 4°³±îÁö
-	             slideWidth:200, //½½¶óÀÌµå±æÀÌ
-	             slideMargin:30, //½½¶óÀÌµå°£°İ
+	             mainSlides:3,   //ì—´ìë§ˆììµœì†Œ 4ê°œ
+	             maxSlides:3,    // ì—´ìë§ˆì 4ê°œê¹Œì§€
+	             slideWidth:200, //ìŠ¬ë¼ì´ë“œê¸¸ì´
+	             slideMargin:30, //ìŠ¬ë¼ì´ë“œê°„ê²©
 	             auto:true,
 	             autoControls:true,
 	             
@@ -69,26 +71,28 @@
 <%@include file= "mainClass.jsp"%>  
 <body>
 	
-      <jsp:include page="mainHeader.jsp"></jsp:include> 		
-	  <div class="body_div" >  
-		  <div class="main_stat_point2" id="main_stat_point2"></div>
-		  <div class="main_stat_point" id="main_stat_point">
-		      <div class="maindiv">
-				  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-					  <div class="carousel-indicators">
+      <jsp:include page="mainHeader.jsp"></jsp:include> 
+       <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style=" width: 92%; margin: auto" > 
+					  <div class="carousel-indicators" >
 					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
 					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
 					  </div>
-					  <div class="carousel-inner">
+					  <div class="carousel-inner" style="width: 100%; " >
 					    <div class="carousel-item active">
-					      <img src="../images/serverimgs/pic_1.jpg" class="d-block w-100" alt="ÀÌ¹ÌÁö¾øÀ½">
+					    <a href="./../cart/goodsDisplay.jsp?product_number=1" style="border: 1px solid yellow;">
+					      <img  src="../images/products/04.jpg" class="d-block w-100" alt="ì´ë¯¸ì§€ì—†ìŒ">
+					      </a>
 					    </div>
 					    <div class="carousel-item">
-					      <img src="../images/serverimgs/pic_2.jpg" class="d-block w-100" alt="ÀÌ¹ÌÁö¾øÀ½">
+					    <a href="./../cart/goodsDisplay.jsp?product_number=1">
+					      <img   src="../images/products/02.jpg" class="d-block w-100" alt="ì´ë¯¸ì§€ì—†ìŒ">
+					      </a>
 					    </div>
 					    <div class="carousel-item">
-					      <img src="../images/serverimgs/pic_3.jpg" class="d-block w-100" alt="ÀÌ¹ÌÁö¾øÀ½">
+					    <a href="./../cart/goodsDisplay.jsp?product_number=1">
+					      <img   src="../images/products/03.jpg" class="d-block w-100" alt="ì´ë¯¸ì§€ì—†ìŒ">
+					      </a>
 					    </div>
 					  </div>
 					  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -99,7 +103,12 @@
 					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 					    <span class="visually-hidden">Next</span>
 					  </button>
-				  </div>
+		  </div>		
+	  <div class="body_div" >  
+		  <div class="main_stat_point2" id="main_stat_point2"></div>
+		  <div class="main_stat_point" id="main_stat_point">
+		      <div class="maindiv">
+				
 				  
 				  <div style="height: 66px; margin-bottom: 25px;">
 				  </div>
@@ -109,26 +118,26 @@
 		  		  </div>
 		  		  <div class="goods">
 	<%					
-					//1¹øfor½ÃÀÛ
-					for(int count=1; count<=3; count++){  //»óÇ°Á¾·ùÃß°¡½Ã Ä«¿îÆ®¾÷ 
+					//1ë²ˆforì‹œì‘
+					for(int count=1; count<=3; count++){  //ìƒí’ˆì¢…ë¥˜ì¶”ê°€ì‹œ ì¹´ìš´íŠ¸ì—… 
 						if(count == 1)
-							category_code = "»óÀÇ";
+							category_code = "ìƒì˜";
 						else if(count == 2)
-							category_code = "ÇÏÀÇ";
+							category_code = "í•˜ì˜";
 						else if(count == 3)
-							category_code = "½Å¹ß";
+							category_code = "ì‹ ë°œ";
 						
 						GoodsDBBean productdb = new GoodsDBBean();
-						ArrayList<GoodsBean> CategoryProductList =productdb.getCategoryProductList(category_code); //Á¾·ù ¸®½ºÆ®µéÀ» ³Ö°í 
-						ArrayList<GoodsBean> productlistArr  =  productdb.getProductimg(CategoryProductList); // »óÇ°ÀÌ¹ÌÁö¸¦ ºÒ·¯¿È
+						ArrayList<GoodsBean> CategoryProductList =productdb.getCategoryProductList(category_code); //ì¢…ë¥˜ ë¦¬ìŠ¤íŠ¸ë“¤ì„ ë„£ê³  
+						ArrayList<GoodsBean> productlistArr  =  productdb.getProductimg(CategoryProductList); // ìƒí’ˆì´ë¯¸ì§€ë¥¼ ë¶ˆëŸ¬ì˜´
 						
 						int j = 0;
 					/* 	if(count==1 && CategoryProductList.size()!=0){
-						   out.println("<h1>»óÀÇ</h1>");
+						   out.println("<h1>ìƒì˜</h1>");
 					    }else if(count==2 && CategoryProductList.size()!=0){
-						   out.println("<h1>ÇÏÀÇ</h1>");
+						   out.println("<h1>í•˜ì˜</h1>");
 					    }else if ( count==3 && CategoryProductList.size()!=0){
-						   out.println("<h1>½Å¹ß</h1>");
+						   out.println("<h1>ì‹ ë°œ</h1>");
 					    } */
 						
 						int size = 0;
@@ -137,12 +146,12 @@
 				     	}else{
 				     		size = CategoryProductList.size()/4;
 				     	}  
-				     	//2¹øfor ¹®
+				     	//2ë²ˆfor ë¬¸
 				     	out.print("<table>");
 				     	for(int i=0; i<size; i++){
 				     		out.print("<tr>");
 				     		int num =i*4;
-				     		//3¹ø for ¹®
+				     		//3ë²ˆ for ë¬¸
 				     		for(j=0+num; j<=3+num; j++){
 				     			if(CategoryProductList.size()==j) break;
 				     		
@@ -153,7 +162,7 @@
 								product_stock = CategoryProductList.get(j).getProduct_stock();
 								product_desc = CategoryProductList.get(j).getProduct_desc();
 								product_hits = CategoryProductList.get(j).getProduct_hits();
-								
+								ArrayList<GoodsBean> getGoodsimg = productdb.getGoodsimg(product_number);
 								
 								file_number =productlistArr.get(j).getFile_number();
 								orgin_file_name = productlistArr.get(j).getOrgin_file_name();
@@ -166,16 +175,12 @@
 								
 								String orgin_file_namearr[] = orgin_file_name.split("/");
 								String stored_file_namearr[] = stored_file_name.split("/");
-								//ÆÄÀÏÁ¸ÀçÈ®ÀÎ
+								//íŒŒì¼ì¡´ì¬í™•ì¸
 								File file = new File(path+"\\"+stored_file_namearr[0]);
 								boolean isExists = file.exists();
-								if(isExists) { System.out.println("I find the existFile.txt"); } 
+								/* if(isExists) { System.out.println("I find the existFile.txt"); } 
 								else { System.out.println("No, there is not a no file."); }
-	
-							
-							
-	
-							
+								 */
 	%>	
 								<td>
 									<table>
@@ -183,11 +188,11 @@
 											<td class="mainalinkimg">
 												<%if(isExists){%>
 												 <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-													<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_namearr[0]%>"  alt="ÀÌ¹ÌÁö¾øÀ½">
+													<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_namearr[0]%>"  alt="../images/products/noimg.png">
 												 </a>
 												<%}else{%>
 												  <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-													<img src="../images/products/noimg.PNG"  alt="ÀÌ¹ÌÁö¾øÀ½">
+													<img src="../images/products/noimg.png"  alt="ì´ë¯¸ì§€ì—†ìŒ">
 												  </a>
 												<%}%>
 											</td>
@@ -199,17 +204,17 @@
 											
 										</tr>
 										<tr>
-											<td style="color: rgb(0, 139, 204); line-height: 15px;">ÆÇ¸Å°¡ :<%=product_price%> won</td>
+											<td style="color: rgb(0, 139, 204); line-height: 15px;">íŒë§¤ê°€ :<%=product_price%> won</td>
 										</tr>
 									</table>
 								</td>
 						
 	<%						
-				     		}//3¹ø for ¸¶Áö¸· 
+				     		}//3ë²ˆ for ë§ˆì§€ë§‰ 
 				     		out.print("</tr>");
-						}//2¹øfor ¸¶Áö¸·
+						}//2ë²ˆfor ë§ˆì§€ë§‰
 				     	out.print("</table>");
-					} //1¹øfor ¸¶Áö¸·
+					} //1ë²ˆfor ë§ˆì§€ë§‰
 	%>
 		  		  </div>
 			  </div>

@@ -57,11 +57,11 @@
 	int b_ref = Integer.parseInt(multi.getParameter("b_ref"));
 	board.setB_ref(b_ref);
 	int b_step = Integer.parseInt(multi.getParameter("b_step"));
-	board.setB_ref(b_ref);
+	board.setB_step(b_step);
 	int b_level = Integer.parseInt(multi.getParameter("b_level"));
-	board.setB_ref(b_ref);
+	board.setB_level(b_level);
 	int b_id = Integer.parseInt(multi.getParameter("b_id"));
-	board.setB_ref(b_id);
+	board.setB_id(b_id);
 	
 	if(file != null){
 		board.setB_fname(file);

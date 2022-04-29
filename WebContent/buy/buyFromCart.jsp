@@ -37,6 +37,7 @@
 
 	<script src="../js/jquery.js"></script>
 	<script>
+	
 	// 도로명 주소 찾기 API 수정 -0421근지
 	function goPopup(){
 		// 주소검색을 수행할 팝업 페이지를 호출합니다.
@@ -52,6 +53,27 @@
 		document.buy_frm.receiver_addr.value = roadFullAddr;
 	}
 	
+	// 필수입력값 체크 -0429근지
+	function buyFromCart_ok(){
+		if(buy_frm.receiver_name.value.length == 0){
+			alert("이름을 써주세요.");
+			buy_frm.receiver_name.focus();
+			return;
+		}
+		if(buy_frm.receiver_phone.value.length == 0){
+			alert("휴대폰번호를 써주세요.");
+			buy_frm.receiver_phone.focus();
+			return;
+		}
+		if(buy_frm.receiver_addr.value.length == 0){
+			alert("주소를 써주세요.");
+			buy_frm.receiver_addr.focus();
+			return;
+		}
+		document.buy_frm.submit();
+	}
+
+	// 체크박스 클릭시 자동으로 회원정보 기입	-0426근지
 	$(function () {
 		$("#check").change(function() {
 			if($("#check").is(":checked")) {
@@ -155,7 +177,7 @@
 						<tr class="buyBlank2"></tr>
 						<tr class="buyBtnClass">
 							<td colspan="2">
-								<input type="submit" value="주문하기" id="buyBtn">
+								<input type="button" value="주문하기" id="buyBtn" onclick="buyFromCart_ok()">
 							</td>
 						</tr>
 				</table>

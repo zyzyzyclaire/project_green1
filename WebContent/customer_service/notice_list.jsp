@@ -21,6 +21,9 @@
 
 <style type="text/css">
 	/* body{font-size: small;} */
+	div{
+		font-family: "Malgun Gothic",돋음;
+	}
 	#scroll{
 		position: sticky;
 		top: 0;
@@ -49,9 +52,9 @@
 		user_id =(String)session.getAttribute("user_id");
 		System.out.print(user_id);
 	}
-	if(((String)session.getAttribute("pageNum"))!=null){
-		 pageNum = request.getParameter("pageNum");
-	}
+	
+	pageNum = request.getParameter("pageNum");
+	
 	
 	if(pageNum == null){
 		pageNum = "1";
@@ -148,7 +151,7 @@
 
 <!-- Breadcrumb 시작 -->
 <center>
-<div style="width: 1100px;">
+<div style="min-width: 1100px; max-width: 1280px;">
 	<nav aria-label="breadcrumb" style="float: right;">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="../main/main.jsp">Home</a></li>
@@ -163,39 +166,28 @@
 <br><br><br><br>
 	<center>
 	<div class="table-responsive" >
-		<div style="width:900px; padding-right: 700px; text-align: left;">
+		<div style="min-width: 1100px; max-width: 1280px; padding-right: 700px; text-align: left;">
 		<p>
 		<h2>Notice</h2>
 		구매 전에 꼭 읽어 주세요~
 		</p>
 		</div>	
-	<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
-	if(user_id.equals("admin")){	
-	%>
-	<table width="800;">
-		<tr>
-			<td align="right">
-				<input type="button" class="btn btn-outline-dark" value="글쓰기" onclick="location.href='notice_write.jsp?pageNum=<%= pageNum %>'"></input>
-			</td>
-		</tr>
-	</table>
-	<% }} %>
 	</center>
 	<center>
-		<table class="table" style="width: 900px;">
+		<table class="table" style="min-width: 1100px; max-width: 1280px;">
     <tr>
       <th scope="col" style="width: 70px;">NO.</th>
-      <th scope="col" style="text-align: center; width: 400px;">SUBJECT</th>
-      <th scope="col" style="text-align: right; width: 100px;">NAME</th>
+      <th scope="col" style="text-align: center; width: 600px;">SUBJECT</th>
+      <th scope="col" style="text-align: right;">NAME</th>
       <th scope="col" style="text-align: center;">DATE</th>
       <th scope="col" style="text-align: right;">VIEWS</th>
     </tr>
   			<%
 			if(boardList.size()==0) {
 			%>
-	 		<tr align="center" bgcolor="#FFFFFF" height="30">
-	 	   		<td colspan="5">등록된 글이 없습니다.</td>
-	 	  	</tr>
+ 		<tr align="center" bgcolor="#FFFFFF" height="30">
+ 	   		<td colspan="5">등록된 글이 없습니다.</td>
+ 	  	</tr>
 			<% } else {
 				for(int i=0; i<boardList.size(); i++){
 						NoticeBean board = boardList.get(i);
@@ -206,42 +198,59 @@
 						n_date = board.getN_date();
 						n_hit = board.getN_hit();
 			%>
-    <tr>
-      <th scope="row"><%= n_num %></th>
-      <td>
-      	<a href="notice_show.jsp?n_num=<%= n_num %>&pageNum=<%= pageNum %>">
-						<%= n_title %>
-					</a>
-      </td>
-      <td style="text-align: right;">
-      	<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
-						if(user_id.equals("admin")){	
-				%>
-						<%= user_id %>	<!-- 세션을 통해 id받아와 입력  -->
-				<% }else {%>
-						admin
-				<% }} else { %>
-						admin
-				<% } %>
-      </td>
-      
-      <td style="text-align: right;"><%= sdf.format(n_date) %></td>
-      <td style="text-align: right;"><%= n_hit %></td>
-      <%
+    	<tr>
+	      <td scope="row"><%= n_num %></td>
+	      <td>
+	      	<a href="notice_show.jsp?n_num=<%= n_num %>&pageNum=<%= pageNum %>"><%= n_title %></a>
+	      </td>
+	      <td style="text-align: right;">
+	      	<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
+							if(user_id.equals("admin")){	
+					%>
+							<%= user_id %>	<!-- 세션을 통해 id받아와 입력  -->
+					<% }else {%>
+							admin
+					<% }} else { %>
+							admin
+					<% } %>
+	      </td>
+	      <td style="text-align: center;"><%= sdf.format(n_date) %></td>
+	      <td style="text-align: right;"><%= n_hit %></td>
+	      <%
+						}
 					}
-				}
-			%>
-    </tr>
+				%>
+   		 </tr>
 </table>
+	<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
+	if(user_id.equals("admin")){	
+	%>
+	<table style="width: 1280px";>
+		<tr>
+			<td align="right">
+				<input type="button" class="btn btn-outline-dark" value="글쓰기" onclick="location.href='notice_write.jsp?pageNum=<%= pageNum %>'"></input>
+			</td>
+		</tr>
+	</table>
+	<% }} %>
 </div>
 
-<%= NoticeBean.pageNumber(4) %>
+<nav id="paging"> 
+		<ul class="pagination justify-content-center"> 
+			<li class="page-item"><a class="page-link" href="#">이전</a></li> 
+			<li class="page-item"><a class="page-link" href="notice_list.jsp?pageNum=1">1</a></li> 
+			<li class="page-item"><a class="page-link" href="notice_list.jsp?pageNum=2">2</a></li> 
+			<li class="page-item"><a class="page-link" href="notice_list.jsp?pageNum=3">3</a></li> 
+			<li class="page-item"><a class="page-link" href="#">다음</a></li> 
+		</ul> 
+	</nav>
+<% NoticeBean.pageNumber(3); %>
 	</center>
 
 <!-- 검색창 시작 -->
 <br><br>
 <center>
-<div style="width: 1100px; padding-left: 100px;">
+<div style="min-width: 1100px; max-width: 1280px; padding-left: 100px;">
 <table style="float: left;">
 	<tr>
 		<td width="100px;">

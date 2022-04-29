@@ -23,6 +23,58 @@ public class QnADBBean {
 		return ds.getConnection();
 	}
 
+	public ArrayList<QnABean> getMyboardlist(String user_id) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<QnABean> boards = new ArrayList<QnABean>();
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("SELECT * FROM qna_board WHERE u_id = ?");
+			pstmt.setString(1, user_id);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				QnABean qbean = new QnABean();
+				qbean.setB_id(rs.getInt("b_id"));
+				qbean.setU_id(rs.getString("u_id"));
+				qbean.setB_category(rs.getString("b_category"));
+				//System.out.println(rs.getString("b_category"));
+				qbean.setB_view(rs.getInt("b_view"));
+				qbean.setB_title(rs.getString("b_title"));
+				qbean.setB_content(rs.getString("b_content"));
+				qbean.setB_ip(rs.getString("b_ip"));
+				qbean.setB_pwd(rs.getString("b_pwd"));
+				qbean.setB_date(rs.getTimestamp("b_date"));
+				qbean.setB_secret(rs.getString("b_secret"));
+				qbean.setB_ref(rs.getInt("b_ref"));
+				qbean.setB_level(rs.getInt("b_level"));
+				qbean.setB_step(rs.getInt("b_step"));
+				qbean.setB_fname(rs.getString("b_fname"));
+				qbean.setB_fsize(rs.getInt("b_fsize"));
+				qbean.setB_rfname(rs.getString("b_rfname"));
+				boards.add(qbean);
+			}
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return boards;
+	}
+	
+	
 	public QnABean getBoard(int b_id, boolean isView) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -84,9 +136,9 @@ public class QnADBBean {
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		ResultSet pageSet = null;	//페이지번호를 받기위해
-		int dbCount=0;	//페이지 번호의 개수를 받기 위한 변수
-		int absolutePage=1;	//출력할 페이지
+		ResultSet pageSet = null;	//�럹�씠吏�踰덊샇瑜� 諛쏄린�쐞�빐
+		int dbCount=0;	//�럹�씠吏� 踰덊샇�쓽 媛쒖닔瑜� 諛쏄린 �쐞�븳 蹂��닔
+		int absolutePage=1;	//異쒕젰�븷 �럹�씠吏�
 		
 		ArrayList<QnABean> boards = new ArrayList<QnABean>();
 
@@ -96,7 +148,7 @@ public class QnADBBean {
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			pageSet = stmt.executeQuery("select count(b_id) from qna_board");
 			
-			if (pageSet.next()) {	//dbcount에 총 개수를 넣음
+			if (pageSet.next()) {	//dbcount�뿉 珥� 媛쒖닔瑜� �꽔�쓬
 				dbCount = pageSet.getInt(1);
 				pageSet.close();
 				stmt.close();
@@ -136,7 +188,7 @@ public class QnADBBean {
 				count++;
 			}
 			
-			String sql = "SELECT * FROM qna_board order by b_ref desc, b_step asc, b_id desc";
+			String sql = "SELECT * FROM qna_board order by b_ref desc, b_step asc";
 			pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			rs = pstmt.executeQuery();
 			
@@ -199,20 +251,19 @@ public class QnADBBean {
 		int number;
 		
 		int id = board.getB_id();
-		int ref = board.getB_ref(); //답변글의 번호 출력
-		int step = board.getB_step(); //답변글이면 숫자 1씩 증가
-		int level = board.getB_level();	//답변글이 달리면 1 증가
+		int ref = board.getB_ref(); //�떟蹂�湲��쓽 踰덊샇 異쒕젰
+		int step = board.getB_step(); //�떟蹂�湲��씠硫� �닽�옄 1�뵫 利앷�
+		int level = board.getB_level();	//�떟蹂�湲��씠 �떖由щ㈃ 1 利앷�
 		
 		try {
 			conn = getConnection();
 			rs = conn.prepareStatement("SELECT MAX(b_id) FROM qna_board").executeQuery();
 			if (rs.next()) {
-				number = rs.getInt(1) + 1;	//값이 있을 경우이기 때문에 +1
+				number = rs.getInt(1) + 1;	//媛믪씠 �엳�쓣 寃쎌슦�씠湲� �븣臾몄뿉 +1
 			} else {
-				number = 1;	//값이 없을 경우
+				number = 1;	//媛믪씠 �뾾�쓣 寃쎌슦
 			}
-			
-			if (id != 0) {	//id가 0이 아니면 답글로 봄
+			if (id != 0) {	//id媛� 0�씠 �븘�땲硫� �떟湲�濡� 遊�
 				String sql="UPDATE qna_board SET b_step = b_step+1"
 						+ " WHERE b_ref=? and b_step > ?";
 				pstmt = conn.prepareStatement(sql);
@@ -222,8 +273,8 @@ public class QnADBBean {
 				
 				step=step+1;
 				level=level+1;
-			} else {	// 답글이 아닐 때 (글쓰기 일 때)
-				ref= number;	//ref에 글 번호가 들어가게 됨
+			} else {	// �떟湲��씠 �븘�땺 �븣 (湲��벐湲� �씪 �븣)
+				ref= number;	//ref�뿉 湲� 踰덊샇媛� �뱾�뼱媛�寃� �맖
 				step=0;
 				level=0;
 			}
@@ -244,19 +295,19 @@ public class QnADBBean {
 			pstmt.setString(7, board.getB_pwd());
 			pstmt.setTimestamp(8, board.getB_date());
 			pstmt.setString(9, board.getB_secret());
-			pstmt.setInt(10, board.getB_ref());
-			pstmt.setInt(11, board.getB_level());
-			pstmt.setInt(12, board.getB_step());
+			pstmt.setInt(10, ref);
+			pstmt.setInt(11, level);
+			pstmt.setInt(12, step);
 			pstmt.setString(13, board.getB_fname());
 			pstmt.setInt(14, board.getB_fsize());
 			pstmt.setString(15, board.getB_rfname());
 			pstmt.executeUpdate();
 			
 			isWrite = 1;
-			System.out.println("글쓰기 성공");
+			System.out.println("湲��벐湲� �꽦怨�");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("글쓰기 실패");
+			System.out.println("湲��벐湲� �떎�뙣");
 		} finally {
 			try {
 				if(rs != null) rs.close();

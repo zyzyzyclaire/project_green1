@@ -14,11 +14,10 @@
     if (session.getAttribute("user_id") != null) {
         user_id = (String) session.getAttribute("user_id");
     }
-
+	
 	if (request.getParameter("b_id") != null) {	
 		b_id = Integer.parseInt(request.getParameter("b_id"));
 	}
-    
 	QnADBBean qdb = QnADBBean.getInstance();
 	QnABean board = qdb.getBoard(b_id, false);
 	UserDBBean udb = new UserDBBean();
@@ -36,7 +35,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-
+	
+	<!-- 서머노트를 위해 추가해야할 부분 시작 -->
+	  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
+	  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	  <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
+	<!-- 서머노트를 위해 추가해야할 부분 끝 -->
     <script src="board.js" type="text/javascript"></script> 
 <style> 
 	#container, #ntc, #navi { 
@@ -88,11 +92,11 @@
 					<%
 						if(b_id == 0){
 					%>
-							<input name="b_title" type="text" size="60px" value="<%= b_title %>">
+							<input name="b_title" type="text" size="100px" value="<%= b_title %>" placeholder="제목을 입력하세요." aria-label="default input example">
 					<% 	
 						} else {
 					%>	
-							<input name="b_title" type="text" size="60px" value="[RE]: <%= b_title %>">
+							<input name="b_title" type="text" size="100px" value="[RE]: <%= b_title %>">
 					<% 	
 						}
 					%>
@@ -115,7 +119,7 @@
 					</td>
 				</tr>
 			<tr>
-				<td colspan="2"><textarea name="b_content" rows="15" cols="160"></textarea></td>
+				<td colspan="2"><textarea name="b_content" class="summernote" placeholder="내용을 입력하세요." rows="15" cols="160" style="height: 500px;"></textarea></td>
 			</tr>
 			<tr>
 				<td>FILE</td>
@@ -126,7 +130,7 @@
 			<tr height="30px">
 				<td>PASSWORD</td>
 				<td>
-					<input type="password" name="b_pwd" size="12" maxlength="12">
+					<input type="password" name="b_pwd" size="100px" maxlength="30" placeholder="암호를 입력하세요." aria-label="default input example">
 				</td>
 			</tr>
 			<% if (!udb.isAdmin(user_id) || b_ref != 0) { %>  <!-- 관리자와 작성자가 아니면 글 비공개 설정  -->
@@ -150,6 +154,12 @@
 			</form>
 		</table>
 	</div>
-	<jsp:include page="../main/mainfooter.jsp"></jsp:include> 
+	<jsp:include page="../main/mainfooter.jsp"></jsp:include>
+<script>
+$('.summernote').summernote({
+	  height: 500,
+	  lang: "ko-KR"
+	});
+</script> 
 </body>
 </html>
