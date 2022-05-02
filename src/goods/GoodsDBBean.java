@@ -486,7 +486,7 @@ public class GoodsDBBean {
 		}
 	}	
 	
-	// 많이 팔린 순으로 상품 들고오기 -0429근지
+	// 많이 팔린 순으로 상품 들고오기(카테고리) -0429근지
 	public ArrayList<GoodsBean> getCategoryProductList_best(String category_code) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -512,6 +512,162 @@ public class GoodsDBBean {
 			pstmt.setString(1, category_code);
 			rs = pstmt.executeQuery();
 		
+			//System.out.println("여기까지는들어옴?");
+			while (rs.next()) {
+				product = new GoodsBean();
+				product.setProduct_number(rs.getInt("product_number"));
+				product.setCategory_code(rs.getString("category_code"));
+				product.setProduct_name(rs.getString("product_name"));
+				product.setProduct_price(rs.getInt("product_price"));
+				product.setProduct_stock(rs.getInt("product_stock"));
+				product.setProduct_desc(rs.getString("product_desc"));
+				product.setProduct_date(rs.getTimestamp("product_date")); 
+				product.setProduct_hits(rs.getInt("product_hits"));
+				//System.out.println(rs.getInt("product_number"));
+				
+				ProductArr.add(product);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return ProductArr;
+	}
+	
+	// 조회순으로 상품 들고오기(카테고리) -0502근지
+	public ArrayList<GoodsBean> getCategoryProductList_hits(String category_code) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select product_number"
+				+ ",category_code"
+				+ ",product_name"
+				+ ",product_price"
+				+ ",product_stock"
+				+ ",product_desc"
+				+ ",product_date"
+				+ ",product_hits"
+				+ " from product"
+				+ "	where category_code = ?"
+				+ " order by product_hits desc";
+		
+		ArrayList<GoodsBean> ProductArr = new ArrayList<GoodsBean>();
+		GoodsBean product = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, category_code);
+			rs = pstmt.executeQuery();
+			
+			//System.out.println("여기까지는들어옴?");
+			while (rs.next()) {
+				product = new GoodsBean();
+				product.setProduct_number(rs.getInt("product_number"));
+				product.setCategory_code(rs.getString("category_code"));
+				product.setProduct_name(rs.getString("product_name"));
+				product.setProduct_price(rs.getInt("product_price"));
+				product.setProduct_stock(rs.getInt("product_stock"));
+				product.setProduct_desc(rs.getString("product_desc"));
+				product.setProduct_date(rs.getTimestamp("product_date")); 
+				product.setProduct_hits(rs.getInt("product_hits"));
+				//System.out.println(rs.getInt("product_number"));
+				
+				ProductArr.add(product);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return ProductArr;
+	}
+	
+	// 가격 높은 순으로 상품 들고오기(카테고리) -0502근지
+	public ArrayList<GoodsBean> getCategoryProductList_price_desc(String category_code) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select product_number"
+				+ ",category_code"
+				+ ",product_name"
+				+ ",product_price"
+				+ ",product_stock"
+				+ ",product_desc"
+				+ ",product_date"
+				+ ",product_hits"
+				+ " from product"
+				+ "	where category_code = ?"
+				+ " order by product_price desc";
+		
+		ArrayList<GoodsBean> ProductArr = new ArrayList<GoodsBean>();
+		GoodsBean product = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, category_code);
+			rs = pstmt.executeQuery();
+			
+			//System.out.println("여기까지는들어옴?");
+			while (rs.next()) {
+				product = new GoodsBean();
+				product.setProduct_number(rs.getInt("product_number"));
+				product.setCategory_code(rs.getString("category_code"));
+				product.setProduct_name(rs.getString("product_name"));
+				product.setProduct_price(rs.getInt("product_price"));
+				product.setProduct_stock(rs.getInt("product_stock"));
+				product.setProduct_desc(rs.getString("product_desc"));
+				product.setProduct_date(rs.getTimestamp("product_date")); 
+				product.setProduct_hits(rs.getInt("product_hits"));
+				//System.out.println(rs.getInt("product_number"));
+				
+				ProductArr.add(product);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return ProductArr;
+	}
+	
+	// 가격 낮은 순으로 상품 들고오기(카테고리) -0502근지
+	public ArrayList<GoodsBean> getCategoryProductList_price(String category_code) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select product_number"
+				+ ",category_code"
+				+ ",product_name"
+				+ ",product_price"
+				+ ",product_stock"
+				+ ",product_desc"
+				+ ",product_date"
+				+ ",product_hits"
+				+ " from product"
+				+ "	where category_code = ?"
+				+ " order by product_price";
+		
+		ArrayList<GoodsBean> ProductArr = new ArrayList<GoodsBean>();
+		GoodsBean product = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, category_code);
+			rs = pstmt.executeQuery();
+			
 			//System.out.println("여기까지는들어옴?");
 			while (rs.next()) {
 				product = new GoodsBean();
@@ -615,6 +771,211 @@ public class GoodsDBBean {
 		}
 		return ProductimgArr;
 	}
+	
+	//전체상품리스트반환 - 판매순	-0501근지
+	public ArrayList<GoodsBean> getProductlist_best() throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+//		System.out.println("들어옴?");
+		String query = "select product_number"
+							+ ",category_code"
+							+ ",product_name"
+							+ ",product_price"
+							+ ",product_stock"
+							+ ",product_desc"
+							+ ",product_date"
+							+ ",product_hits"
+							+ " from product"
+							+ " order by product_ordered_count desc";
+		
+		ArrayList<GoodsBean> ProductArr = new ArrayList<GoodsBean>();
+		GoodsBean product = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+		
+			//System.out.println("여기까지는들어옴?");
+			while (rs.next()) {
+				product = new GoodsBean();
+				product.setProduct_number(rs.getInt("product_number"));
+				product.setCategory_code(rs.getString("category_code"));
+				product.setProduct_name(rs.getString("product_name"));
+				product.setProduct_price(rs.getInt("product_price"));
+				product.setProduct_stock(rs.getInt("product_stock"));
+				product.setProduct_desc(rs.getString("product_desc"));
+				product.setProduct_date(rs.getTimestamp("product_date"));
+				product.setProduct_hits(rs.getInt("product_hits"));
+				//System.out.println(rs.getInt("product_number"));
+				
+				ProductArr.add(product);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return ProductArr;
+	}
+
+	//전체상품리스트반환 - 조회순	-0501근지
+	public ArrayList<GoodsBean> getProductlist_hits() throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+//		System.out.println("들어옴?");
+		String query = "select product_number"
+							+ ",category_code"
+							+ ",product_name"
+							+ ",product_price"
+							+ ",product_stock"
+							+ ",product_desc"
+							+ ",product_date"
+							+ ",product_hits"
+							+ " from product"
+							+ " order by product_hits desc";
+		
+		ArrayList<GoodsBean> ProductArr = new ArrayList<GoodsBean>();
+		GoodsBean product = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+		
+			//System.out.println("여기까지는들어옴?");
+			while (rs.next()) {
+				product = new GoodsBean();
+				product.setProduct_number(rs.getInt("product_number"));
+				product.setCategory_code(rs.getString("category_code"));
+				product.setProduct_name(rs.getString("product_name"));
+				product.setProduct_price(rs.getInt("product_price"));
+				product.setProduct_stock(rs.getInt("product_stock"));
+				product.setProduct_desc(rs.getString("product_desc"));
+				product.setProduct_date(rs.getTimestamp("product_date"));
+				product.setProduct_hits(rs.getInt("product_hits"));
+				//System.out.println(rs.getInt("product_number"));
+				
+				ProductArr.add(product);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return ProductArr;
+	}
+	
+	//전체상품리스트반환 - 높은가격순	-0501근지
+	public ArrayList<GoodsBean> getProductlist_price_desc() throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+//		System.out.println("들어옴?");
+		String query = "select product_number"
+							+ ",category_code"
+							+ ",product_name"
+							+ ",product_price"
+							+ ",product_stock"
+							+ ",product_desc"
+							+ ",product_date"
+							+ ",product_hits"
+							+ " from product"
+							+ " order by product_price desc";
+		
+		ArrayList<GoodsBean> ProductArr = new ArrayList<GoodsBean>();
+		GoodsBean product = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+		
+			//System.out.println("여기까지는들어옴?");
+			while (rs.next()) {
+				product = new GoodsBean();
+				product.setProduct_number(rs.getInt("product_number"));
+				product.setCategory_code(rs.getString("category_code"));
+				product.setProduct_name(rs.getString("product_name"));
+				product.setProduct_price(rs.getInt("product_price"));
+				product.setProduct_stock(rs.getInt("product_stock"));
+				product.setProduct_desc(rs.getString("product_desc"));
+				product.setProduct_date(rs.getTimestamp("product_date"));
+				product.setProduct_hits(rs.getInt("product_hits"));
+				//System.out.println(rs.getInt("product_number"));
+				
+				ProductArr.add(product);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return ProductArr;
+	}
+	
+	//전체상품리스트반환 - 낮은가격순	-0501근지
+	public ArrayList<GoodsBean> getProductlist_price() throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+//		System.out.println("들어옴?");
+		String query = "select product_number"
+							+ ",category_code"
+							+ ",product_name"
+							+ ",product_price"
+							+ ",product_stock"
+							+ ",product_desc"
+							+ ",product_date"
+							+ ",product_hits"
+							+ " from product"
+							+ " order by product_price";
+		
+		ArrayList<GoodsBean> ProductArr = new ArrayList<GoodsBean>();
+		GoodsBean product = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+		
+			//System.out.println("여기까지는들어옴?");
+			while (rs.next()) {
+				product = new GoodsBean();
+				product.setProduct_number(rs.getInt("product_number"));
+				product.setCategory_code(rs.getString("category_code"));
+				product.setProduct_name(rs.getString("product_name"));
+				product.setProduct_price(rs.getInt("product_price"));
+				product.setProduct_stock(rs.getInt("product_stock"));
+				product.setProduct_desc(rs.getString("product_desc"));
+				product.setProduct_date(rs.getTimestamp("product_date"));
+				product.setProduct_hits(rs.getInt("product_hits"));
+				//System.out.println(rs.getInt("product_number"));
+				
+				ProductArr.add(product);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+		}
+		return ProductArr;
+	}
+	
 	
 	//아래쪽부터 찬희한거@@@@@@@@@@@@@@@@@@@@@@@@@@@@// 수정하면 다바꿔야해서 수정안함
 	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

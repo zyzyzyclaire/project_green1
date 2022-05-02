@@ -7,6 +7,13 @@
 <%
 request.setCharacterEncoding("UTF-8");
 %>
+<%
+	int j = 0;
+	GoodsDBBean productdb = new GoodsDBBean();
+    ArrayList<GoodsBean> productListArr = productdb.getProductlist();
+    ArrayList<GoodsBean> productListArr_best = productdb.getProductlist_best();
+
+%>
 <html>
 <head>
 <meta charset="EUC-KR">
@@ -116,109 +123,165 @@ request.setCharacterEncoding("UTF-8");
 				  <div class="maintitle">
 				 		BEST ITEM
 		  		  </div>
-		  		  <div class="goods">
-	<%					
-					//1번for시작
-					for(int count=1; count<=3; count++){  //상품종류추가시 카운트업 
-						if(count == 1)
-							category_code = "상의";
-						else if(count == 2)
-							category_code = "하의";
-						else if(count == 3)
-							category_code = "신발";
-						
-						GoodsDBBean productdb = new GoodsDBBean();
-						ArrayList<GoodsBean> CategoryProductList =productdb.getCategoryProductList(category_code); //종류 리스트들을 넣고 
-						ArrayList<GoodsBean> productlistArr  =  productdb.getProductimg(CategoryProductList); // 상품이미지를 불러옴
-						
-						int j = 0;
-					/* 	if(count==1 && CategoryProductList.size()!=0){
-						   out.println("<h1>상의</h1>");
-					    }else if(count==2 && CategoryProductList.size()!=0){
-						   out.println("<h1>하의</h1>");
-					    }else if ( count==3 && CategoryProductList.size()!=0){
-						   out.println("<h1>신발</h1>");
-					    } */
-						
-						int size = 0;
-				     	if(CategoryProductList.size()%4 != 0){
-				     		size = CategoryProductList.size()/4+1 ;
-				     	}else{
-				     		size = CategoryProductList.size()/4;
-				     	}  
-				     	//2번for 문
-				     	out.print("<table>");
-				     	for(int i=0; i<size; i++){
-				     		out.print("<tr>");
-				     		int num =i*4;
-				     		//3번 for 문
-				     		for(j=0+num; j<=3+num; j++){
-				     			if(CategoryProductList.size()==j) break;
-				     		
-					     		product_number= CategoryProductList.get(j).getProduct_number();
-								category_code = CategoryProductList.get(j).getCategory_code();
-								product_name = CategoryProductList.get(j).getProduct_name();
-								product_price =CategoryProductList.get(j).getProduct_price();
-								product_stock = CategoryProductList.get(j).getProduct_stock();
-								product_desc = CategoryProductList.get(j).getProduct_desc();
-								product_hits = CategoryProductList.get(j).getProduct_hits();
-								ArrayList<GoodsBean> getGoodsimg = productdb.getGoodsimg(product_number);
-								
-								file_number =productlistArr.get(j).getFile_number();
-								orgin_file_name = productlistArr.get(j).getOrgin_file_name();
-								stored_file_name = productlistArr.get(j).getStored_file_name();
-								stored_thumbnail = productlistArr.get(j).getStored_thumbnail();
-								delegate_thumbnail =productlistArr.get(j).getDelegate_thumbnail();
-								file_size = productlistArr.get(j).getFile_size();
-								create_date = productlistArr.get(j).getCreate_date();
-								delete_check = productlistArr.get(j).getDelete_check();
-								
-								String orgin_file_namearr[] = orgin_file_name.split("/");
-								String stored_file_namearr[] = stored_file_name.split("/");
-								//파일존재확인
-								File file = new File(path+"\\"+stored_file_namearr[0]);
-								boolean isExists = file.exists();
-								/* if(isExists) { System.out.println("I find the existFile.txt"); } 
-								else { System.out.println("No, there is not a no file."); }
-								 */
-	%>	
-								<td>
-									<table>
-										<tr>
-											<td class="mainalinkimg">
-												<%if(isExists){%>
-												 <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-													<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_namearr[0]%>"  alt="../images/products/noimg.png">
-												 </a>
-												<%}else{%>
-												  <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-													<img src="../images/products/noimg.png"  alt="이미지없음">
-												  </a>
-												<%}%>
-											</td>
-										</tr>
-										<tr  style = "cursor:pointer;" onclick="location.href='../cart/goodsDisplay.jsp?product_number=<%=product_number%>'">
-											 	<td style="border-bottom: 1px rgba(0, 0, 0, 0.09) solid; line-height: 30px;">	
-											 			<%=product_name %>
-											 	</td>
-											
-										</tr>
-										<tr>
-											<td style="color: rgb(0, 139, 204); line-height: 15px;">판매가 :<%=product_price%> won</td>
-										</tr>
-									</table>
-								</td>
-						
-	<%						
-				     		}//3번 for 마지막 
-				     		out.print("</tr>");
-						}//2번for 마지막
-				     	out.print("</table>");
-					} //1번for 마지막
-	%>
+		<!-- best 8개 출력 -0502근지-->
+      	<div class="goods">
+ <%
+	     	out.print("<table>");
+	     	//번for 문
+	     	for(int i=0; i<2; i++){
+	     		out.print("<tr>");
+	     		int num =i*4;
+	     		//2번 for 문
+	     
+	     		for(j=0+num; j<=3+num; j++){
+					
+	     			product_number= productListArr_best.get(j).getProduct_number();
+	     			category_code = productListArr_best.get(j).getCategory_code();
+	     			product_name = productListArr_best.get(j).getProduct_name();
+	     			product_price =productListArr_best.get(j).getProduct_price();
+	     			product_stock = productListArr_best.get(j).getProduct_stock();
+	     			product_desc = productListArr_best.get(j).getProduct_desc();
+	     			product_hits = productListArr_best.get(j).getProduct_hits();
+
+					// 이미지 불러오기	-0502근지
+	     			GoodsBean getGoodsImg = productdb.getGoodsImg(product_number);
+	     			
+	     			file_number = getGoodsImg.getFile_number();
+	     			orgin_file_name = getGoodsImg.getOrgin_file_name();
+	     			stored_file_name = getGoodsImg.getStored_file_name();
+	     			stored_thumbnail = getGoodsImg.getStored_thumbnail();
+	     			delegate_thumbnail = getGoodsImg.getDelegate_thumbnail();
+	     			file_size = getGoodsImg.getFile_size();
+	     			create_date = getGoodsImg.getCreate_date();
+	     			delete_check = getGoodsImg.getDelete_check();
+					
+					String orgin_file_namearr[] = orgin_file_name.split("/");
+					String stored_file_namearr[] = stored_file_name.split("/");
+					//파일존재확인
+					File file = new File(path+"\\"+stored_file_namearr[0]);
+					boolean isExists = file.exists();
+					/* if(isExists) { System.out.println("I find the existFile.txt"); } 
+					else { System.out.println("No, there is not a no file."); } */
+%>
+					   <td>
+							<table>
+								<tr>
+									<td class="mainalinkimg">
+										<%if(isExists){%>
+										 <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
+											<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_namearr[0]%>"  alt="이미지없음">
+										 </a>
+										<%}else{%>
+										  <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
+											<img src="../images/products/noimg.PNG"  alt="이미지없음">
+										  </a>
+										<%}%>
+									</td>
+								</tr>
+								<tr  style = "cursor:pointer;" onclick="location.href='../cart/goodsDisplay.jsp?product_number=<%=product_number%>'">
+									 	<td style="border-bottom: 1px rgba(0, 0, 0, 0.09) solid; line-height: 30px;">	
+									 			<%=product_name %>
+									 	</td>
+								</tr>
+								<tr>
+									<td style="color: rgb(0, 139, 204); line-height: 15px;">판매가 :<%=product_price%> won</td>
+								</tr>
+							</table>
+						</td>
+ <%
+	     		}
+	     		out.print("</tr>");
+	     	}
+	     	out.print("</table>");
+ %>
+ 		</div>
+ 		
+ 		
+ 		
+				  <div style="height: 66px; margin-bottom: 25px;">
+				  </div>
+				  
+				  <div class="maintitle">
+				 		NEW ARRIVAL
 		  		  </div>
+		<!-- new 72개 출력 -0502근지-->
+      	<div class="goods">
+ <%
+	     	out.print("<table>");
+	     	//번for 문
+	     	for(int i=0; i<6; i++){
+	     		out.print("<tr>");
+	     		int num =i*4;
+	     		//2번 for 문
+	     
+	     		for(j=0+num; j<=3+num; j++){
+					
+	     			product_number= productListArr.get(j).getProduct_number();
+	     			category_code = productListArr.get(j).getCategory_code();
+	     			product_name = productListArr.get(j).getProduct_name();
+	     			product_price =productListArr.get(j).getProduct_price();
+	     			product_stock = productListArr.get(j).getProduct_stock();
+	     			product_desc = productListArr.get(j).getProduct_desc();
+	     			product_hits = productListArr.get(j).getProduct_hits();
+
+					// 이미지 불러오기	-0502근지
+	     			GoodsBean getGoodsImg = productdb.getGoodsImg(product_number);
+	     			
+	     			file_number = getGoodsImg.getFile_number();
+	     			orgin_file_name = getGoodsImg.getOrgin_file_name();
+	     			stored_file_name = getGoodsImg.getStored_file_name();
+	     			stored_thumbnail = getGoodsImg.getStored_thumbnail();
+	     			delegate_thumbnail = getGoodsImg.getDelegate_thumbnail();
+	     			file_size = getGoodsImg.getFile_size();
+	     			create_date = getGoodsImg.getCreate_date();
+	     			delete_check = getGoodsImg.getDelete_check();
+					
+					String orgin_file_namearr[] = orgin_file_name.split("/");
+					String stored_file_namearr[] = stored_file_name.split("/");
+					//파일존재확인
+					File file = new File(path+"\\"+stored_file_namearr[0]);
+					boolean isExists = file.exists();
+					/* if(isExists) { System.out.println("I find the existFile.txt"); } 
+					else { System.out.println("No, there is not a no file."); } */
+%>
+					   <td>
+							<table>
+								<tr>
+									<td class="mainalinkimg">
+										<%if(isExists){%>
+										 <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
+											<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_namearr[0]%>"  alt="이미지없음">
+										 </a>
+										<%}else{%>
+										  <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
+											<img src="../images/products/noimg.PNG"  alt="이미지없음">
+										  </a>
+										<%}%>
+									</td>
+								</tr>
+								<tr  style = "cursor:pointer;" onclick="location.href='../cart/goodsDisplay.jsp?product_number=<%=product_number%>'">
+									 	<td style="border-bottom: 1px rgba(0, 0, 0, 0.09) solid; line-height: 30px;">	
+									 			<%=product_name %>
+									 	</td>
+								</tr>
+								<tr>
+									<td style="color: rgb(0, 139, 204); line-height: 15px;">판매가 :<%=product_price%> won</td>
+								</tr>
+							</table>
+						</td>
+ <%
+	     		}
+	     		out.print("</tr>");
+	     	}
+	     	out.print("</table>");
+ %>
+ 		</div>
+ 		
+ 		
 			  </div>
-			</div>  <!-- main_stat_point -->
+			</div> 
+			
+			 <!-- main_stat_point -->
 			
 			
 			<jsp:include page="mainfooter.jsp"></jsp:include>
