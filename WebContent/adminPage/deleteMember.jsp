@@ -36,7 +36,7 @@
         } else if (udb.deleteUser(deleteID) == 1) {
         	%><script>
 			alert("탈퇴 처리되었습니다.");
-			location.href = "manageMember.jsp";
+			location.href = "?pageChange=manageMember.jsp";
 			</script><%
         } else {
         	%><script>

@@ -76,8 +76,16 @@
 		//비공개글
 		board.setB_secret("1");
 	}
+	if (multi.getParameter("b_anschk") == null || 2*b_step==0 || b_step==0) {
+		//일반글
+		board.setB_anschk("0");
+	} else {
+		//답변글
+		board.setB_anschk("1");
+	}
 	
 	if (qnaDB.writeBoard(board) == 1) {
+		qnaDB.alreadyAnswered(board);
 		response.sendRedirect("qnaList.jsp");
 	} else {
 %>

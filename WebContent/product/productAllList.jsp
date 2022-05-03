@@ -10,9 +10,15 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
  <%
+ 	String pageNum = request.getParameter("pageNum");
+
+	if(pageNum == null){
+		pageNum = "1";
+	}
+	
 	int j = 0;
 	GoodsDBBean productdb = new GoodsDBBean();
-    ArrayList<GoodsBean> productListArr = productdb.getProductlist();
+    ArrayList<GoodsBean> productListArr = productdb.getProductlist(pageNum);
     int size = 0;
     if(productListArr.size()%4 != 0){
     	size = productListArr.size()/4+1 ;
@@ -112,9 +118,9 @@
 		String result = request.getParameter("sort");
 //		System.out.println("@@@###===>"+result);
 		if(result==null) {
-			productListArr = productdb.getProductlist();
+			productListArr = productdb.getProductlist(pageNum);
 		} else if(result.equals("1")) {
-			productListArr = productdb.getProductlist();
+			productListArr = productdb.getProductlist(pageNum);
 		} else if(result.equals("2")) {
 			productListArr = productdb.getProductlist_best();
 		} else if(result.equals("3")) {
@@ -144,7 +150,6 @@
 	     			product_stock = productListArr.get(j).getProduct_stock();
 	     			product_desc = productListArr.get(j).getProduct_desc();
 	     			product_hits = productListArr.get(j).getProduct_hits();
-
 					// 이미지 불러오기	-0502근지
 	     			GoodsBean getGoodsImg = productdb.getGoodsImg(product_number);
 	     			
@@ -157,10 +162,15 @@
 	     			create_date = getGoodsImg.getCreate_date();
 	     			delete_check = getGoodsImg.getDelete_check();
 					
-					String orgin_file_namearr[] = orgin_file_name.split("/");
-					String stored_file_namearr[] = stored_file_name.split("/");
+	     			if(stored_file_name!=null){
+						String orgin_file_namearr[] = orgin_file_name.split("/");
+						String stored_file_namearr[] = stored_file_name.split("/");
+						stored_file_name =  stored_file_namearr[0];
+					}else{
+						stored_file_name = null;
+					}
 					//파일존재확인
-					File file = new File(path+"\\"+stored_file_namearr[0]);
+					File file = new File(path+"\\"+stored_file_name);
 					boolean isExists = file.exists();
 					/* if(isExists) { System.out.println("I find the existFile.txt"); } 
 					else { System.out.println("No, there is not a no file."); } */
@@ -170,17 +180,17 @@
 								<tr>
 									<td class="mainalinkimg">
 										<%if(isExists){%>
-										 <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-											<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_namearr[0]%>"  alt="이미지없음">
+										 <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>&checkpage=productAllList">
+											<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name%>"  alt="이미지없음">
 										 </a>
 										<%}else{%>
-										  <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-											<img src="../images/products/noimg.PNG"  alt="이미지없음">
+										  <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>&checkpage=productAllList">
+											<img src="../images/products/noimg.png"  alt="이미지없음">
 										  </a>
 										<%}%>
 									</td>
 								</tr>
-								<tr  style = "cursor:pointer;" onclick="location.href='../cart/goodsDisplay.jsp?product_number=<%=product_number%>'">
+								<tr  style = "cursor:pointer;" onclick="location.href='../cart/goodsDisplay.jsp?product_number=<%=product_number%>&checkpage=productAllList'">
 									 	<td style="border-bottom: 1px rgba(0, 0, 0, 0.09) solid; line-height: 30px;">	
 									 			<%=product_name %>
 									 	</td>
@@ -198,15 +208,14 @@
  %>
  		</div>
 	</main>
+				<div style="margin: auto;  width: 300px; text-align: center;"> 
+			 		<ul class="pagination justify-content-center"> 
+			 			<%= GoodsBean.pageNumer(4,"All",null,null) %>
+		 			</ul> 
+		 		</div>
+	</table> 
 	<jsp:include page="../main/mainfooter.jsp"></jsp:include>
 </body>
 </html>
 
-
-	            	}
-         	}
-            %>
-            
-            
-            
- 		</table> --%>
+ 		

@@ -33,19 +33,14 @@
     <link rel="stylesheet" href="../fontstyle/fontello-4581031e/css/fontello.css">
     <link rel="stylesheet" href="../css/jquery.bxslider.css">
 
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet"> -->
+
+
 <style type="text/css">
-	div{
-		font-family: "Malgun Gothic",돋음;
-	}
-	/* body{font-size: small;} */
-	#scroll{
-		position: sticky;
-		top: 0;
-		background-color: white;
-		background-color: rgba( 255, 255, 255, 0.5 );
-	}
-	#lastnav{
-		padding-right: 50px;
+	 body{
+		font-family: "Nanum Gothic","Malgun Gothic","맑은 고딕","돋움","Dotum","Apple Gothic","Apple SD Gothic Neo",sans-serif;
 	}
 	.breadcrumb {
 		 background: white; 
@@ -60,7 +55,7 @@
 	var pwd = prompt("비밀번호를 입력하세요.");
 	if(<%= board.getN_pwd() %> == pwd){
 		if(confirm("정말 글을 삭제하시겠습니까?") == true){
-			location.href = "notice_delete_ok.jsp?n_num="+<%= board.getN_num() %>+"&pageNum="<%= pageNum %>;
+			location.href = "notice_delete_ok.jsp?n_num=<%= board.getN_num() %>&pageNum=<%= pageNum %>";
 		}
 	} else {
 		alert("비밀번호가 맞지 않습니다.");
@@ -70,90 +65,10 @@
 </script>
 </head>
 <body>
-<!-- 스크롤 네비바 시작 -->
-<div id="scroll">
+<jsp:include page="../main/mainHeader.jsp"></jsp:include>
 
-
-<nav class="py-2 border-bottom">
-    <div class="container d-flex flex-wrap">
-       <%
-       		if(user_id==null){
-       %>
-      <ul class="nav me-auto">
-        <li class="nav-item"><a href="../login/login.jsp" class="nav-link link-dark px-2 active" aria-current="page">로그인</a></li>
-        <li class="nav-item"><a href="../login/register.jsp" class="nav-link link-dark px-2">회원가입</a></li>
-        <li class="nav-item"><a href="../cart/viewCart.jsp" class="nav-link link-dark px-2">장바구니</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">주문조회</a></li>
-        <li class="nav-item"><a href="../userPage/userPage.jsp" class="nav-link link-dark px-2">마이페이지</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">+즐겨찾기</a></li>
-      </ul>
-      	<%
-                	}else{
-      	%>
-      <ul class="nav me-auto">
-        <li class="nav-item"><a href="../login/logOut.jsp" class="nav-link link-dark px-2 active" aria-current="page">로그아웃</a></li>
-        <li class="nav-item"><a href="../login/userUpdate.jsp" class="nav-link link-dark px-2">정보수정</a></li>
-        <li class="nav-item"><a href="../cart/viewCart.jsp" class="nav-link link-dark px-2">장바구니</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">주문조회</a></li>
-        <li class="nav-item"><a href="../userPage/userPage.jsp" class="nav-link link-dark px-2">마이페이지</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">+즐겨찾기</a></li>
-      </ul>
-      	<%
-                	}
-         %> 
-      <ul class="nav">
-        <li class="nav-item"><a href="../customer_service/notice_list.jsp" class="nav-link link-dark px-2">NOTICE</a></li>
-        <li class="nav-item"><a href="../customer_service/qnaList.jsp" class="nav-link link-dark px-2">Q&A</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">REVIEW</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">MODEL</a></li>
-      </ul>
-    </div>
-  </nav>
-   <header class="py-3 mb-0 border-bottom">
-    <div class="container d-flex flex-wrap justify-content-center">
-      <a href="../main/main.jsp" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
-        <svg class="bi me-4" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-        <span class="fs-1" style="padding-left: 350px;">
-        shopping mall</span>
-      </a>
-      <form class="col-12 col-lg-auto mb-3 mb-lg-0">
-        <input type="search" class="form-control" placeholder="Search?" aria-label="Search">
-      </form>
-    </div>
-  </header>
-  <div>
- <ul class="nav justify-content-center">
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">BEST 50</a>
-  </li>
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">OUTER</a>
-  </li>
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">TOP</a>
-  </li>
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">BOTTOM</a>
-  </li>
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">SKIRT/OPS</a>
-  </li>
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">SHOSE/BAG</a>
-  </li>
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">ACC</a>
-  </li>
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">SALE</a>
-  </li>
-</ul>
-</div>
-
-</div>
-<!-- 스크롤 네비바 끝 -->
 <!-- Breadcrumb 시작 -->
-<center>
+<center style="font-size: 11px;">
 	<nav style= "--bs-breadcrumb-divider: '>'; min-width: 1100px; max-width: 1280px;" aria-label="breadcrumb">
 		<ul class="breadcrumb" style= "float: right;">
 			<li class="breadcrumb-item"><a href="../main/main.jsp">Home</a></li>
@@ -162,22 +77,22 @@
 		</ul>
 	</nav>
 </center>
-	<br><br><br><br>
+	<br>
 	<center>
 		<div class="table-responsive">
 				<div style="min-width: 1100px; max-width: 1280px; padding-right: 700px; text-align: left;">
 					<p>
-						<h2>NOTICE</h2>
-						구매 전에 꼭 읽어 주세요~
+						<h1 style="font-size: 16px; line-height: 17px; padding-bottom: 10px;">NOTICE</h1>
+						<h1 style="font-size: 12px; color: #939393;">구매 전에 꼭 읽어 주세요~</h1>
 					</p>
 				</div>	
 			<table class="table" style="min-width: 1100px; max-width: 1280px;">
 				<tr>
-					<td style="width: 120px;">SUBJECT</td><td ><%= board.getN_title() %></td>
+					<td style="width: 120px; font-size: 11px;">SUBJECT</td><td style="font-size: 12px;"><%= board.getN_title() %></td>
 				</tr>
 				<tr>
-					<td style="width: 120px;">NAME</td>
-					<td>
+					<td style="width: 120px; font-size: 11px;">NAME</td>
+					<td style="font-size: 12px;">
 					<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
 							if(user_id.equals("admin")){	
 					%>
@@ -190,33 +105,33 @@
 				</td>
 				</tr>
 				<tr>
-					<td colspan="2" height="400px"><%= board.getN_content() %></td>
+					<td colspan="2" height="400px" style="font-size: 12px;"><%= board.getN_content() %></td>
 				</tr>
 			</table>
 			<div style="min-width: 1100px; max-width: 1280px;">
-				<button style="float: left;" class="btn btn-outline-dark" onclick="location.href='notice_list.jsp?pageNum=<%= pageNum %>'">목록</button>
+				<button style="float: left; font-size: 11px;" class="btn btn-outline-dark" onclick="location.href='notice_list.jsp?pageNum=<%= pageNum %>'">목록</button>
 					<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
 						if(user_id.equals("admin")){	
 					%>
-				<button style="float: right;" class="btn btn-outline-dark" id="editbtn" onclick="location.href='notice_edit.jsp?n_num=<%= board.getN_num() %>&pageNum=<%= pageNum %>'">
+				<button style="float: right; font-size: 11px;" class="btn btn-outline-dark" id="editbtn" onclick="location.href='notice_edit.jsp?n_num=<%= board.getN_num() %>&pageNum=<%= pageNum %>'">
 				수정</button>
-				<button style="float: right;" class="btn btn-outline-dark" id="delbtn" onclick="delete_OK()">
+				<button style="float: right; font-size: 11px;" class="btn btn-outline-dark" id="delbtn" onclick="delete_OK()">
 				삭제</button>
 				<% }} %>
 			</div>
 			<br><br><br><br>
 			<table class="table" style="min-width: 1100px; max-width: 1280px;">
 				<tr>
-					<td style="width: 120px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
+					<td style="width: 120px; font-size: 11px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
 												<path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
 												</svg>
-												PREV</td><td><a href="#">?????</a></td>
+												PREV</td><td style="font-size: 11px;"><a href="#">?????</a></td>
 				</tr>
 				<tr>
-					<td style="width: 120px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+					<td style="width: 120px; font-size: 11px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
 												<path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
 												</svg>
-												NEXT</td><td><a href="#">?????</a></td>
+												NEXT</td><td style="font-size: 11px;"><a href="#">?????</a></td>
 				</tr>
 			</table>
 		</div>	

@@ -306,5 +306,62 @@ public class UserOrderDetailDBBean {
 	}
 	
 	
+	//관리자 주문관리를 위한 전체주문리스트 불러오는 메서드 - 0429 진용 
+		public  ArrayList<UserOrderDetailBean> getAllUserOrderDetail() {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs1 = null;
+			ResultSet rs2 = null;
+			String sql = "select * from user_order";
+			
+			ArrayList<UserOrderDetailBean> detailarr = new ArrayList<UserOrderDetailBean>();
+			try {
+				conn = getConnection();
+				pstmt = conn.prepareStatement(sql);
+				rs1 = pstmt.executeQuery();
+				int cnt=0;
+				
+				UserOrderDetailBean uodb = null;
+				while (rs1.next()) {
+					sql = "select * from userOrder_detail order by order_number desc";
+					pstmt = conn.prepareStatement(sql);
+					rs2 = pstmt.executeQuery();
+					while(rs2.next()) {
+						uodb = new UserOrderDetailBean();
+						uodb.setOrder_detail_number(rs2.getInt("order_detail_number"));
+						uodb.setOrder_number(rs2.getString("order_number"));
+						uodb.setProduct_number(	rs2.getInt("product_number"));
+						uodb.setProduct_count(rs2.getInt("product_count"));
+						uodb.setProduct_price(rs2.getInt("product_price"));
+						uodb.setOrder_detail_status(rs2.getString("order_detail_status"));
+						uodb.setRefund_check(rs2.getString("refund_check"));
+						detailarr.add(uodb);
+						
+						cnt++;
+					}
+					if (cnt > 1) {
+						break;
+					}
+					
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs2 != null)
+						rs2.close();
+					if (rs1 != null)
+						rs1.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+			return detailarr;
+		}
+	
 	
 }

@@ -13,7 +13,7 @@ drop table userorder_refund  cascade constraints;
 CREATE TABLE user_table
 (USER_ID VARCHAR2(30) PRIMARY KEY 
 ,USER_PWD VARCHAR2(50)
-,USER_NAME VARCHAR2(20)
+,USER_NAME VARCHAR2(20) 
 ,USER_PHONE VARCHAR2(20)
 ,USER_EMAIL VARCHAR2(20)
 ,USER_ADDR VARCHAR2(500)
@@ -39,6 +39,7 @@ insert into user_order values (3,'user1','1991-01-01','서울','user1','010-user1'
 insert into user_order values (2,'user2','1992-02-02','대구','user2','010-user2');
 
 
+
 CREATE TABLE product_category (
     category_code     VARCHAR2(30 BYTE) primary key,
     category_name     VARCHAR2(50 BYTE),
@@ -49,6 +50,8 @@ PCTFREE 10 PCTUSED 40 TABLESPACE system LOGGING
 insert into product_category values ('신발','상의','1');
 insert into product_category values ('상의','하의','1');
 insert into product_category values ('하의','신발','1');
+
+
 
 
 CREATE TABLE product (
@@ -220,6 +223,7 @@ b_id	NUMBER(10) primary key
 ,b_fname VARCHAR2(100)
 ,b_fsize NUMBER(10)
 ,b_rfname VARCHAR2(100)
+--,b_anschk
 );		
 
 

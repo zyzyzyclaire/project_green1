@@ -1,17 +1,24 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="goods.GoodsBean"%>
 <%@page import="goods.GoodsDBBean"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <%@page import="java.io.File"%>
 <title>Insert title here</title>
+
 </head>
 <body>
 	<%
+		request.setCharacterEncoding("UTF-8");
+		String checkpage = "";
+		checkpage = request.getParameter("checkpage");
+		System.out.println("checkpage"+checkpage);
+		checkpage = checkpage.trim();
+		
 		int product_number = Integer.parseInt(request.getParameter("product_number"));	
 		GoodsDBBean goodsDb = GoodsDBBean.getInstance();
 		String path = request.getRealPath("upload");
@@ -29,18 +36,63 @@
 			
 			if( filee.exists() ){
 					if(filee.delete()){ 
-						//System.out.println("ÆÄÀÏ»èÁ¦ ¼º°ø"); 
+						//System.out.println("íŒŒì¼ì‚­ì œ ì„±ê³µ"); 
 					}else{ 
-						//System.out.println("ÆÄÀÏ»èÁ¦ ½ÇÆÐ"); 
+						//System.out.println("íŒŒì¼ì‚­ì œ ì‹¤íŒ¨"); 
 					} 
 			}else{ 
-				//System.out.println("ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù."); 
+				//System.out.println("íŒŒì¼ì´ ì¡´ìž¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤."); 
 			} 
 		}
 		
 		
-		int re = goodsDb.deleteGoods(product_number);
-		response.sendRedirect("../main/main.jsp");
+		 int re = goodsDb.deleteGoods(product_number);
+		/*response.sendRedirect("../adminPage/productAllList.jsp"); */
 	%>
+	<!-- alert('ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.'); -->
+	<%
+	String category = request.getParameter("category");
+	//System.out.println("category"+category);
+	 if(re == 1){
+		 //System.out.println("goodsUpdateOk.jspì„±ê³µ");
+		 %>
+		
+			 <script>
+				alert("ì‚­ì œì„±ê³µ");
+			</script>
+		 <% if(checkpage.equals("main")){
+			
+		 %>
+		  	<script>
+		 		location.href="../main/main.jsp";
+		 	</script>
+		 <%}else if(checkpage.equals("productAllList")){
+			
+		 %>
+		 	<script>
+		 	location.href="../product/productAllList.jsp";
+		 	</script>
+		 <%}else if(checkpage.equals("categoryProduct")){%>
+		 	<script>
+		 	location.href="../product/categoryProduct.jsp?category=<%=category%>";
+		 	</script>
+		 <%}else if(checkpage.equals("adminpage")){ %>
+			<script>
+		 	location.href="../adminPage/adminPage.jsp?pageChange=productAllList.jsp";
+		 	</script>
+		 <%} %>
+		
+		 <%
+	 }else{
+		 //System.out.println("goodsUpdateOk.jspì‹¤íŒ¨");
+		 %>
+		 <script>
+		 alert("ì‚­ì œì‹¤íŒ¨");
+		 </script>
+		 <%
+	 }
+	%>
+	
+	
 </body>
 </html>

@@ -24,9 +24,10 @@
 		    //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
 		}
 		
-		function jusoCallBack(roadFullAddr){
+		function jusoCallBack(roadAddrPart1,addrDetail, zipNo){
 			// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
-			document.upd_frm.user_addr.value = roadFullAddr;
+			var addr = roadAddrPart1+", "+addrDetail+" ("+zipNo+")";
+			document.upd_frm.user_addr.value = addr;
 		}
 	
 		// 입력값 체크 -0421근지
@@ -41,7 +42,7 @@
 				alert("패스워드가 일치하지 않습니다.");
 				upd_frm.pwd_check.focus();
 				return;
-			}	
+			}
 			
 			if(document.upd_frm.user_email.value.length == 0){
 				alert("Email을 써주세요.");
@@ -60,6 +61,31 @@
 				document.upd_frm.user_addr.focus();
 				return;
 			}
+			
+			// 유효성 체크	-0503근지
+			var pwd_RegExp1 = /[0-9]/; // 숫자
+			var pwd_RegExp2 = /[a-zA-Z]/; // 문자
+			var pwd_RegExp3 = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자
+			if(!pwd_RegExp1.test(upd_frm.user_pwd.value) || !pwd_RegExp2.test(upd_frm.user_pwd.value) || !pwd_RegExp3.test(upd_frm.user_pwd.value) || upd_frm.user_pwd.value.length < 8) {
+				alert("비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.");
+				upd_frm.user_pwd.focus();
+				return;
+			}
+			
+			var email_RegExp = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+		     if(!email_RegExp.test(upd_frm.user_email.value)) {
+				alert("이메일 형식이 잘못되었습니다.");
+				upd_frm.user_email.focus();
+				return;
+		     }
+		     
+		     var phone_RegExp = /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
+		     if(!phone_RegExp.test(upd_frm.user_phone.value)) {
+		         alert('휴대폰 형식이 잘못되었습니다.');
+		         upd_frm.user_phone.focus();
+				return;
+		     }
+		     
 			document.upd_frm.submit();
 		}
 	</script>
@@ -141,7 +167,7 @@
 				</td>
 				<td colspan="2" style="vertical-align: middle;" id="boderright">
 				  <div class="col-5">
-					<input type="password" size="20" name="user_pwd" class="form-control" style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+					<input type="password" size="20" name="user_pwd" class="form-control" placeholder="(8자리 이상 문자, 숫자, 특수문자 조합)" style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
 				  </div>
 				</td>
 			</tr>
@@ -151,7 +177,7 @@
 				</td>
 				<td colspan="2" style="vertical-align: middle;" id="boderright">
 				  <div class="col-5">
-					<input type="password" size="20" name="pwd_check" class="form-control" style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+					<input type="password" size="20" name="pwd_check" class="form-control" placeholder="비밀번호를 한번 더 입력해주세요." style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
 				  </div>
 				</td>
 			</tr>

@@ -19,6 +19,11 @@
     QnADBBean qdb = QnADBBean.getInstance();
 	QnABean board = qdb.getBoard(b_id, false);
 	
+	String select = request.getParameter("pageChange");
+	boolean isAdPage = true;
+	if (select == null) {
+		isAdPage = false;
+	}
 %>
 <html>
 <head>
@@ -32,7 +37,8 @@
 		min-width: 1100px; 
 		max-width: 1280px; 
 		margin: 0 auto; /* 가로로 중앙에 배치 */ 
-				font-family: "Malgun Gothic",돋음;
+		font-family: "Malgun Gothic",돋음;
+		font-size: 12px;
 	} 
 	#ntc{
 		padding-top: 3%;
@@ -47,7 +53,9 @@
  	a:visited { color: gray; text-decoration: none;}
  	a:hover { color: blue; text-decoration: underline;}
 </style>
+<% if(!isAdPage){ %>
 <jsp:include page="../main/mainHeader.jsp"></jsp:include>
+<% } %>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<script src="board.js" type="text/javascript"></script>   
@@ -60,10 +68,12 @@
 			<li class="breadcrumb-item active">Q & A</li>
 		</ul>
 	</div>
+	<% if(!isAdPage){ %>
 	<div id="ntc">
 		<h4 id="list">Q & A</h4>
 		<p>사이즈 문의, 입금 배송 문의, 코디 문의, 이벤트 문의 등 모든 궁금한 사항들을 남겨주세요~</p>
 	</div>  
+	<% } %>
 	<div id="container">
 	<table class="table">
 		<form name="boardForm" method="post" action="qnaEditOK.jsp?b_id=<%= b_id %>&pageNum=<%= pageNum %>" enctype="multipart/form-data">
@@ -115,6 +125,8 @@
 			</form>
 		</table>
 	</div>
-	<jsp:include page="../main/mainfooter.jsp"></jsp:include> 
+	<% if(!isAdPage){ %>
+	<jsp:include page="../main/mainfooter.jsp"></jsp:include>
+	<% } %> 
 </body>
 </html>

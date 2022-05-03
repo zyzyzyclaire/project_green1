@@ -54,6 +54,7 @@ public class QnADBBean {
 				qbean.setB_fname(rs.getString("b_fname"));
 				qbean.setB_fsize(rs.getInt("b_fsize"));
 				qbean.setB_rfname(rs.getString("b_rfname"));
+				qbean.setB_anschk(rs.getString("b_anschk"));
 				boards.add(qbean);
 			}
 			
@@ -115,6 +116,7 @@ public class QnADBBean {
 				board.setB_fname(rs.getString("b_fname"));
 				board.setB_fsize(rs.getInt("b_fsize"));
 				board.setB_rfname(rs.getString("b_rfname"));
+				board.setB_anschk(rs.getString("b_anschk"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -215,6 +217,7 @@ public class QnADBBean {
 					board.setB_step(rs.getInt("b_step"));
 					board.setB_fname(rs.getString("b_fname"));
 					board.setB_fsize(rs.getInt("b_fsize"));
+					board.setB_anschk(rs.getString("b_anschk"));
 					boards.add(board);
 					
 					if (rs.isLast()) {
@@ -283,8 +286,8 @@ public class QnADBBean {
 			pstmt = conn.prepareStatement("INSERT INTO qna_board "
 					+ "(b_id, u_id, b_category, b_title, b_content, "
 					+ "b_ip, b_pwd, b_date, b_secret, b_ref, b_level, b_step, "
-					+ "b_fname, b_fsize, b_rfname)"
-					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					+ "b_fname, b_fsize, b_rfname, b_anschk)"
+					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			pstmt.setInt(1, number);
 			pstmt.setString(2, board.getU_id());
@@ -301,13 +304,14 @@ public class QnADBBean {
 			pstmt.setString(13, board.getB_fname());
 			pstmt.setInt(14, board.getB_fsize());
 			pstmt.setString(15, board.getB_rfname());
+			pstmt.setString(16, board.getB_anschk());
 			pstmt.executeUpdate();
 			
 			isWrite = 1;
-			System.out.println("湲��벐湲� �꽦怨�");
+			System.out.println("글쓰기 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("湲��벐湲� �떎�뙣");
+			System.out.println("글쓰기 실패");
 		} finally {
 			try {
 				if(rs != null) rs.close();
@@ -436,4 +440,95 @@ public class QnADBBean {
 		}
 		return board;
 	}
+	
+	//관리자 답변을 위한 질문 리스트를 불러오는 메소드 - 0502 진용
+	public ArrayList<QnABean> getAdminBoardList(String user_id) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<QnABean> boards = new ArrayList<QnABean>();
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("SELECT * FROM qna_board WHERE u_id != ? "
+										+ "AND b_anschk = 0 "
+										+ "ORDER BY b_id desc");
+			pstmt.setString(1, user_id);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				QnABean qbean = new QnABean();
+				qbean.setB_id(rs.getInt("b_id"));
+				qbean.setU_id(rs.getString("u_id"));
+				qbean.setB_category(rs.getString("b_category"));
+				qbean.setB_view(rs.getInt("b_view"));
+				qbean.setB_title(rs.getString("b_title"));
+				qbean.setB_content(rs.getString("b_content"));
+				qbean.setB_ip(rs.getString("b_ip"));
+				qbean.setB_pwd(rs.getString("b_pwd"));
+				qbean.setB_date(rs.getTimestamp("b_date"));
+				qbean.setB_secret(rs.getString("b_secret"));
+				qbean.setB_ref(rs.getInt("b_ref"));
+				qbean.setB_level(rs.getInt("b_level"));
+				qbean.setB_step(rs.getInt("b_step"));
+				qbean.setB_fname(rs.getString("b_fname"));
+				qbean.setB_fsize(rs.getInt("b_fsize"));
+				qbean.setB_rfname(rs.getString("b_rfname"));
+				qbean.setB_anschk(rs.getString("b_anschk"));
+				boards.add(qbean);
+			}
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return boards;
+	}
+	
+	//이미 답변을 적은 글을 구분하는 메소드 - 0502 진용
+	
+	  public int alreadyAnswered(QnABean board) throws Exception { 
+		  Connection conn = null; 
+		  PreparedStatement pstmt = null; 
+		  ResultSet rs = null; 
+		  int isAnswered = 0;
+	  
+		  try { 
+			  conn = getConnection(); 
+			  
+			  if(rs.next()) { 
+				  if (board.getB_id() == board.getB_ref()) { 
+					  pstmt = conn.prepareStatement("UPDATE qna_board SET b_anschk= ? WHERE b_id=?");
+					  pstmt.setString(1, "1");
+					  pstmt.setInt(2, board.getB_id());
+					  isAnswered = pstmt.executeUpdate();
+				  	}
+			  } else { 
+				  isAnswered = 0; 
+			  } 
+		  } catch (Exception e) { 
+			  e.printStackTrace(); 
+		  } finally { 
+			  try { 
+				  if(rs != null) rs.close(); 
+				  if(pstmt != null) pstmt.close();
+				  if(conn != null) conn.close(); 
+			} catch (Exception e2) { 
+				e2.printStackTrace();
+		  	} 
+		  }
+	  
+		  return isAnswered; 
+	  }
+	
 }

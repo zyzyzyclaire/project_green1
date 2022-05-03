@@ -6,6 +6,23 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!doctype html>
+<%
+	String pageNum = request.getParameter("pageNum");
+
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	
+	String user_id = null;
+	String b_pwd = null;
+    if (session.getAttribute("user_id") != null) {
+        user_id = (String) session.getAttribute("user_id");
+    }
+   
+    String select = request.getParameter("pageChange");
+	boolean isAdPage = true;
+	if (select == null) {
+		isAdPage = false;
+	}
+%>
 <html>
 <head>
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -18,7 +35,8 @@
 		min-width: 1100px; 
 		max-width: 1280px; 
 		margin: 0 auto; /* 가로로 중앙에 배치 */ 
-				font-family: "Malgun Gothic",돋음;
+		font-family: "Malgun Gothic",돋음;
+		font-size: 12px;
 	} 
 	#ntc{
 		padding-top: 3%;
@@ -33,21 +51,12 @@
  	a:visited { color: gray; text-decoration: none;}
  	a:hover { color: blue; text-decoration: underline;}
 </style>
+
+<% if(!isAdPage){ %>
 <jsp:include page="../main/mainHeader.jsp"></jsp:include>
+<% } %>
 </head>
 <body>
-<%
-	String pageNum = request.getParameter("pageNum");
-
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	
-	String user_id = null;
-	String b_pwd = null;
-    if (session.getAttribute("user_id") != null) {
-        user_id = (String) session.getAttribute("user_id");
-    }
-   
-%>
 <%
 	QnADBBean ndb = QnADBBean.getInstance();
 	QnABean board;
@@ -123,10 +132,12 @@
 			<li class="breadcrumb-item active">Q & A</li>
 		</ul>
 	</div>
+	<% if(!isAdPage){ %>
 	<div id="ntc">
 		<h4 id="list">Q & A</h4>
 		<p>사이즈 문의, 입금 배송 문의, 코디 문의, 이벤트 문의 등 모든 궁금한 사항들을 남겨주세요~</p>
 	</div>  
+	<% } %>
 	<div id="container">
       	<% if (board != null) { %>
 		<table class="table"> 
@@ -161,12 +172,12 @@
 			</tr>
 			<tr>
 				<td align="left">
-					<input type="button" value="&nbsp;&nbsp;&nbsp;목록&nbsp;&nbsp;&nbsp;" onClick="location.href='qnaList.jsp?b_id=<%= b_id %>&pageNum=<%= pageNum %>'"  class="btn btn-secondary">
+					<input type="button" value="&nbsp;&nbsp;&nbsp;목록&nbsp;&nbsp;&nbsp;" onClick="location.href='../customer_service/qnaList.jsp?b_id=<%= b_id %>&pageNum=<%= pageNum %>'"  class="btn btn-secondary">
 				</td>
 				<td colspan="3" align="right">
 					<% if (isRef || isAdmin) { %>
 						<input type="button" value="&nbsp;&nbsp;&nbsp;답글&nbsp;&nbsp;&nbsp;" onClick="location.href='qnaWrite.jsp?b_id=<%= b_id %>&pageNum=<%= pageNum %>'" class="btn btn-dark">
-					<% } %>
+					<%	} %>
 					<% if (isMe || isAdmin) { %>
 						<input type="button" value="&nbsp;&nbsp;&nbsp;수정&nbsp;&nbsp;&nbsp;" onClick="location.href='qnaEdit.jsp?b_id=<%= b_id %>&pageNum=<%= pageNum %>'" class="btn btn-dark">
 						<input type="button" value="&nbsp;&nbsp;&nbsp;삭제&nbsp;&nbsp;&nbsp;" onClick="deleteOK()" class="btn btn-dark">
@@ -180,6 +191,8 @@
       	%>
      
    	</div>
-      	<jsp:include page="../main/mainfooter.jsp"></jsp:include>      
+   		<% if(!isAdPage){ %>
+      	<jsp:include page="../main/mainfooter.jsp"></jsp:include>
+      	<% } %>      
 </body>
 </html>

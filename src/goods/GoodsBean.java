@@ -11,7 +11,6 @@ public class GoodsBean {
      private String product_desc;
      private Timestamp product_date;
      private int product_hits;
-     private int product_ordered_count;
      private  int file_number;
   	 private  String orgin_file_name;
   	 private  String stored_file_name;
@@ -21,14 +20,52 @@ public class GoodsBean {
   	 private  Timestamp create_date;
   	 private  String delete_check;
   	
-  	
- 	public int getProduct_ordered_count() {
-		return product_ordered_count;
+  	public static int pageSize = 12; //한 페이지당 10개 출력물
+	public static int pageCount = 1; //페이지 개수 지정 변수
+	public static int pageNum = 1; //페이지 번호
+
+ 	public static String pageNumer(int limit ,String page,String category,String sort) {
+		String str="";
+		
+		int temp = (pageNum-1) % limit;
+		int startPage=pageNum - temp;
+		if(page.equals("main")) page = "main.jsp?";
+		else if(page.equals("All")) page = "productAllList.jsp?";
+		else if(page.equals("category")) {
+			page = "categoryProduct.jsp?&category="+category+"&sort="+sort;
+		}else if(page.equals("adminAll")) {
+			page = "adminPage.jsp?pageChange=productAllList.jsp";
+		}
+	
+		
+		
+	
+		//[이전] 출력
+		if ((startPage - limit) > 0) {
+			str="<a href='"+page+"&pageNum="+(startPage-1)+"'>[이전]</a>&nbsp;&nbsp;";
+		}
+		
+		//페이지 번호 나열하기
+		for (int i = startPage; i < (startPage+limit); i++) {
+			if (i == pageNum) {
+				str += "<li class='page-item'> <a class='page-link' >"+i+"</a></li>";
+			} else {
+				
+				str += "<li class='page-item'> <a class='page-link'  href='"+page+"&pageNum="+i+"'>"+""+i+"</a></li>";
+				
+				
+			}
+			if(i >= pageCount) break;
+		}
+		//[다음] 출력
+		if ((startPage + limit) <= pageCount) {
+			str +="<a href='"+page+"&pageNum="+(startPage+limit)+"'>[다음]</a>";
+		}
+		
+		return str;
 	}
-	public void setProduct_ordered_count(int product_ordered_count) {
-		this.product_ordered_count = product_ordered_count;
-	}
-	public Timestamp getProduct_date() {
+     
+ 	public Timestamp getProduct_date() {
 		return product_date;
 	}
 	public void setProduct_date(Timestamp product_date) {
@@ -136,5 +173,6 @@ public class GoodsBean {
 	public void setProduct_hits(int product_hits) {
 		this.product_hits = product_hits;
 	}
+	
      
 }

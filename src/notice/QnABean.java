@@ -22,7 +22,7 @@ public class QnABean {
 	private String b_rfname;
 	
 	private String b_secret;
-	
+	private String b_anschk;
 	
 	public static int pageSize = 10; //한 페이지에 10개를 보여주기 위한 변수
 	public static int pageCount = 1; //페이지 개수 카운트, 페이지가 많을수록 늘어남
@@ -211,6 +211,12 @@ public class QnABean {
 	}
 	public void setN_ip(String n_ip) {
 		this.n_ip = n_ip;
+	}
+	public String getB_anschk() {
+		return b_anschk;
+	}
+	public void setB_anschk(String b_anschk) {
+		this.b_anschk = b_anschk;
 	}
 	
 }

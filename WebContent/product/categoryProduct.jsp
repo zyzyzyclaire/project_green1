@@ -11,21 +11,30 @@
     path = request.getRealPath("upload");
 %>
 <%
+
+
+	String pageNum = request.getParameter("pageNum");
+
+	if(pageNum == null){
+		pageNum = "1";
+	}
   	category_code = request.getParameter("category");
-	//System.out.println("@@@@@@@@@@@@@"+category_code);
+
 	String goods = null;
-	if(category_code.equals("1")){
+	
+	if(category_code.equals("1") || category_code.equals("상의")){
 		goods = "상의";
 		category_code = "상의";
-	}else if(category_code.equals("2")){
+	}else if(category_code.equals("2")  || category_code.equals("하의")){
 		goods = "하의";
 		category_code = "하의";
-	}else if(category_code.equals("3")){
+	}else if(category_code.equals("3")  || category_code.equals("신발")){
 		goods = "신발";
 		category_code = "신발";
 	}
 	GoodsDBBean productdb = new GoodsDBBean();
-	ArrayList<GoodsBean> CategoryProductList = productdb.getCategoryProductList(category_code);
+	ArrayList<GoodsBean> CategoryProductList = productdb.getCategoryProductList(category_code,"1");
+	
 //필요없어서 주석처리-0502근지 	ArrayList<GoodsBean> productlistArr  =  productdb.getProductimg(CategoryProductList);
  	int j = 0;
  	int size = 0;
@@ -36,8 +45,7 @@
  	} 
  	
  	// 베스트상품 4개를 얻어오기 위해	-0429근지
-	ArrayList<GoodsBean> CategoryProductList_best = productdb.getCategoryProductList_best(category_code);
- 	
+	ArrayList<GoodsBean> CategoryProductList_best = productdb.getCategoryProductList_best(category_code,"1");
 %>
 <!DOCTYPE html>
 <html>
@@ -103,7 +111,7 @@
 	     		out.print("<tr>");
 	     		//2번 for 문	     
 	     		for(j=0; j<=3; j++){
-	     			if(CategoryProductList.size()==j) break;
+	     			if(CategoryProductList_best.size()==j) break;
 					
 	     			product_number= CategoryProductList_best.get(j).getProduct_number();
 	     			category_code = CategoryProductList_best.get(j).getCategory_code();
@@ -123,11 +131,10 @@
 	     			file_size = getGoodsImg.getFile_size();
 	     			create_date = getGoodsImg.getCreate_date();
 	     			delete_check = getGoodsImg.getDelete_check();
-					
-					String orgin_file_namearr[] = orgin_file_name.split("/");
-					String stored_file_namearr[] = stored_file_name.split("/");
+				
+				
 					//파일존재확인
-					File file = new File(path+"\\"+stored_file_namearr[0]);
+					File file = new File(path+"\\"+stored_file_name);
 					boolean isExists = file.exists();
 					/* if(isExists) { System.out.println("I find the existFile.txt"); } 
 					else { System.out.println("No, there is not a no file."); } */
@@ -140,17 +147,17 @@
 					<tr>
 						<td class="mainalinkimg">
 							<%if(isExists){%>
-							 <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-								<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_namearr[0]%>"  alt="이미지없음">
+							 <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>&checkpage=categoryProduct&category=<%=category_code%>">
+								<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name%>"  alt="이미지없음">
 							 </a>
 							<%}else{%>
-							  <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-								<img src="../images/products/noimg.PNG"  alt="이미지없음">
+							  <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>&checkpage=categoryProduct&category=<%=category_code%>">
+								<img src="../images/products/noimg.png"  alt="이미지없음">
 							  </a>
 							<%}%>
 						</td>
 					</tr>
-					<tr  style = "cursor:pointer;" onclick="location.href='../cart/goodsDisplay.jsp?product_number=<%=product_number%>'">
+					<tr  style = "cursor:pointer;" onclick="location.href='../cart/goodsDisplay.jsp?product_number=<%=product_number%>&checkpage=categoryProduct&category=<%=category_code%>'">
 					 	<td style="border-bottom: 1px rgba(0, 0, 0, 0.09) solid; line-height: 30px;">	
 					 			<%=product_name %>
 					 	</td>
@@ -201,21 +208,31 @@
 
 		<!-- 사용자가 클릭한 정렬순대로 정렬 -0502근지-->
 <%
+		CategoryProductList = productdb.getCategoryProductList(category_code,pageNum);
 		String result = request.getParameter("sort");
-//		System.out.println("@@@###===>"+result);
+		
+		
 		if(result==null) {
-			CategoryProductList = productdb.getCategoryProductList(category_code);
+			CategoryProductList = productdb.getCategoryProductList(category_code,pageNum);
 		} else if(result.equals("1")) {
-			CategoryProductList = productdb.getCategoryProductList(category_code);
+			CategoryProductList = productdb.getCategoryProductList(category_code,pageNum);
 		} else if(result.equals("2")) {
-			CategoryProductList = productdb.getCategoryProductList_best(category_code);
+			CategoryProductList = productdb.getCategoryProductList_best(category_code,pageNum);
 		} else if(result.equals("3")) {
-			CategoryProductList = productdb.getCategoryProductList_hits(category_code);
+			CategoryProductList = productdb.getCategoryProductList_hits(category_code,pageNum);
 		} else if(result.equals("4")) {
-			CategoryProductList = productdb.getCategoryProductList_price_desc(category_code);
+			CategoryProductList = productdb.getCategoryProductList_price_desc(category_code,pageNum);
 		} else if(result.equals("5")) {
-			CategoryProductList = productdb.getCategoryProductList_price(category_code);
+			CategoryProductList = productdb.getCategoryProductList_price(category_code,pageNum);
+			
 		}
+		
+		//System.out.println("@@CategoryProductListresult@@@@@@@@"+CategoryProductList.size());
+	 	if(CategoryProductList.size()%4 != 0){
+	 		size = CategoryProductList.size()/4+1 ;
+	 	}else{
+	 		size = CategoryProductList.size()/4;
+	 	}
 %>	 
       	<div class="goods">
  <%
@@ -228,7 +245,7 @@
 	     
 	     		for(j=0+num; j<=3+num; j++){
 	     			if(CategoryProductList.size()==j) break;
-					
+					//System.out.println("j@@@@"+j);
 	     			product_number= CategoryProductList.get(j).getProduct_number();
 	     			category_code = CategoryProductList.get(j).getCategory_code();
 	     			product_name = CategoryProductList.get(j).getProduct_name();
@@ -257,11 +274,15 @@
 	     			file_size = getGoodsImg.getFile_size();
 	     			create_date = getGoodsImg.getCreate_date();
 	     			delete_check = getGoodsImg.getDelete_check();
-					
-					String orgin_file_namearr[] = orgin_file_name.split("/");
-					String stored_file_namearr[] = stored_file_name.split("/");
+					if(stored_file_name!=null){
+						String orgin_file_namearr[] = orgin_file_name.split("/");
+						String stored_file_namearr[] = stored_file_name.split("/");
+						stored_file_name =  stored_file_namearr[0];
+					}else{
+						stored_file_name = null;
+					}
 					//파일존재확인
-					File file = new File(path+"\\"+stored_file_namearr[0]);
+					File file = new File(path+"\\"+stored_file_name);
 					boolean isExists = file.exists();
 					/* if(isExists) { System.out.println("I find the existFile.txt"); } 
 					else { System.out.println("No, there is not a no file."); } */
@@ -272,17 +293,17 @@
 								<tr>
 									<td class="mainalinkimg">
 										<%if(isExists){%>
-										 <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-											<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_namearr[0]%>"  alt="이미지없음">
+										 <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>&checkpage=categoryProduct&category=<%=category_code%>">
+											<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name%>"  alt="이미지없음">
 										 </a>
 										<%}else{%>
-										  <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-											<img src="../images/products/noimg.PNG"  alt="이미지없음">
+										  <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>&checkpage=categoryProduct&category=<%=category_code%>">
+											<img src="../images/products/noimg.png"  alt="이미지없음">
 										  </a>
 										<%}%>
 									</td>
 								</tr>
-								<tr  style = "cursor:pointer;" onclick="location.href='../cart/goodsDisplay.jsp?product_number=<%=product_number%>'">
+								<tr  style = "cursor:pointer;" onclick="location.href='../cart/goodsDisplay.jsp?product_number=<%=product_number%>&checkpage=categoryProduct&category=<%=category_code%>'">
 									 	<td style="border-bottom: 1px rgba(0, 0, 0, 0.09) solid; line-height: 30px;">	
 									 			<%=product_name %>
 									 	</td>
@@ -302,6 +323,11 @@
 	     	}
 	     	out.print("</table>");
  %>
+ 			<div style="margin: auto;  width: 300px; text-align: center;"> 
+			 		<ul class="pagination justify-content-center"> 
+			 			<%= GoodsBean.pageNumer(4,"category",category_code,result) %>
+		 			</ul> 
+		 		</div>
  		</div>
   
 	<jsp:include page="../main/mainfooter.jsp"></jsp:include>

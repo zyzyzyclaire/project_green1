@@ -37,7 +37,6 @@
 
 	<script src="../js/jquery.js"></script>
 	<script>
-	
 	// 도로명 주소 찾기 API 수정 -0421근지
 	function goPopup(){
 		// 주소검색을 수행할 팝업 페이지를 호출합니다.
@@ -48,32 +47,12 @@
 	    //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
 	}
 	
-	function jusoCallBack(roadFullAddr){
+	function jusoCallBack(roadAddrPart1,addrDetail, zipNo){
 		// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
-		document.buy_frm.receiver_addr.value = roadFullAddr;
+		var addr = roadAddrPart1+", "+addrDetail+" ("+zipNo+")";
+		document.buy_frm.receiver_addr.value = addr;
 	}
 	
-	// 필수입력값 체크 -0429근지
-	function buyFromCart_ok(){
-		if(buy_frm.receiver_name.value.length == 0){
-			alert("이름을 써주세요.");
-			buy_frm.receiver_name.focus();
-			return;
-		}
-		if(buy_frm.receiver_phone.value.length == 0){
-			alert("휴대폰번호를 써주세요.");
-			buy_frm.receiver_phone.focus();
-			return;
-		}
-		if(buy_frm.receiver_addr.value.length == 0){
-			alert("주소를 써주세요.");
-			buy_frm.receiver_addr.focus();
-			return;
-		}
-		document.buy_frm.submit();
-	}
-
-	// 체크박스 클릭시 자동으로 회원정보 기입	-0426근지
 	$(function () {
 		$("#check").change(function() {
 			if($("#check").is(":checked")) {
@@ -87,6 +66,37 @@
 			}
 		});
 	});
+	
+	// 입력값 체크 -0503근지
+	function buyFromCart_check_ok(){
+		if(document.buy_frm.receiver_name.value.length == 0){
+			alert("이름을 써주세요.");
+			document.buy_frm.receiver_name.focus();
+			return;
+		}
+		
+		if(document.buy_frm.receiver_phone.value.length == 0){
+			alert("휴대폰번호를 써주세요.");
+			document.buy_frm.receiver_phone.focus();
+			return;
+		}
+		
+		if(document.buy_frm.receiver_addr.value.length == 0){
+			alert("주소를 써주세요.");
+			document.buy_frm.receiver_addr.focus();
+			return;
+		}
+		// 유효성 체크	-0503근지
+	    var phone_RegExp = /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
+	    if(!phone_RegExp.test(buy_frm.receiver_phone.value)) {
+	        alert('휴대폰 형식이 잘못되었습니다.');
+	        buy_frm.receiver_phone.focus();
+			return;
+	    }
+	    
+		document.buy_frm.submit();
+	}
+	
 	</script>
 	
 <link rel="stylesheet" href="../css/buy.css" type = "text/css">	
@@ -164,20 +174,20 @@
 						</tr>
 						<tr>
 							<td id="buyRow2_1">이름</td>
-							<td><input type="text" name="receiver_name" id="re_name" class="form-control"></td>
+							<td><input type="text" name="receiver_name" id="re_name" class="form-control" placeholder="이름을 입력해주세요."></td>
 						</tr>
 						<tr>
 							<td id="buyRow2_2">휴대폰 번호</td>
-							<td><input type="text" name="receiver_phone" id="re_phone" class="form-control"></td>
+							<td><input type="text" name="receiver_phone" id="re_phone" class="form-control" placeholder="( 하이픈'-' 포함 입력 )"></td>
 						</tr>
 						<tr>
 							<td id="buyRow2_3">주소</td>
-							<td><input type="text" name="receiver_addr" id="re_addr" class="form-control" onclick="goPopup()"></td>
+							<td><input type="text" name="receiver_addr" id="re_addr" class="form-control" placeholder="(클릭하여 주소 입력)" onclick="goPopup()"></td>
 						</tr>
 						<tr class="buyBlank2"></tr>
 						<tr class="buyBtnClass">
 							<td colspan="2">
-								<input type="button" value="주문하기" id="buyBtn" onclick="buyFromCart_ok()">
+								<input type="button" value="주문하기" id="buyBtn" onclick="buyFromCart_check_ok()">
 							</td>
 						</tr>
 				</table>

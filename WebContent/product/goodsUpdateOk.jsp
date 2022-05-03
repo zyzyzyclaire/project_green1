@@ -19,6 +19,9 @@
 <body>
 <a href="./../main/main.jsp">메인으로가기</a>
 	<%
+	String checkpage = null;
+	
+	
 	int product_number = 0;
 	String category_code = null;
 	String product_name = null;
@@ -72,6 +75,8 @@
 	 product_stock = Integer.parseInt( multi.getParameter("product_stock"));
 	 product_desc = multi.getParameter("product_desc");
 	 category_code = multi.getParameter("category_code");
+	 checkpage = request.getParameter("checkpage");
+	 String category = request.getParameter("category");
 	 
 	 int count=2;
 	 for(int i=1; i<count; i++){
@@ -149,9 +154,33 @@
 		 //System.out.println("goodsUpdateOk.jsp성공");
 		 %>
 		 <script>
-		 	alert("수정성공");
+		 alert("수정성공");
 		 </script>
-		 <%
+		 
+		 <% if(checkpage.equals("main")){
+			
+		 %>
+		  	<script>
+		 		location.href="../main/main.jsp";
+		 	</script>
+		 <%}else if(checkpage.equals("productAllList")){
+			
+		 %>
+		 	<script>
+		 	location.href="../product/productAllList.jsp";
+		 	</script>
+		 <%}else if(checkpage.equals("categoryProduct")){
+			
+		 %>
+		 	<script>
+		 	location.href="../product/categoryProduct.jsp?category=<%=category%>";
+		 	</script>
+		 <%}else if(checkpage.equals("adminpage")){ %>
+		 <script>
+		 	location.href="../adminPage/adminPage.jsp?pageChange=productAllList.jsp";
+		 	</script>
+		 <%} 
+		 
 	 }else{
 		 //System.out.println("goodsUpdateOk.jsp실패");
 		 %>

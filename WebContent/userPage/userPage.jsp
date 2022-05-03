@@ -86,7 +86,7 @@ clear:both;
 		</div>
 </nav>
 
-<div class="media mypage">
+<div class="media mypage" style="font-size: 12px;">
   <img class="mr-3" src="../images/noimg.png" alt="NO IMG" 
        style="width: 150px; height: 150px; border: 1px solid black; float: left; 
   								margin-right: 25px;">
@@ -106,9 +106,9 @@ clear:both;
 </div>
 
 
-<div class="userBuyGoodsdiv">
+<div class="userBuyGoodsdiv" style="font-size: 12px;">
 	<table class="table table-hover userBuyGoods">
-		  <thead>
+  		<thead>
 		    <tr>
 	    		<th>#</th>
 				<th>주문일자</th>
@@ -205,7 +205,7 @@ clear:both;
 
 
 
-<div class="userBuyGoodsdiv">
+<div class="userBuyGoodsdiv" style="font-size: 12px;">
 	<table class="table table-hover userBuyGoods">
 		  <thead>
 		    <tr>

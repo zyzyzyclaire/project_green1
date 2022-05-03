@@ -8,7 +8,9 @@
 	request.setCharacterEncoding("UTF-8");  //한글깨지면 주석제거
 	//request.setCharacterEncoding("EUC-KR");  //해당시스템의 인코딩타입이 EUC-KR일경우에
 	String inputYn = request.getParameter("inputYn"); 
-	String roadFullAddr = request.getParameter("roadFullAddr"); 
+	String roadAddrPart1 = request.getParameter("roadAddrPart1"); 
+	String zipNo = request.getParameter("zipNo"); 
+	String addrDetail = request.getParameter("addrDetail"); 
 
 %>
 </head>
@@ -34,7 +36,7 @@ function init(){
 		//document.form.action="https://www.juso.go.kr/addrlink/addrMobileLinkUrl.do"; //모바일 웹인 경우, 인터넷망
 		document.form.submit();
 	}else{
-		opener.jusoCallBack("<%=roadFullAddr%>");
+		opener.jusoCallBack("<%=roadAddrPart1%>","<%=addrDetail%>","<%=zipNo%>");
 		window.close();
 		}
 }

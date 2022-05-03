@@ -5,6 +5,7 @@
 	// DB에 한글로 저장시키기 위해 registerOK.jsp 와 register.jsp 파일 캐릭터 타입 UTF-8f로 캐릭터값 맞추고
 	// request.setCharacterEncoding("UFT-8");로 설정	- 0415 근지
 	request.setCharacterEncoding("UTF-8");
+
 %>
 <jsp:useBean id="user" class="login.UserBean"/>
 <jsp:setProperty property="*" name="user"/>

@@ -3,18 +3,26 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="goods.GoodsDBBean"%>
 <%@page import="goods.GoodsBean"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%
+	request.setCharacterEncoding("UTF-8");
 	if(request.getParameter("product_number")==null) {
 	%>		
 		<script>
-		alert("Àß¸øµÈ °æ·ÎÀÔ´Ï´Ù.");
+		alert("ì˜ëª»ëœ ê²½ë¡œì…ë‹ˆë‹¤.");
 		location.href = "../main/main.jsp";
 		</script>
 	<%
 		return;
 	}
+
+	 String checkpage = request.getParameter("checkpage"); 
+	 String category =	request.getParameter("category");
+	if(checkpage == null){
+		checkpage = "main";
+	}
+	//System.out.println("checkpage@@@@@@@@@@@@@@@@"+checkpage);
 	
 	int file_number = 0 ;
 	String orgin_file_name= null;
@@ -38,13 +46,13 @@
 	
 	GoodsDBBean db = GoodsDBBean.getInstance();
 	GoodsBean goods = db.getGoods(product_number);
-/*	//»óÇ°¼¼ºÎÀÌ¹ÌÁö±îÁöºÒ·¯¿À±â
+/*	//ìƒí’ˆì„¸ë¶€ì´ë¯¸ì§€ê¹Œì§€ë¶ˆëŸ¬ì˜¤ê¸°
 	ArrayList<GoodsBean> getGoodsimg = db.getGoodsimg(product_number); */
 	String product_name = goods.getProduct_name();
 	int product_price = goods.getProduct_price();
 	int product_stock = goods.getProduct_stock();
 
-	//»óÇ°¼¼ºÎÀÌ¹ÌÁö±îÁöºÒ·¯¿À±â
+	//ìƒí’ˆì„¸ë¶€ì´ë¯¸ì§€ê¹Œì§€ë¶ˆëŸ¬ì˜¤ê¸°
 	ArrayList<GoodsBean> getGoodsimg = db.getGoodsimg(product_number);
 	stored_file_name = getGoodsimg.get(0).getStored_file_name();
 	//System.out.println("@@@@@@"+stored_file_name);
@@ -54,27 +62,42 @@
 /* 	if(isExists) { System.out.println("I find the existFile.txt"); } 
 	else { System.out.println("No, there is not a no file."); } */
 	
-	// Á¶È¸¼ö 1 Áõ°¡½ÃÅ°´Â ¸Ş¼­µå	-0429±ÙÁö
+	// ì¡°íšŒìˆ˜ 1 ì¦ê°€ì‹œí‚¤ëŠ” ë©”ì„œë“œ	-0429ê·¼ì§€
 	db.hitUp(product_number);
 %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>elpmis</title>
-<!-- ºÎÆ®½ºÆ®·¦	-0426±ÙÁö -->
+<!-- ë¶€íŠ¸ìŠ¤íŠ¸ë©	-0426ê·¼ì§€ -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 <script src="../js/jquery.js"></script>
 <script type="text/javascript">
+	function deleteok() {	
+		   var delConfirm = confirm('ìƒí’ˆì„ ì‚­ì œ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?');
+		   if (delConfirm) {
+		     
+		      location.href="../product/goodsDelete.jsp?product_number=<%=product_number %>&checkpage=<%=checkpage%> &category=<%=category%>";
+			
+		   }
+		   else {
+		      alert('ì‚­ì œê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.');
+		   }
+		}
+	
+	
+		 
+		 
 	$(function() {
 		$("#setCart").on("click", function() {
 			var value = $('#product_count').val();
-			if(confirm("Àå¹Ù±¸´Ï¿¡ ´ãÀ¸½Ã°Ú½À´Ï±î?")) {
+			if(confirm("ì¥ë°”êµ¬ë‹ˆì— ë‹´ìœ¼ì‹œê² ìŠµë‹ˆê¹Œ?")) {
 				
 				if(value == 0) {
-					alert("»óÇ° ¼ö·®À» ¼±ÅÃÇØÁÖ¼¼¿ä.");
+					alert("ìƒí’ˆ ìˆ˜ëŸ‰ì„ ì„ íƒí•´ì£¼ì„¸ìš”.");
 				} else {
 					location.href="cartProcess.jsp?product_count="+value+"&product_number="+<%= product_number %>;
 				}
@@ -84,25 +107,25 @@
 		});
 	});
 	
-	// ¹Ù²Û ¼ö·®¿¡ Àç°í°¡ ¾øÀ» ½Ã ¾Ë¸²Ã¢ ¶ç¿ìµµ·Ï ÇÔ -0420±ÙÁö
+	// ë°”ê¾¼ ìˆ˜ëŸ‰ì— ì¬ê³ ê°€ ì—†ì„ ì‹œ ì•Œë¦¼ì°½ ë„ìš°ë„ë¡ í•¨ -0420ê·¼ì§€
 	$(function () {
 		$("#product_count").on("change",function() {
 			var value = $('#product_count').val();
 			
 			if(value == 0) {
-				alert("»óÇ° ¼ö·®À» ¼±ÅÃÇØÁÖ¼¼¿ä.");
+				alert("ìƒí’ˆ ìˆ˜ëŸ‰ì„ ì„ íƒí•´ì£¼ì„¸ìš”.");
 			} else {
 				location.href="checkStock.jsp?product_count="+value+"&product_number="+<%= product_number %>;
 			}
 		});
 	});
 	
-	// 0°³¸¦ ±¸¸ÅÇÒ ½Ã ¾Ë¸²Ã¢ ¶ç¿ìµµ·Ï ÇÔ -0421±ÙÁö
+	// 0ê°œë¥¼ êµ¬ë§¤í•  ì‹œ ì•Œë¦¼ì°½ ë„ìš°ë„ë¡ í•¨ -0421ê·¼ì§€
 	$(function () {
 		$("#buyCount").on("click",function() {
 			var value = $('#product_count').val();
 			if(value == 0) {
-				alert("»óÇ° ¼ö·®À» ¼±ÅÃÇØÁÖ¼¼¿ä.");
+				alert("ìƒí’ˆ ìˆ˜ëŸ‰ì„ ì„ íƒí•´ì£¼ì„¸ìš”.");
 			} else {
 				document.goods_frm.submit();
 			}
@@ -116,7 +139,7 @@
 		margin: 0 auto;
 		
 		font-size:11px;
-		font-family: "Nanum Gothic","Malgun Gothic","¸¼Àº °íµñ","µ¸¿ò","Dotum","Apple Gothic","Apple SD Gothic Neo",sans-serif;
+		font-family: "Nanum Gothic","Malgun Gothic","ë§‘ì€ ê³ ë”•","ë‹ì›€","Dotum","Apple Gothic","Apple SD Gothic Neo",sans-serif;
  	}
  	#displayTable {
  		border-top: 1px solid black;
@@ -161,11 +184,11 @@
  		text-align: center;
  	}
  	.selectBox { 
- 		width: 200px; /* ¿øÇÏ´Â ³Êºñ¼³Á¤ */ 
+ 		width: 200px; /* ì›í•˜ëŠ” ë„ˆë¹„ì„¤ì • */ 
  		height: 25px;
- 		font-family: inherit; /* ÆùÆ® »ó¼Ó */ 
+ 		font-family: inherit; /* í°íŠ¸ ìƒì† */ 
  		border: 1px solid #999; 
- 		border-radius: 0px; /* iOS µÕ±Ù¸ğ¼­¸® Á¦°Å */ 
+ 		border-radius: 0px; /* iOS ë‘¥ê·¼ëª¨ì„œë¦¬ ì œê±° */ 
  	}
  	.buyBtn {
  		margin-right: 30px;
@@ -240,42 +263,44 @@
 		if(user_id.equals("admin")){
 			%>
 			<div style="margin-left:88% ; width:100px; ">
-				<a href="../product/goodsUpdate.jsp?product_number=<%=product_number %>">»óÇ°¼öÁ¤</a>
-				<a href="../product/goodsDelete.jsp?product_number=<%=product_number %>">»óÇ°»èÁ¦</a>
+				<a href="../product/goodsUpdate.jsp?product_number=<%=product_number %>&checkpage=<%=checkpage%>&category=<%=category%>">ìƒí’ˆìˆ˜ì •</a>
+				<a onclick="deleteok()" style="text-decoration: underline; cursor: pointer;">ìƒí’ˆì‚­ì œ</a>
 			</div>
 			<%
 		}
 		}
 		 %>
+		 
+	
 	<div class="fisrtDiv">
 		<div class="imgDiv">
 <%	out.println(product_number); %>
 			<%if(isExists){%>
-				<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name%>"  alt="ÀÌ¹ÌÁö¾øÀ½" class="buyImg">
+				<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name%>"  alt="ì´ë¯¸ì§€ì—†ìŒ" class="buyImg">
 			<%}else{%>
-				<img src="../images/products/noimg.PNG"  alt="ÀÌ¹ÌÁö¾øÀ½"  class="buyImg">
+				<img src="../images/products/noimg.PNG"  alt="ì´ë¯¸ì§€ì—†ìŒ"  class="buyImg">
 			<%}%>
 		</div>
 		<div class="descDiv">
 			<table class="table" id="displayTable">
 				<tr>
-					<td colspan="2" id="desc1">[¹«·á¹è¼Û]<%= product_name %></td>
+					<td colspan="2" id="desc1">[ë¬´ë£Œë°°ì†¡]<%= product_name %></td>
 				</tr>
 				<tr>
-					<td id="desc2">ÆÇ¸Å°¡</td>
+					<td id="desc2">íŒë§¤ê°€</td>
 					<td id="desc3"><%= product_price %> won</td>
 				</tr>
 				<tr>
-					<td id="desc4">»óÇ° Àç°í</td>
+					<td id="desc4">ìƒí’ˆ ì¬ê³ </td>
 					<td id="desc5"><%=product_stock %></td>
 				</tr>
 				<tr>
-					<td id="desc6">¼ö·®</td> 
+					<td id="desc6">ìˆ˜ëŸ‰</td> 
 					<td id="desc7">
 						<form method="post" action="../buy/buy.jsp" name="goods_frm">
 							<input type="hidden" name="product_number" value="<%= product_number %>">
 								<select name="product_count" id="product_count" class="selectBox">
-									<option value="0" selected>¼ö·®À» ¼±ÅÃÇÏ¼¼¿ä.</option>
+									<option value="0" selected>ìˆ˜ëŸ‰ì„ ì„ íƒí•˜ì„¸ìš”.</option>
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
@@ -286,8 +311,8 @@
 				</tr>
 	 			<tr>
 					<td colspan="2"  id="desc8">
-						<input type="button" value="¹Ù·Î±¸¸Å" id="buyCount" class="buyBtn">
-						<input type="button" value="Àå¹Ù±¸´Ï" id="setCart" class="cartBtn">
+						<input type="button" value="ë°”ë¡œêµ¬ë§¤" id="buyCount" class="buyBtn">
+						<input type="button" value="ì¥ë°”êµ¬ë‹ˆ" id="setCart" class="cartBtn">
 					</td>
 				</tr>
 						</form>
@@ -296,13 +321,13 @@
 	</div>
 	
 	<% 
-//		admin°èÁ¤ÀÏ ¶§¸¸ »óÇ°¼öÁ¤, »èÁ¦ ¹öÆ°ÀÌ º¸ÀÌµµ·Ï ÇÏ´Â ºÎºĞ. ÀÏ´Ü ½ÇÇà ¾ÈµÇ´Â °Í °°¾Æ °¢ÁÖÃ³¸®ÇÔ	-0428±ÙÁö
+//		adminê³„ì •ì¼ ë•Œë§Œ ìƒí’ˆìˆ˜ì •, ì‚­ì œ ë²„íŠ¼ì´ ë³´ì´ë„ë¡ í•˜ëŠ” ë¶€ë¶„. ì¼ë‹¨ ì‹¤í–‰ ì•ˆë˜ëŠ” ê²ƒ ê°™ì•„ ê°ì£¼ì²˜ë¦¬í•¨	-0428ê·¼ì§€
 //		if(user_id != null){
 //			if(user_id.equals("admin")){
 //			}
 //		}
-//		out.println("<a href='../product/goodsUpdate.jsp?product_number="+product_number+"'>»óÇ°¼öÁ¤</a>");
-//		out.println("<a href='../product/goodsDelete.jsp?product_number="+product_number+"'>»óÇ°»èÁ¦</a>");
+//		out.println("<a href='../product/goodsUpdate.jsp?product_number="+product_number+"'>ìƒí’ˆìˆ˜ì •</a>");
+//		out.println("<a href='../product/goodsDelete.jsp?product_number="+product_number+"'>ìƒí’ˆì‚­ì œ</a>");
 	%>
 	
 	<div class="secondDiv">

@@ -44,92 +44,6 @@
 </style>
 </head>
 <body>
-<!-- 스크롤 네비바 시작 -->
-<div id="scroll">
-<%-- <%
-	if(((String)session.getAttribute("user_id"))!=null){
-		user_id =(String)session.getAttribute("user_id");
-	}
-%> --%>
-
-<nav class="py-2 border-bottom">
-    <div class="container d-flex flex-wrap">
-       <%
-       		if(user_id==null){
-       %>
-      <ul class="nav me-auto">
-        <li class="nav-item"><a href="../login/login.jsp" class="nav-link link-dark px-2 active" aria-current="page">로그인</a></li>
-        <li class="nav-item"><a href="../login/register.jsp" class="nav-link link-dark px-2">회원가입</a></li>
-        <li class="nav-item"><a href="../cart/viewCart.jsp" class="nav-link link-dark px-2">장바구니</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">주문조회</a></li>
-        <li class="nav-item"><a href="../userPage/userPage.jsp" class="nav-link link-dark px-2">마이페이지</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">+즐겨찾기</a></li>
-      </ul>
-      	<%
-                	}else{
-      	%>
-      <ul class="nav me-auto">
-        <li class="nav-item"><a href="../login/logOut.jsp" class="nav-link link-dark px-2 active" aria-current="page">로그아웃</a></li>
-        <li class="nav-item"><a href="../login/userUpdate.jsp" class="nav-link link-dark px-2">정보수정</a></li>
-        <li class="nav-item"><a href="../cart/viewCart.jsp" class="nav-link link-dark px-2">장바구니</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">주문조회</a></li>
-        <li class="nav-item"><a href="../userPage/userPage.jsp" class="nav-link link-dark px-2">마이페이지</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">+즐겨찾기</a></li>
-      </ul>
-      	<%
-                	}
-         %> 
-      <ul class="nav">
-        <li class="nav-item"><a href="../customer_service/notice_list.jsp" class="nav-link link-dark px-2">NOTICE</a></li>
-        <li class="nav-item"><a href="../customer_service/qnaList.jsp" class="nav-link link-dark px-2">Q&A</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">REVIEW</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">MODEL</a></li>
-      </ul>
-    </div>
-  </nav>
-   <header class="py-3 mb-0 border-bottom">
-    <div class="container d-flex flex-wrap justify-content-center">
-      <a href="../main/main.jsp" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
-        <svg class="bi me-4" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-        <span class="fs-1" style="padding-left: 350px;">
-        shopping mall</span>
-      </a>
-      <form class="col-12 col-lg-auto mb-3 mb-lg-0">
-        <input type="search" class="form-control" placeholder="Search?" aria-label="Search">
-      </form>
-    </div>
-  </header>
-  <div>
- <ul class="nav justify-content-center">
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">BEST 50</a>
-  </li>
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">OUTER</a>
-  </li>
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">TOP</a>
-  </li>
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">BOTTOM</a>
-  </li>
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">SKIRT/OPS</a>
-  </li>
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">SHOSE/BAG</a>
-  </li>
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">ACC</a>
-  </li>
-  <li class="nav-item" id="lastnav">
-    <a class="nav-link" href="#">SALE</a>
-  </li>
-</ul>
-</div>
-
-</div>
-<!-- 스크롤 네비바 끝 -->
 <!-- Breadcrumb 시작 -->
 <center>
 <div style="width: 1100px;">
@@ -149,7 +63,7 @@
 		<div class="table-responsive" >
 		<div style="width:900px; padding-right: 700px; text-align: left;">
 		<p>
-		<h2>Manager&nbsp;Management</h2>
+		<h2>Members&nbsp;Management</h2>
 		진상 바로 손절치기
 		</p>
 		</div>	
@@ -188,7 +102,7 @@ function delete_check_admin(u_id) {
 }
 </script>
 </center>
-	<center>
+	<center style="font-size: 11px;">
 		<table class="table" style="width: 900px;">
 			<tr>
 				<th>User ID</th>
@@ -197,7 +111,7 @@ function delete_check_admin(u_id) {
 				<th>E-MAIL</th>
 				<th>ADDRESS</th>
 				<th style="text-align: center;">ORDER</th>
-				<th style="text-align: center;">EXIT</th>
+				<th style="text-align: center;">BANISHMENT</th>
 			</tr>
 		<tbody>
 			<%	
@@ -265,6 +179,6 @@ function delete_check_admin(u_id) {
 <!-- 검색창 끝 -->
 <br><br><br><br><br><br><br><br>
 	
-	<jsp:include page="../main/mainfooter.jsp"></jsp:include>
-</body>
+<%-- 	<jsp:include page="../main/mainfooter.jsp"></jsp:include>
+ --%></body>
 </html>

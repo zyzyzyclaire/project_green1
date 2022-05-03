@@ -20,8 +20,12 @@
 	}
 	
  	pageNum = request.getParameter("pageNum");
-
-	//System.out.println("@@@>>>>"+pageNum); 
+ 	
+ 	String select = request.getParameter("pageChange");
+	boolean isAdPage = true;
+	if (select == null) {
+		isAdPage = false;
+	}
 %>
 <%
 	QnADBBean qnaDB = QnADBBean.getInstance();
@@ -53,6 +57,7 @@
 		max-width: 1280px; 
 		margin: 0 auto; /* 가로로 중앙에 배치 */ 
 		font-family: "Malgun Gothic",돋음;
+		font-size: 12px;
 	}
 	#ntc{
 		padding-top: 3%;
@@ -85,7 +90,9 @@
 		text-align: center; 
 	} 
 </style>
+<% if(!isAdPage){ %>
  <jsp:include page="../main/mainHeader.jsp"></jsp:include>
+ <% } %>
 </head>
 <body>
 <div id="navi" style= "--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -95,13 +102,14 @@
 		<li class="breadcrumb-item active">Q & A</li>
 	</ul>
 </div>
+<% if(!isAdPage){ %>
 <div id="ntc">
 	<h4 id="list">Q & A</h4>
 	<p>사이즈 문의, 입금 배송 문의, 코디 문의, 이벤트 문의 등 모든 궁금한 사항들을 남겨주세요~</p>
 </div>
+<% } %>
 <div id="container">
-	<table class="table table-borderless table-bordered table-hover"> 
-		<thead>
+	<table class="table table-hover"> 
 			<tr>
 				<td width="90px">글번호</td>
 				<td width="90px">분류</td>
@@ -124,8 +132,6 @@
 						continue;
 					}
 			%>
-		</thead>
-		<tbody>
 			<tr bgcolor="#F7F7F7">
 				<td> 공지 </td>
 				<td> &nbsp; </td>
@@ -194,7 +200,6 @@
 						<td><img src='../images/outline_lock_black_24dp.png'></td>	
 				<% 	} %>	
 			</tr>
-		</tbody>
 		<% 			 
 			}
 		}	
@@ -222,6 +227,8 @@
 	</div> 
 </div>  
 </body>
+<% if(!isAdPage){ %>
 <jsp:include page="../main/mainfooter.jsp"></jsp:include>
+<% } %>
 </html>
 <% QnABean.pageNumber(3); %>

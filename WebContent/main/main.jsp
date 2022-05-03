@@ -8,9 +8,21 @@
 request.setCharacterEncoding("UTF-8");
 %>
 <%
+ 	
+	String pageNum = request.getParameter("pageNum");
+
+	
+	if(pageNum == null){
+		pageNum = "1";
+	}
+	
+%>
+
+<%
+
 	int j = 0;
 	GoodsDBBean productdb = new GoodsDBBean();
-    ArrayList<GoodsBean> productListArr = productdb.getProductlist();
+    ArrayList<GoodsBean> productListArr = productdb.getProductlist(pageNum);
     ArrayList<GoodsBean> productListArr_best = productdb.getProductlist_best();
 
 %>
@@ -126,6 +138,7 @@ request.setCharacterEncoding("UTF-8");
 		<!-- best 8개 출력 -0502근지-->
       	<div class="goods">
  <%
+ 	
 	     	out.print("<table>");
 	     	//번for 문
 	     	for(int i=0; i<2; i++){
@@ -173,7 +186,7 @@ request.setCharacterEncoding("UTF-8");
 										 </a>
 										<%}else{%>
 										  <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-											<img src="../images/products/noimg.PNG"  alt="이미지없음">
+											<img src="../images/products/noimg.png"  alt="이미지없음">
 										  </a>
 										<%}%>
 									</td>
@@ -207,15 +220,25 @@ request.setCharacterEncoding("UTF-8");
 		<!-- new 72개 출력 -0502근지-->
       	<div class="goods">
  <%
+ 	
+			
+		 int size = 0;
+		 if(productListArr.size()%4 != 0){
+		 	size = productListArr.size()/4+1 ;
+		 }else{
+		 		size = productListArr.size()/4;
+		 } 
+		 j=0;
+ 
 	     	out.print("<table>");
 	     	//번for 문
-	     	for(int i=0; i<6; i++){
+	     	for(int i=0; i<size; i++){
 	     		out.print("<tr>");
 	     		int num =i*4;
 	     		//2번 for 문
 	     
 	     		for(j=0+num; j<=3+num; j++){
-					
+	     			 System.out.println("@@@@@@@@@jj@"+j );
 	     			product_number= productListArr.get(j).getProduct_number();
 	     			category_code = productListArr.get(j).getCategory_code();
 	     			product_name = productListArr.get(j).getProduct_name();
@@ -236,10 +259,15 @@ request.setCharacterEncoding("UTF-8");
 	     			create_date = getGoodsImg.getCreate_date();
 	     			delete_check = getGoodsImg.getDelete_check();
 					
-					String orgin_file_namearr[] = orgin_file_name.split("/");
-					String stored_file_namearr[] = stored_file_name.split("/");
+	     			if(stored_file_name!=null){
+						String orgin_file_namearr[] = orgin_file_name.split("/");
+						String stored_file_namearr[] = stored_file_name.split("/");
+						stored_file_name =  stored_file_namearr[0];
+					}else{
+						stored_file_name = null;
+					}
 					//파일존재확인
-					File file = new File(path+"\\"+stored_file_namearr[0]);
+					File file = new File(path+"\\"+stored_file_name);
 					boolean isExists = file.exists();
 					/* if(isExists) { System.out.println("I find the existFile.txt"); } 
 					else { System.out.println("No, there is not a no file."); } */
@@ -250,11 +278,11 @@ request.setCharacterEncoding("UTF-8");
 									<td class="mainalinkimg">
 										<%if(isExists){%>
 										 <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-											<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_namearr[0]%>"  alt="이미지없음">
+											<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name%>"  alt="이미지없음">
 										 </a>
 										<%}else{%>
 										  <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-											<img src="../images/products/noimg.PNG"  alt="이미지없음">
+											<img src="../images/products/noimg.png"  alt="이미지없음">
 										  </a>
 										<%}%>
 									</td>
