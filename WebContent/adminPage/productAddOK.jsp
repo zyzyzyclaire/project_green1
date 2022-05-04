@@ -18,15 +18,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 <a href="./../main/main.jsp">메인으로가기</a>
 	<%
 
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-
-
-	
-	    request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 	    String product_name=null,product_desc=null,category_code=null;
 		String product_img=null;
 		int product_price=0;
@@ -134,8 +131,27 @@
 			re = prductDBB.insertGoodss(productBean, true);
 		}
 		
+ %>
+ 	<%
+	if(re == 1){
+		 //System.out.println("goodsUpdateOk.jsp성공");
 		 %>
-	
+		 <script>
+		 	alert("등록성공");
+		
+		 	location.href="../adminPage/adminPage.jsp?pageChange=productAllList.jsp";
+		
+		 </script>
+		 <%
+	 }else{
+		 //System.out.println("goodsUpdateOk.jsp실패");
+		 %>
+		 <script>
+		 	alert("");
+		 </script>
+		 <%
+	 }
+	%>
 	
 </body>
 </html>

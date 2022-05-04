@@ -1,5 +1,5 @@
-<%@page import="notice.NoticeDBBean"%>
 <%@page import="notice.NoticeBean"%>
+<%@page import="notice.NoticeDBBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -13,6 +13,8 @@
 	int n_num = Integer.parseInt(request.getParameter("n_num"));
 	NoticeDBBean db = NoticeDBBean.getInstance();
 	NoticeBean board = db.getBoard(n_num, false);
+	
+	String pagecheck =   request.getParameter("pagecheck"); 
 	
 	String select = request.getParameter("pageChange");
 	boolean isAdPage = true;
@@ -41,7 +43,7 @@
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
   <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 <!-- 서머노트를 위해 추가해야할 부분 끝 -->
-	<script src="notice.js" type="text/javascript"></script>
+	<script src="../customer_service/notice.js" type="text/javascript"></script>
 <style type="text/css">
 	body{
 		font-family: "Nanum Gothic","Malgun Gothic","맑은 고딕","돋움","Dotum","Apple Gothic","Apple SD Gothic Neo",sans-serif;
@@ -80,7 +82,7 @@
 						
 					</p>
 				</div>
-		<form name="reg_frm" method="post" action="notice_edit_ok.jsp?n_num=<%= n_num %>&pageNum=<%= pageNum %>">
+		<form name="reg_frm" method="post" action="../customer_service/notice_edit_ok.jsp?n_num=<%= n_num %>&pageNum=<%= pageNum %>&pagecheck=<%=pagecheck%>">
 			<table class="table" style="width: 1280px; font-size: 12px;">
 			 	<tr>
 					<td style="width: 120px;">NAME</td>
@@ -109,8 +111,12 @@
 				</tr>
 			</table>
 			<div style="width: 1280px;">
-						<button style="float: left; font-size: 12px;" class="btn btn-outline-dark" onclick="check_ok()">글수정</button>
-						<input style="float: right; font-size: 12px;" class="btn btn-outline-dark" type="button" value="글목록" onclick="location.href='notice_list.jsp?pageNum=<%= pageNum %>'">
+						<% if(!isAdPage){ %>
+							<input style="float: left; font-size: 12px;" class="btn btn-outline-dark" type="button" value="글목록" onclick="location.href='notice_list.jsp?pageNum=<%= pageNum %>'">
+						<% } else { %>
+							<input style="float: left; font-size: 12px;" class="btn btn-outline-dark" type="button" value="글목록" onclick="location.href='?pageChange=../customer_service/notice_list.jsp?pageNum=<%= pageNum %>'">
+						<% } %>
+						<input style="float: right; font-size: 12px;" class="btn btn-outline-dark" onclick="check_ok()" value="글수정" type="button">
 						<input style="float: right; font-size: 12px;" class="btn btn-outline-dark" type="reset" value="다시작성">
 			</div>
 			<br><br><br><br>

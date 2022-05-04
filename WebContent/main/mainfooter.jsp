@@ -10,6 +10,8 @@
  		color: rgb(136, 136, 136);
  		border-top: 1px solid  rgb(136, 136, 136);
  		padding-top: 30px;
+ 	
+ 		
  	}
  	
 	.u1 li{
@@ -28,13 +30,15 @@
 		max-width : 100%;	
  		min-width : 1120px;	
  		margin: auto;
+ 		padding-left: 190px;
 		
 	}
 	.footerdiv1{
 		display: flex;
 	}
 	ul{
-		margin-left: 80px;
+		margin-left: 40px;
+		margin-right: 20px;
 	}
 	a{
 		text-decoration: none;
@@ -56,46 +60,46 @@
 </head>
 <body>
 	
-	<div class="footerdiv" >
+	<div class="footerdiv" id="footerdiv">
 		<div class="footerdiv1">
 			<ul class="u1">
 				<li>
 					<ul>
 						<li><span><a href="./../main/main.jsp">elpmis</a></span></li>
-						<li>COPYRIGHT @ elpmis ALL RIGHTS RESERVED.</li>
+						<li style="font-size: 9px;">COPYRIGHT @ elpmis ALL RIGHTS RESERVED.</li>
 						<li>&nbsp;</li>
-						<li style="font-size: 11px;">TEL <span style="font-size: 15px;">000-0000-0000</span></li>
-						<li style="font-size: 11px;">평일 오후 1:00 ~ 오후 6:00/토.일.공휴일.휴무</li>
+						<li style="font-size: 9px;">TEL <span style="font-size: 15px;">000-0000-0000</span></li>
+						<li style="font-size: 9px;">평일 오후 1:00 ~ 오후 6:00/토.일.공휴일.휴무</li>
 						<li>&nbsp;</li>
-						<li style="font-size: 11px;">COMPANY 주식회사 elpmis OWNER 3팀</li>
-						<li style="font-size: 11px;">ADDRESS 01234 부산광역시 부산진구 부전동 1층 elpmis</li>
-						<li style="font-size: 11px;">MASTER 3team E-MAIL <a href="" style="color: rgb(136, 136, 136);"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-envelope" viewBox="0 0 18 18"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/></svg>
+						<li style="font-size: 9px;">COMPANY 주식회사 elpmis OWNER 3팀</li>
+						<li style="font-size: 9px;">ADDRESS 01234 부산광역시 부산진구 부전동 1층 elpmis</li>
+						<li style="font-size: 9px;">MASTER 3team E-MAIL <a href="" style="color: rgb(136, 136, 136);"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-envelope" viewBox="0 0 18 18"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/></svg>
 																		 3team@naver.com</a></li>
-						<li style="font-size: 11px;">BUSINESS LICENSE 000-00-00000 
+						<li style="font-size: 9px;">BUSINESS LICENSE 000-00-00000 
 						<button id="bt" style="border: 0; font-size: 0.1em; " onclick="window.open('https://ftc.go.kr/www/bizCommList.do?key=232')">사업자정보확인</button></li>
-						<li style="font-size: 11px;">MALL-ORDER LICENSE 2022-부산진구-0000호</li>
-						<li style="font-size: 11px;">HOSTING By TEAM3 | DESIGNED By TEAM3</li>
+						<li style="font-size: 9px;">MALL-ORDER LICENSE 2022-부산진구-0000호</li>
+						<li style="font-size: 9px;">HOSTING By TEAM3 | DESIGNED By TEAM3</li>
 					</ul>
 				</li>
 				<li style="margin-left: 50px;">
 					<ul  style="margin-top: 65px;">
-						<li style="margin-bottom:6px; "><span style="font-size: 11px;">ACCOUNT INFO</span></li>
-						<li style="font-size: 11px;">부산 333-1111-222</li>
-						<li style="font-size: 11px;">예금주 : 주식회사 elpmis</li>
+						<li style="margin-bottom:6px; "><span style="font-size: 9px;">ACCOUNT INFO</span></li>
+						<li style="font-size: 9px;">부산 333-1111-222</li>
+						<li style="font-size: 9px;">예금주 : 주식회사 elpmis</li>
 					</ul>
 				</li>
 				<li>
 					<ul  style="margin-top: 65px;">
-						<li style="margin-bottom:6px; "><span style="font-size: 11px;">WITH US</span></li>
-						<li style="font-size: 11px;"><a href="#" style="color: rgb(136, 136, 136);">COMPANY</a></li>
-						<li style="font-size: 11px;">AGREEMENT</li>
-						<li style="font-size: 11px;">PRIVACY POLICY</li>
-						<li style="font-size: 11px;">GUIDE</li>
+						<li style="margin-bottom:6px; "><span style="font-size: 9px;">WITH US</span></li>
+						<li style="font-size: 9px;"><a href="#" style="color: rgb(136, 136, 136);">COMPANY</a></li>
+						<li style="font-size: 9px;">AGREEMENT</li>
+						<li style="font-size: 9px;">PRIVACY POLICY</li>
+						<li style="font-size: 9px;">GUIDE</li>
 					</ul>
 					<br>
 					<ul >
-						<li style="margin-bottom:6px; "><span style="font-size: 11px;">SOCIAL NETWORK</span></li>
-						<li style="font-size: 11px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+						<li style="margin-bottom:6px; "><span style="font-size: 9px;">SOCIAL NETWORK</span></li>
+						<li style="font-size: 9px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
   <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
 </svg>&nbsp;&nbsp;
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
@@ -117,10 +121,10 @@
 				</li>
 				<li>
 					<ul>
-						<li style="margin-bottom:6px; "><span style="font-size: 11px;">RETURN / EXCHANGE</span></li>
-						<li style="font-size: 11px;">654321 부산광역시 부산진구 부전동 cj대한통운 부산지점 부전1팀 'elpmis'</li>
-						<li style="font-size: 11px;">(CJ대한통운택배 가상주소로 CJ택배로만 반품가능함)</li>
-						<li style="font-size: 11px;">자세한 교환·반품절차 안내는 문의란 및 공지사항을 참고해주세요</li>
+						<li style="margin-bottom:6px; "><span style="font-size: 9px;">RETURN / EXCHANGE</span></li>
+						<li style="font-size: 9px;">654321 부산광역시 부산진구 부전동 cj대한통운 부산지점 부전1팀 'elpmis'</li>
+						<li style="font-size: 9px;">(CJ대한통운택배 가상주소로 CJ택배로만 반품가능함)</li>
+						<li style="font-size: 9px;">자세한 교환·반품절차 안내는 문의란 및 공지사항을 참고해주세요</li>
 						<li style="margin-top:20px; "><a style="color: rgb(136, 136, 136);" href="../customer_service/notice_list.jsp"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-mic-fill" viewBox="0 0 16 16">
   <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z"/>
   <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"/>
@@ -144,14 +148,14 @@
 				</li>
 				<li>
 					<ul>
-						<li>NOTICE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QnA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cart&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;My&nbsp;page</li>
+						<li style="font-size: 10px;">&nbsp;NOTICE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QnA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cart&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;My&nbsp;page</li>
 						<li>&nbsp;</li>
-						<li>For detailed exchange/return procedures,<br> please refer to the inquiry section and notice.</li>
+						<li style="font-size: 9px;">For detailed exchange/return procedures,<br> please refer to the inquiry section and notice.</li>
 					</ul>
 				</li>
 			</ul>
 		</div>
 	</div>
-	<br><br>
+	<br>
 </body>
 </html>

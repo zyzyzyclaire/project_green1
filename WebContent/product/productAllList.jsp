@@ -116,19 +116,20 @@
 		<!-- 사용자가 클릭한 정렬순대로 정렬 -0502근지-->
 <%
 		String result = request.getParameter("sort");
+		
 //		System.out.println("@@@###===>"+result);
 		if(result==null) {
 			productListArr = productdb.getProductlist(pageNum);
 		} else if(result.equals("1")) {
 			productListArr = productdb.getProductlist(pageNum);
 		} else if(result.equals("2")) {
-			productListArr = productdb.getProductlist_best();
+			productListArr = productdb.getProductlist_best(pageNum);
 		} else if(result.equals("3")) {
-			productListArr = productdb.getProductlist_hits();
+			productListArr = productdb.getProductlist_hits(pageNum);
 		} else if(result.equals("4")) {
-			productListArr = productdb.getProductlist_price_desc();
+			productListArr = productdb.getProductlist_price_desc(pageNum);
 		} else if(result.equals("5")) {
-			productListArr = productdb.getProductlist_price();
+			productListArr = productdb.getProductlist_price(pageNum);
 		}
 %>	 
       	<div class="goods">
@@ -210,7 +211,8 @@
 	</main>
 				<div style="margin: auto;  width: 300px; text-align: center;"> 
 			 		<ul class="pagination justify-content-center"> 
-			 			<%= GoodsBean.pageNumer(4,"All",null,null) %>
+			 			
+			 			<%= GoodsBean.pageNumer(4,"All",null,result) %>
 		 			</ul> 
 		 		</div>
 	</table> 

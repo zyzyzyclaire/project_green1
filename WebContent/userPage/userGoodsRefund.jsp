@@ -11,12 +11,12 @@
 	function refund(order_detail_number) {
 		if(confirm("환불신청하시겠습니까?")){
 			$.ajax({
-	   			url:"./userGoodsRefundOk.jsp",
+	   			url:"userGoodsRefundOk.jsp",
 	   			type:"post",
 	   			data:{"order_detail_number":order_detail_number},
 	   			//data:{"search":send,"zipcode":"12345"},
 	   			//dataType,
-	   			success:function(data){	
+	   			success:function(data){
 	   				location.href="userPage.jsp";
 	   				//document.getElementById("main_stat_point2").innerHTML =data;
 	   			},

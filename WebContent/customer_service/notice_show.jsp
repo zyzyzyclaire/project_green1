@@ -1,6 +1,6 @@
-<%@page import="java.sql.Timestamp"%>
 <%@page import="notice.NoticeBean"%>
 <%@page import="notice.NoticeDBBean"%>
+<%@page import="java.sql.Timestamp"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
@@ -18,6 +18,14 @@
 
 	if(!((String)session.getAttribute("user_id") == null)){
 		user_id =(String)session.getAttribute("user_id");
+	}
+	
+	String pagecheck = request.getParameter("pagecheck");
+	
+	String select = request.getParameter("pageChange");
+	boolean isAdPage = true;
+	if (select == null) {
+		isAdPage = false;
 	}
 %>
 <html>
@@ -53,19 +61,22 @@
 <script type="text/javascript">
 	function delete_OK() {
 	var pwd = prompt("비밀번호를 입력하세요.");
-	if(<%= board.getN_pwd() %> == pwd){
+	
+	if(pwd == <%= board.getN_pwd()%>){
 		if(confirm("정말 글을 삭제하시겠습니까?") == true){
-			location.href = "notice_delete_ok.jsp?n_num=<%= board.getN_num() %>&pageNum=<%= pageNum %>";
+			
+			location.href = "../customer_service/notice_delete_ok.jsp?n_num=<%= board.getN_num()%>&pageNum=<%= pageNum %>&pagecheck=<%=pagecheck%>&pwd="+pwd;
 		}
 	} else {
 		alert("비밀번호가 맞지 않습니다.");
-		history.go(-1);
 	} 
 }
 </script>
 </head>
 <body>
+<% if(!isAdPage){ %>
 <jsp:include page="../main/mainHeader.jsp"></jsp:include>
+<% } %>
 
 <!-- Breadcrumb 시작 -->
 <center style="font-size: 11px;">
@@ -80,12 +91,14 @@
 	<br>
 	<center>
 		<div class="table-responsive">
+				<% if(!isAdPage){ %>
 				<div style="min-width: 1100px; max-width: 1280px; padding-right: 700px; text-align: left;">
 					<p>
 						<h1 style="font-size: 16px; line-height: 17px; padding-bottom: 10px;">NOTICE</h1>
 						<h1 style="font-size: 12px; color: #939393;">구매 전에 꼭 읽어 주세요~</h1>
 					</p>
 				</div>	
+				<% } %>
 			<table class="table" style="min-width: 1100px; max-width: 1280px;">
 				<tr>
 					<td style="width: 120px; font-size: 11px;">SUBJECT</td><td style="font-size: 12px;"><%= board.getN_title() %></td>
@@ -109,15 +122,20 @@
 				</tr>
 			</table>
 			<div style="min-width: 1100px; max-width: 1280px;">
-				<button style="float: left; font-size: 11px;" class="btn btn-outline-dark" onclick="location.href='notice_list.jsp?pageNum=<%= pageNum %>'">목록</button>
-					<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
-						if(user_id.equals("admin")){	
+				<% if(!isAdPage){ %>
+					<button style="float: left; font-size: 11px;" class="btn btn-outline-dark" onclick="location.href='notice_list.jsp?pageNum=<%= pageNum %>'">목록</button>
+				<% } else { %>
+					<button style="float: left; font-size: 11px;" class="btn btn-outline-dark" onclick="location.href='?pageChange=../customer_service/notice_list.jsp?pageNum=<%= pageNum %>'">목록</button>
+				<% } %>
+					<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글수정,삭제 버튼 노출
+							if(user_id.equals("admin")){
 					%>
-				<button style="float: right; font-size: 11px;" class="btn btn-outline-dark" id="editbtn" onclick="location.href='notice_edit.jsp?n_num=<%= board.getN_num() %>&pageNum=<%= pageNum %>'">
-				수정</button>
-				<button style="float: right; font-size: 11px;" class="btn btn-outline-dark" id="delbtn" onclick="delete_OK()">
-				삭제</button>
-				<% }} %>
+						<button style="float: right; font-size: 11px;" class="btn btn-outline-dark" id="editbtn" onclick="location.href='../customer_service/notice_edit.jsp?n_num=<%= board.getN_num() %>&pageNum=<%= pageNum %>&pagecheck=<%=pagecheck%>'">수정</button>
+						<button style="float: right; font-size: 11px;" class="btn btn-outline-dark" id="delbtn" onclick="delete_OK()">삭제</button>
+					<%
+							}
+						} 
+					%>
 			</div>
 			<br><br><br><br>
 			<table class="table" style="min-width: 1100px; max-width: 1280px;">
@@ -136,6 +154,8 @@
 			</table>
 		</div>	
 	</center>
+	<% if(!isAdPage){ %>
 	<jsp:include page="../main/mainfooter.jsp"></jsp:include>
+	<% } %>
 </body>
 </html>

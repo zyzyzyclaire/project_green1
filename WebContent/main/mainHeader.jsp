@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="goods.GoodsDBBean"%>
+<%@page import="goods.GoodsBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file= "mainClass.jsp"%> 
@@ -22,6 +25,14 @@
 <script src="../js/jquery.js"></script>
 <script src="../js/jquery.bxslider.js"></script>
 <script>
+
+		function goTop(){
+			$('html').scrollTop(0);
+			// scrollTop 메서드에 0 을 넣어서 실행하면 끝 !!
+			// 간혹 이 소스가 동작하지 않는다면
+			// $('html, body') 로 해보세요~
+		}
+		
 	$(window).scroll(function(){ 
 		
 		var scroll = $(window).scrollTop();
@@ -70,6 +81,7 @@
  			 document.getElementById("main_stat_point").style.display = "block";
  			 document.getElementById("main_stat_point2").style.display = "none";
  		 }
+ 		 
  		$.ajax({
  			url:"../search/search2.jsp",
  			type:"post",
@@ -96,6 +108,16 @@
 	}
 	   
 </script>
+
+<script src="../js/jquery-ui.js"></script>
+ <script>
+        $(function(){
+            $(".layer_popup").draggable();
+            
+        });
+    </script>
+    
+    
 <style type="text/css">
 a {
    color: rgb(34, 34, 34);
@@ -133,12 +155,128 @@ a {
 	max-width : 1280px;	
 	margin:auto;
 }
+.layer_popup{
+			position: fixed;
+            text-align:center;
+            right: 100px;
+            top: 300px;
+            z-index: 2;
+        }
 </style>
 </head>
  
 <body >
-			
-			
+	<%-- <%  GoodsBean goods = new GoodsBean();
+	if(goods.headercheck ==1 ){%> --%>
+	<%
+	GoodsDBBean db = GoodsDBBean.getInstance();
+	ArrayList<GoodsBean>  myList = db.myList();
+	String stored_file_name1 =null;
+	String stored_file_name2 =null;
+	String stored_file_name3 =null;
+	String stored_file_name4 =null;
+	String stored_file_name5 =null;
+	int product_number11 = 0;
+	int product_number22 = 0;
+	int product_number33 = 0;
+	int product_number44 = 0;
+	int product_number55 = 0;
+
+	
+	%>
+	  <%				for(int i=0; i<myList.size(); i++){  
+		  			
+						product_number =  myList.get(i).getProduct_number(); 
+					  	GoodsBean getGoodsImg = db.getGoodsImg(product_number);
+		     			file_number = getGoodsImg.getFile_number();
+		     			orgin_file_name = getGoodsImg.getOrgin_file_name();
+		     			stored_file_name = getGoodsImg.getStored_file_name();
+		     			stored_thumbnail = getGoodsImg.getStored_thumbnail();
+		     			delegate_thumbnail = getGoodsImg.getDelegate_thumbnail();
+		     			file_size = getGoodsImg.getFile_size();
+		     			create_date = getGoodsImg.getCreate_date();
+		     			delete_check = getGoodsImg.getDelete_check();
+		     			if(i==0) product_number11 =  product_number;
+						if(i==1) product_number22 =  product_number;
+						if(i==2) product_number33 =   product_number;
+						if(i==3) product_number44 =  product_number;
+						if(i==4) product_number55 =  product_number;
+						
+		     			if(stored_file_name!=null){
+							String orgin_file_namearr[] = orgin_file_name.split("/");
+							String stored_file_namearr[] = stored_file_name.split("/");
+							if(i==0) stored_file_name1 =  stored_file_namearr[0];
+							if(i==1) stored_file_name2 =  stored_file_namearr[0];
+							if(i==2) stored_file_name3 =  stored_file_namearr[0];
+							if(i==3) stored_file_name4 =  stored_file_namearr[0];
+							if(i==4) stored_file_name5 =  stored_file_namearr[0];
+						}else{
+							stored_file_name = null;
+						}
+		     			/* System.out.println("@@"+stored_file_name1);
+		     			System.out.println("@@"+stored_file_name2);
+		     			System.out.println("@@"+stored_file_name3);
+		     			System.out.println("@@"+stored_file_name4);
+		     			System.out.println("@@"+stored_file_name5); */
+						//파일존재확인
+						File file = new File(path+"\\"+stored_file_name);
+						boolean isExists = file.exists();
+						}%>
+	
+		<div class="layer_popup" style="background-color: rgb(143, 143, 143); width: 150px; /* height: 200px;" */>
+		
+	        <div style="margin-top: 30px; width: 80%; margin-right: auto; margin-left: auto;">
+        		 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style=" width: 92%; margin: auto" > 
+					  <div class="carousel-indicators" >
+					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+				         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+				         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+					  </div>
+					  <div class="carousel-inner" >
+						    <div class="carousel-item active">
+							    <a href="./../cart/goodsDisplay.jsp?product_number=<%= product_number11%>" >
+							      
+							      <img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name1%>" class="d-block w-100"   alt="이미지없음" style="width: 100px; height: 100px;">
+							      </a>
+						    </div>
+						    <div class="carousel-item">
+							    <a href="./../cart/goodsDisplay.jsp?product_number=<%= product_number22%>">
+							      <img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name2%>" class="d-block w-100"   alt="이미지없음" style="width: 100px; height: 100px;">
+							      </a>
+						    </div>
+						    <div class="carousel-item">
+							    <a href="./../cart/goodsDisplay.jsp?product_number=<%= product_number33%>">
+							      <img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name3%>" class="d-block w-100"   alt="이미지없음" style="width: 100px; height: 100px;">
+							      </a>
+						    </div>
+						    <div class="carousel-item">
+							    <a href="./../cart/goodsDisplay.jsp?product_number=<%= product_number44%>">
+							      <img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name4%>" class="d-block w-100"   alt="이미지없음" style="width: 100px; height: 100px;">
+							      </a>
+						    </div>
+						    <div class="carousel-item">
+							    <a href="./../cart/goodsDisplay.jsp?product_number=<%= product_number55%>">
+							      <img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name5%>" class="d-block w-100"   alt="이미지없음" style="width: 100px; height: 100px;">
+							      </a>
+						    </div>
+					  </div>
+					  
+					  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Previous</span>
+					  </button>
+					  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Next</span>
+					  </button>
+	  			</div>	
+	        </div>
+	        	<a onclick="goTop()" href="#">맨위로가기</a><br>
+	        	<a href="#footerdiv">맨아래</a>
+	    </div>
+   <%--  <%}%>	 --%>
 			
 			<div class="addstyle"  style="color: rgb(34, 34, 34); ">
 	            <div class="headertop" >
@@ -148,7 +286,8 @@ a {
 			                	if(user_id==null){
 			                %>
 			                	<a class="nav-link active" aria-current="page" href="../login/login.jsp"> <span>&#xf2c0</span> 로그인</a>
-			                    <a class="nav-link" href="../login/register.jsp"><span></span>회원가입</a>
+			                    <!-- <a class="nav-link" href="../login/register.jsp"><span></span>회원가입</a> -->
+			                     <a class="nav-link" href="../login/regiagree.jsp"><span></span>회원가입</a>
 			                <%
 			                	}else{
 			                %>
@@ -209,6 +348,11 @@ a {
               	<li class="nav-item">             		
               		<a class="nav-link" href="../customer_service/notice_list.jsp">공지사항</a>
               	</li>
+              	<li class="nav-item">             		
+              		<a class="nav-link" href="../customer_service/qnaList.jsp">Q & A</a>
+              			
+              	</li>
+              
             	<li class="nav-item">
                     <a class="nav-link" href="../product/productAllList.jsp">전체</a>
                 </li>
@@ -242,5 +386,6 @@ a {
 			%>
 			</script>
 
+	
 </body>
 </html>

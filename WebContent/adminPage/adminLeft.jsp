@@ -59,8 +59,8 @@
         </button>
         <div class="collapse" id="notice-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="?pageChange=../customer_service/notice_write.jsp" class="link-dark rounded">공지사항 등록</a></li>
-			<li><a href="?pageChange=../customer_service/notice_list.jsp" class="link-dark rounded">공지사항 수정/삭제</a></li>
+            <li><a href="?pageChange=../customer_service/notice_write.jsp&pagecheck=adminpage" class="link-dark rounded">공지사항 등록</a></li>
+			<li><a href="?pageChange=../customer_service/notice_list.jsp&pagecheck=adminpage" class="link-dark rounded">공지사항 수정/삭제</a></li>
           </ul>
         </div>
       </li><br>

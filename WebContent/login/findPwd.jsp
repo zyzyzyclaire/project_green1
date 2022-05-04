@@ -22,7 +22,7 @@
 	}
 	.logindiv{
 	    width: 480px;
-	    margin: 210px auto;
+	    margin: 175px auto;
 	    height: 550px;
 		border-radius: 20px;
 	}
@@ -41,6 +41,17 @@
 		background: white;
 		color: black;
 		border-color: gray;
+	}
+	a.a_style{
+		color: black;
+		/* text-decoration: none; */
+		text-decoration: underline;
+		font-size: 15px; 
+		font: 500; 
+		font-family: Malgun Gothic,돋움;
+	}
+	a.a_style:hover{
+		color: gray;
 	}
 </style>
 <body>
@@ -85,7 +96,9 @@
   
 </form>
 </table>
-</div> 
+</div>
+<br>
+아이디가 기억나지 않는다면? <a href="findId.jsp" class="a_style">아이디 찾기 바로가기</a>
 </div>
 </body>
 </html>

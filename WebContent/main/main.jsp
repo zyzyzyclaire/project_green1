@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+ <jsp:include page="mainHeader.jsp"></jsp:include> 
 <%
 request.setCharacterEncoding("UTF-8");
 %>
@@ -23,10 +24,12 @@ request.setCharacterEncoding("UTF-8");
 	int j = 0;
 	GoodsDBBean productdb = new GoodsDBBean();
     ArrayList<GoodsBean> productListArr = productdb.getProductlist(pageNum);
-    ArrayList<GoodsBean> productListArr_best = productdb.getProductlist_best();
+    ArrayList<GoodsBean> productListArr_best = productdb.getProductlist_best("1");
+   
 
 %>
 <html>
+
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
@@ -39,7 +42,10 @@ request.setCharacterEncoding("UTF-8");
 </head>
 <script src="../js/jquery.js"></script>
 <script src="../js/jquery.bxslider.js"></script>
-<script>
+<script >
+
+
+	
 	    $(function(){
 	         $(".slide_gallery").bxSlider({
 	             mainSlides:3,   //열자마자최소 4개
@@ -60,7 +66,7 @@ request.setCharacterEncoding("UTF-8");
         });
         
         
-      
+        
         
         
         function sendRequest() {
@@ -83,14 +89,21 @@ request.setCharacterEncoding("UTF-8");
    			}
    		});
    	}
+        function msg() {
+        	alert("@@gd");
+			
+		}
+        
 </script>
-
+<%@include file= "mainClass.jsp"%>  
+<%-- <%  GoodsBean goods = new GoodsBean();
+	goods.setHeadercheck(1);%> --%>
 <link rel="stylesheet" href="./../css/main.css" type = "text/css">
 <%-- <jsp:include page="mainClass.jsp"></jsp:include> --%> 
-<%@include file= "mainClass.jsp"%>  
-<body>
+ <!-- onload="msg();" -->
+<body >
 	
-      <jsp:include page="mainHeader.jsp"></jsp:include> 
+     
        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style=" width: 92%; margin: auto" > 
 					  <div class="carousel-indicators" >
 					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -98,11 +111,13 @@ request.setCharacterEncoding("UTF-8");
 					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
 					  </div>
 					  <div class="carousel-inner" style="width: 100%; " >
+					  
 					    <div class="carousel-item active">
 					    <a href="./../cart/goodsDisplay.jsp?product_number=1" style="border: 1px solid yellow;">
 					      <img  src="../images/products/04.jpg" class="d-block w-100" alt="이미지없음">
 					      </a>
 					    </div>
+					    
 					    <div class="carousel-item">
 					    <a href="./../cart/goodsDisplay.jsp?product_number=1">
 					      <img   src="../images/products/02.jpg" class="d-block w-100" alt="이미지없음">
@@ -168,10 +183,15 @@ request.setCharacterEncoding("UTF-8");
 	     			create_date = getGoodsImg.getCreate_date();
 	     			delete_check = getGoodsImg.getDelete_check();
 					
-					String orgin_file_namearr[] = orgin_file_name.split("/");
-					String stored_file_namearr[] = stored_file_name.split("/");
+	     			if(stored_file_name!=null){
+						String orgin_file_namearr[] = orgin_file_name.split("/");
+						String stored_file_namearr[] = stored_file_name.split("/");
+						stored_file_name =  stored_file_namearr[0];
+					}else{
+						stored_file_name = null;
+					}
 					//파일존재확인
-					File file = new File(path+"\\"+stored_file_namearr[0]);
+					File file = new File(path+"\\"+stored_file_name);
 					boolean isExists = file.exists();
 					/* if(isExists) { System.out.println("I find the existFile.txt"); } 
 					else { System.out.println("No, there is not a no file."); } */
@@ -182,7 +202,7 @@ request.setCharacterEncoding("UTF-8");
 									<td class="mainalinkimg">
 										<%if(isExists){%>
 										 <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-											<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_namearr[0]%>"  alt="이미지없음">
+											<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name%>"  alt="이미지없음">
 										 </a>
 										<%}else{%>
 										  <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
@@ -238,7 +258,7 @@ request.setCharacterEncoding("UTF-8");
 	     		//2번 for 문
 	     
 	     		for(j=0+num; j<=3+num; j++){
-	     			 System.out.println("@@@@@@@@@jj@"+j );
+	     			 //System.out.println("@@@@@@@@@jj@"+j );
 	     			product_number= productListArr.get(j).getProduct_number();
 	     			category_code = productListArr.get(j).getCategory_code();
 	     			product_name = productListArr.get(j).getProduct_name();

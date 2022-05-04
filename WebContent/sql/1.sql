@@ -8,7 +8,7 @@ drop  table product_category cascade constraints;
 drop  table notice cascade constraints;
 drop  table qna_board cascade constraints;
 drop table userorder_refund  cascade constraints;
-
+drop table  mylist  cascade constraints;
 
 CREATE TABLE user_table
 (USER_ID VARCHAR2(30) PRIMARY KEY 
@@ -223,7 +223,7 @@ b_id	NUMBER(10) primary key
 ,b_fname VARCHAR2(100)
 ,b_fsize NUMBER(10)
 ,b_rfname VARCHAR2(100)
---,b_anschk
+,b_anschk CHAR(1)	
 );		
 
 
@@ -236,5 +236,12 @@ CREATE TABLE userorder_refund(
     ,user_email VARCHAR2(50)
     ,constraint orderdetailnumberFK foreign key(order_detail_number) references userOrder_detail(order_detail_number)ON DELETE CASCADE
 );
+
+create table mylist(
+    product_number     NUMBER(*, 0),
+    product_date   VARCHAR2(100)
+    ,constraint productfk foreign key(product_number) references product(product_number)ON DELETE CASCADE
+);
+
 
 commit;

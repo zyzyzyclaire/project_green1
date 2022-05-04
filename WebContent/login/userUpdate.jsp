@@ -24,10 +24,9 @@
 		    //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
 		}
 		
-		function jusoCallBack(roadAddrPart1,addrDetail, zipNo){
+		function jusoCallBack(roadFullAddr){
 			// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
-			var addr = roadAddrPart1+", "+addrDetail+" ("+zipNo+")";
-			document.upd_frm.user_addr.value = addr;
+			document.upd_frm.user_addr.value = roadFullAddr;
 		}
 	
 		// 입력값 체크 -0421근지
@@ -42,7 +41,7 @@
 				alert("패스워드가 일치하지 않습니다.");
 				upd_frm.pwd_check.focus();
 				return;
-			}
+			}	
 			
 			if(document.upd_frm.user_email.value.length == 0){
 				alert("Email을 써주세요.");
@@ -61,31 +60,6 @@
 				document.upd_frm.user_addr.focus();
 				return;
 			}
-			
-			// 유효성 체크	-0503근지
-			var pwd_RegExp1 = /[0-9]/; // 숫자
-			var pwd_RegExp2 = /[a-zA-Z]/; // 문자
-			var pwd_RegExp3 = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자
-			if(!pwd_RegExp1.test(upd_frm.user_pwd.value) || !pwd_RegExp2.test(upd_frm.user_pwd.value) || !pwd_RegExp3.test(upd_frm.user_pwd.value) || upd_frm.user_pwd.value.length < 8) {
-				alert("비밀번호는 8자리 이상 문자, 숫자, 특수문자로 구성하여야 합니다.");
-				upd_frm.user_pwd.focus();
-				return;
-			}
-			
-			var email_RegExp = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-		     if(!email_RegExp.test(upd_frm.user_email.value)) {
-				alert("이메일 형식이 잘못되었습니다.");
-				upd_frm.user_email.focus();
-				return;
-		     }
-		     
-		     var phone_RegExp = /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
-		     if(!phone_RegExp.test(upd_frm.user_phone.value)) {
-		         alert('휴대폰 형식이 잘못되었습니다.');
-		         upd_frm.user_phone.focus();
-				return;
-		     }
-		     
 			document.upd_frm.submit();
 		}
 	</script>
@@ -145,9 +119,9 @@
 					<div style="font-size: 25px;">회원 정보 수정</div><br>
 				</td>
 				
-				<!-- <td class="regitd2" style="vertical-align : bottom; border: solid 2px white;">
+				<td class="regitd2" style="vertical-align : bottom; border: solid 2px white;">
 					<div align="right" style="font-size: 15px;">'*'필수 입력 사항</div>
-				</td> -->
+				</td> 
 			</tr>
 			<tr>
 				<td width="80" class="width_tr" id="boderleft" style="vertical-align: middle; border-top: solid 3px #DCDCDC; background-color: #F5F5F5;">
@@ -163,17 +137,17 @@
 			</tr>
 			<tr>
 				<td width="80" class="width_tr" id="boderleft" style="vertical-align: middle; background-color: #F5F5F5;" >
-					&nbsp;&nbsp;비밀번호
+					&nbsp;&nbsp;비밀번호*
 				</td>
 				<td colspan="2" style="vertical-align: middle;" id="boderright">
 				  <div class="col-5">
-					<input type="password" size="20" name="user_pwd" class="form-control" placeholder="(8자리 이상 문자, 숫자, 특수문자 조합)" style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+					<input type="password" size="20" name="user_pwd" class="form-control" placeholder="( 8자리 이상 문자, 숫자, 특수문자 조합 )" style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
 				  </div>
 				</td>
 			</tr>
 			<tr>
 				<td width="80" class="width_tr" id="boderleft" style="vertical-align: middle; background-color: #F5F5F5;">
-					&nbsp;&nbsp;비밀번호 확인
+					&nbsp;&nbsp;비밀번호 확인*
 				</td>
 				<td colspan="2" style="vertical-align: middle;" id="boderright">
 				  <div class="col-5">
@@ -198,7 +172,7 @@
 				<td colspan="2" style="vertical-align: middle;" id="boderright">
 				  <div class="col-5">
 					<input type="text" size="30" name="user_email" value="<%= user.getUser_email() %>" class="form-control"
-																		style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+																		placeholder="이메일을 입력해주세요." style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
 				  </div>
 				</td>
 			</tr>
@@ -209,7 +183,7 @@
 				<td colspan="2" style="vertical-align: middle;" id="boderright">
 				  <div class="col-5">
 					<input type="text" size="40" name="user_phone" value="<%= user.getUser_phone() %>" class="form-control"
-															style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+															placeholder="( 하이픈'-' 포함 입력 )" style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
 				  </div>
 				</td>
 			</tr>
@@ -220,7 +194,7 @@
 				<td colspan="2" style="vertical-align: middle; border-bottom: solid 3px #DCDCDC;" id="boderright">
 				  <div class="col-12">
 					<input type="text" size="40" name="user_addr" value="<%= user.getUser_addr()%>" class="form-control" onclick="goPopup()"
-								                                   style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+						placeholder="( 클릭하여 주소 입력 )" style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
 				  </div>
 				</td>
 			</tr>

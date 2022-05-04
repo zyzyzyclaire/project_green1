@@ -236,7 +236,7 @@
 				</td>
 				<td colspan="2" style="vertical-align: middle;" id="boderright">
 				  <div class="col-5">
-					<input type="text" size="40" name="user_phone" class="form-control"  placeholder="( 하이픈'-' 포함 입력 )" style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
+					<input type="text" size="40" name="user_phone" class="form-control" placeholder="( 하이픈'-' 포함 입력 )" style="font-size: 15px; font: 500; font-family: Malgun Gothic,돋움;">
 				  </div>
 				</td>
 			</tr>

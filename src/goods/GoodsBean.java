@@ -3,7 +3,16 @@ package goods;
 import java.sql.Timestamp;
 
 public class GoodsBean {
-     private int product_number;
+	public static int headercheck = 0;
+	
+     public static int getHeadercheck() {
+		return headercheck;
+	}
+
+	public static void setHeadercheck(int headercheck) {
+		GoodsBean.headercheck = headercheck;
+	}
+	private int product_number;
      private String category_code;
      private String product_name;
      private int product_price;
@@ -19,7 +28,7 @@ public class GoodsBean {
   	 private  int file_size;
   	 private  Timestamp create_date;
   	 private  String delete_check;
-  	
+  	 
   	public static int pageSize = 12; //한 페이지당 10개 출력물
 	public static int pageCount = 1; //페이지 개수 지정 변수
 	public static int pageNum = 1; //페이지 번호
@@ -30,13 +39,13 @@ public class GoodsBean {
 		int temp = (pageNum-1) % limit;
 		int startPage=pageNum - temp;
 		if(page.equals("main")) page = "main.jsp?";
-		else if(page.equals("All")) page = "productAllList.jsp?";
+		else if(page.equals("All")) page = "productAllList.jsp?&sort="+sort;
 		else if(page.equals("category")) {
 			page = "categoryProduct.jsp?&category="+category+"&sort="+sort;
 		}else if(page.equals("adminAll")) {
 			page = "adminPage.jsp?pageChange=productAllList.jsp";
 		}
-	
+		
 		
 		
 	

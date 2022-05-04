@@ -85,12 +85,26 @@
 	} */
 	.logindiv{
 	    width: 480px;
-	    margin: 250px auto;
+	    margin: 50px auto;
 	    height: 440px;
 		border-radius: 20px;
 		padding: auto;
 	}
 	
+	#hearder_title{
+   /*  border: 1px solid black;   */
+ 	line-height: 84px;
+ 	margin: auto;
+ 	font-size: 50px;
+ 	
+ 		
+ 	max-width : 1280px;	
+ 	min-width : 1120px;	
+ }
+.header_title a{
+	text-decoration: none;
+	color: black;
+}
 </style>
 <!-- <script src="../js/jquery.js"></script>
 <script type="text/javascript">
@@ -105,17 +119,14 @@
 </head>
 <body>
 <%-- <jsp:include page="../main/mainHeader.jsp" flush="false"/> --%>
-
+         
+ <div style="margin-top: 150px;">    
+		<div class="header_title" style="overflow: hidden; align="center"> 
+             <a href="./../main/main.jsp" style="font-size: 50px;" ><div align="center">elpmis<div></a>
+         </div>
+	
 	<div style="border: 1px solid #DCDCDC;" class="logindiv">
 		
-		<!-- <div class="border d-flex justify-content-center" id="hearder_title"> 
-		    <div class="header_title" >
-		        <h1>shopping mall</h1>
-		    </div>
-		   </div> -->
-			
-		<div class="outbox"> 
-		<div class="">
 		 <table align="center" width="400">
 		  <td colspan="4" class="border_bottom"><h3 align="center" style="font-size: 25px; font-weight: 500;">MEMBER LOGIN<br><br></h3></td>
 		    <form class="form-horizontal" method="post" action="loginOk.jsp">
@@ -189,15 +200,15 @@
 					<td align="center">
 						<a href="findId.jsp" class="a_style">아이디 찾기</a>
 						<a href="findPwd.jsp" class="a_style">| 비밀번호 찾기</a>
-						<a href="register.jsp" class="a_style">| 회원가입</a>
+						<a href="regiagree.jsp" class="a_style">| 회원가입</a>
 					</td>
 				</tr>
 			</table>
-			</div>
-		   </div>  
+			 
 		 <br><br><br><br>
 	</div>
 
+</div>
 	<%-- <jsp:include page="../main/mainfooter.jsp" flush="false"/> --%>
 </body>
 </html>

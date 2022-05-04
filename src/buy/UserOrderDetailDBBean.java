@@ -252,6 +252,57 @@ public class UserOrderDetailDBBean {
 		return detailarr;
 		}
 	
+	//입금했을때처리
+	public  ArrayList<UserOrderDetailBean> updateUserOrderDetail(String user_id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ResultSet rs1 = null;
+		String sql = "select * from user_order  where user_id = ?";
+		
+		ArrayList<UserOrderDetailBean> detailarr = new ArrayList<UserOrderDetailBean>();
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			rs = pstmt.executeQuery();
+			
+			UserOrderDetailBean uodb = null;
+			while (rs.next()) {
+				sql = "select * from userOrder_detail where order_number = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, rs.getString("order_number"));
+				rs1 = pstmt.executeQuery();
+				while(rs1.next()) {
+					uodb = new UserOrderDetailBean();
+					uodb.setOrder_detail_number(rs1.getInt("order_detail_number"));
+					uodb.setOrder_number(rs.getString("order_number"));
+					uodb.setProduct_number(	rs1.getInt("product_number"));
+					uodb.setProduct_count(rs1.getInt("product_count"));
+					uodb.setProduct_price(rs1.getInt("product_price"));
+					uodb.setOrder_detail_status(rs1.getString("order_detail_status"));
+					uodb.setRefund_check(rs1.getString("refund_check"));
+					detailarr.add(uodb);	
+				}
+				
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return detailarr;
+		}
 	
 	public int goodsRefundRequest(UserOrderDetailBean uodbean) throws Exception {
 		Connection conn = null;

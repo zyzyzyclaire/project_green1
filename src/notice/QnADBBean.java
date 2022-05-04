@@ -138,9 +138,9 @@ public class QnADBBean {
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		ResultSet pageSet = null;	//�럹�씠吏�踰덊샇瑜� 諛쏄린�쐞�빐
-		int dbCount=0;	//�럹�씠吏� 踰덊샇�쓽 媛쒖닔瑜� 諛쏄린 �쐞�븳 蹂��닔
-		int absolutePage=1;	//異쒕젰�븷 �럹�씠吏�
+		ResultSet pageSet = null;	//占쎈읂占쎌뵠筌욑옙甕곕뜇�깈�몴占� 獄쏆룄由곤옙�맄占쎈퉸
+		int dbCount=0;	//占쎈읂占쎌뵠筌욑옙 甕곕뜇�깈占쎌벥 揶쏆뮇�땾�몴占� 獄쏆룄由� 占쎌맄占쎈립 癰귨옙占쎈땾
+		int absolutePage=1;	//�빊�뮆�젾占쎈막 占쎈읂占쎌뵠筌욑옙
 		
 		ArrayList<QnABean> boards = new ArrayList<QnABean>();
 
@@ -150,7 +150,7 @@ public class QnADBBean {
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			pageSet = stmt.executeQuery("select count(b_id) from qna_board");
 			
-			if (pageSet.next()) {	//dbcount�뿉 珥� 媛쒖닔瑜� �꽔�쓬
+			if (pageSet.next()) {	//dbcount占쎈퓠 �룯占� 揶쏆뮇�땾�몴占� 占쎄퐫占쎌벉
 				dbCount = pageSet.getInt(1);
 				pageSet.close();
 				stmt.close();
@@ -254,19 +254,19 @@ public class QnADBBean {
 		int number;
 		
 		int id = board.getB_id();
-		int ref = board.getB_ref(); //�떟蹂�湲��쓽 踰덊샇 異쒕젰
-		int step = board.getB_step(); //�떟蹂�湲��씠硫� �닽�옄 1�뵫 利앷�
-		int level = board.getB_level();	//�떟蹂�湲��씠 �떖由щ㈃ 1 利앷�
+		int ref = board.getB_ref(); //占쎈뼗癰귨옙疫뀐옙占쎌벥 甕곕뜇�깈 �빊�뮆�젾
+		int step = board.getB_step(); //占쎈뼗癰귨옙疫뀐옙占쎌뵠筌롳옙 占쎈떭占쎌쁽 1占쎈뎃 筌앹빓占�
+		int level = board.getB_level();	//占쎈뼗癰귨옙疫뀐옙占쎌뵠 占쎈뼎�뵳�됥늺 1 筌앹빓占�
 		
 		try {
 			conn = getConnection();
 			rs = conn.prepareStatement("SELECT MAX(b_id) FROM qna_board").executeQuery();
 			if (rs.next()) {
-				number = rs.getInt(1) + 1;	//媛믪씠 �엳�쓣 寃쎌슦�씠湲� �븣臾몄뿉 +1
+				number = rs.getInt(1) + 1;	//揶쏅�れ뵠 占쎌뿳占쎌뱽 野껋럩�뒭占쎌뵠疫뀐옙 占쎈르�눧紐꾨퓠 +1
 			} else {
-				number = 1;	//媛믪씠 �뾾�쓣 寃쎌슦
+				number = 1;	//揶쏅�れ뵠 占쎈씨占쎌뱽 野껋럩�뒭
 			}
-			if (id != 0) {	//id媛� 0�씠 �븘�땲硫� �떟湲�濡� 遊�
+			if (id != 0) {	//id揶쏉옙 0占쎌뵠 占쎈툡占쎈빍筌롳옙 占쎈뼗疫뀐옙嚥∽옙 �걡占�
 				String sql="UPDATE qna_board SET b_step = b_step+1"
 						+ " WHERE b_ref=? and b_step > ?";
 				pstmt = conn.prepareStatement(sql);
@@ -276,8 +276,8 @@ public class QnADBBean {
 				
 				step=step+1;
 				level=level+1;
-			} else {	// �떟湲��씠 �븘�땺 �븣 (湲��벐湲� �씪 �븣)
-				ref= number;	//ref�뿉 湲� 踰덊샇媛� �뱾�뼱媛�寃� �맖
+			} else {	// 占쎈뼗疫뀐옙占쎌뵠 占쎈툡占쎈빜 占쎈르 (疫뀐옙占쎈쾺疫뀐옙 占쎌뵬 占쎈르)
+				ref= number;	//ref占쎈퓠 疫뀐옙 甕곕뜇�깈揶쏉옙 占쎈굶占쎈선揶쏉옙野껓옙 占쎈쭡
 				step=0;
 				level=0;
 			}
@@ -308,10 +308,10 @@ public class QnADBBean {
 			pstmt.executeUpdate();
 			
 			isWrite = 1;
-			System.out.println("글쓰기 성공");
+			System.out.println("湲��벐湲� �꽦怨�");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("글쓰기 실패");
+			System.out.println("湲��벐湲� �떎�뙣");
 		} finally {
 			try {
 				if(rs != null) rs.close();
@@ -441,7 +441,7 @@ public class QnADBBean {
 		return board;
 	}
 	
-	//관리자 답변을 위한 질문 리스트를 불러오는 메소드 - 0502 진용
+	//愿�由ъ옄 �떟蹂��쓣 �쐞�븳 吏덈Ц 由ъ뒪�듃瑜� 遺덈윭�삤�뒗 硫붿냼�뱶 - 0502 吏꾩슜
 	public ArrayList<QnABean> getAdminBoardList(String user_id) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -495,7 +495,7 @@ public class QnADBBean {
 		return boards;
 	}
 	
-	//이미 답변을 적은 글을 구분하는 메소드 - 0502 진용
+	//�씠誘� �떟蹂��쓣 �쟻�� 湲��쓣 援щ텇�븯�뒗 硫붿냼�뱶 - 0502 吏꾩슜
 	
 	  public int alreadyAnswered(QnABean board) throws Exception { 
 		  Connection conn = null; 
@@ -505,8 +505,11 @@ public class QnADBBean {
 	  
 		  try { 
 			  conn = getConnection(); 
+			  pstmt = conn.prepareStatement("select b_id from qna_board where b_ref=?");
+				pstmt.setInt(1, board.getB_ref());
+				rs = pstmt.executeQuery();
 			  
-			  if(rs.next()) { 
+			  if(rs.next()) {
 				  if (board.getB_id() == board.getB_ref()) { 
 					  pstmt = conn.prepareStatement("UPDATE qna_board SET b_anschk= ? WHERE b_id=?");
 					  pstmt.setString(1, "1");

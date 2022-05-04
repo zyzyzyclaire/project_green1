@@ -17,6 +17,8 @@
 		return;
 	}
 
+	
+		
 	 String checkpage = request.getParameter("checkpage"); 
 	 String category =	request.getParameter("category");
 	if(checkpage == null){
@@ -46,6 +48,8 @@
 	
 	GoodsDBBean db = GoodsDBBean.getInstance();
 	GoodsBean goods = db.getGoods(product_number);
+	db.insertMyList(product_number);
+	
 /*	//상품세부이미지까지불러오기
 	ArrayList<GoodsBean> getGoodsimg = db.getGoodsimg(product_number); */
 	String product_name = goods.getProduct_name();
@@ -278,7 +282,7 @@
 			<%if(isExists){%>
 				<img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%=stored_file_name%>"  alt="이미지없음" class="buyImg">
 			<%}else{%>
-				<img src="../images/products/noimg.PNG"  alt="이미지없음"  class="buyImg">
+				<img src="../images/products/noimg.png"  alt="이미지없음"  class="buyImg">
 			<%}%>
 		</div>
 		<div class="descDiv">

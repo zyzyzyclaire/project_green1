@@ -9,6 +9,9 @@
 <%
 	// 주소 받아올 때 한글 깨지지 않기 위해 -0421근지
 	request.setCharacterEncoding("UTF-8");
+
+	String total_price = request.getParameter("total_price");
+	
 %>
 <jsp:useBean id="userOrder" class="buy.UserOrderBean"/>
 <jsp:setProperty property="*" name="userOrder"/>
@@ -31,12 +34,13 @@
 	SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
 	String time = sdf.format(now);
 	String order_number = time+"_"+user_id;
-	
+		
 	// cart_number 배열 받기 -0425근지
 	String[] cart_num_arr = request.getParameterValues("cart_num_arr");
 	
 	// product테이블의 product_ordered_count(구매개수) 증가	-0429근지
 	goods_db.orderedCountUpArray(cart_num_arr);
+	
 %>
 <!DOCTYPE html>
 <html>

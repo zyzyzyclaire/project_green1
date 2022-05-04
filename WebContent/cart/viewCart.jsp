@@ -185,12 +185,12 @@
 				//상품세부이미지까지불러오기
 				ArrayList<GoodsBean> getGoodsimg = goodsDb.getGoodsimg(cart.getProduct_number());
 				String stored_file_name = getGoodsimg.get(0).getStored_file_name();
-				System.out.println("@@@@@@"+stored_file_name);
+				//System.out.println("@@@@@@"+stored_file_name);
 				String path = request.getRealPath("upload");
 				File file = new File(path+"\\"+stored_file_name);
 				boolean isExists = file.exists();
-				if(isExists) { System.out.println("I find the existFile.txt"); } 
-				else { System.out.println("No, there is not a no file."); }
+				/* if(isExists) { System.out.println("I find the existFile.txt"); } 
+				else { System.out.println("No, there is not a no file."); } */
 		%>
 				<input type="hidden" name="cart_number" value="<%= cart_number %>" id="cart_number<%=i%>">
 				<input type="hidden" name="product_number" value="<%= product_number %>" id="product_number<%=i%>">

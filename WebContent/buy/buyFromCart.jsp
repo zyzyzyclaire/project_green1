@@ -9,6 +9,8 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.io.File"%>
 <%
+	
+
 	// 주소 받아올 때 한글 깨지지 않기 위해 -0421근지
 	request.setCharacterEncoding("UTF-8");
 %>
@@ -25,6 +27,7 @@
 	
 	GoodsDBBean goodsDb = GoodsDBBean.getInstance();
 	GoodsBean goods = null;
+
 %>
 <!DOCTYPE html>
 <html>
@@ -104,9 +107,12 @@
 <body class="buyBody">
 
       <jsp:include page="../main/mainHeader.jsp"></jsp:include> 
+<%
 
+%>
 	<h1 class="buyH1">주문서 작성</h1>
-		<form action="buyOkFromCart.jsp?" name="buy_frm">
+		<form action="buyOkFromCart.jsp" name="buy_frm" >
+
 				<table class="table" id="buyTable1">
 					<h2 class="buyH2">주문 내역</h2>
 						<tr align="center">
@@ -118,7 +124,7 @@
 							<td>합계</td>
 						</tr>
 			<%			
-						int total_price = 0;
+			int total_price = 0;
 						for(int i=0; i<cart_num_arr.length; i++) {
 							cart = cartDb.getCart_one(Integer.parseInt(cart_num_arr[i]));
 							goods = goodsDb.getGoods(cart.getProduct_number());
@@ -126,12 +132,12 @@
 							//상품세부이미지까지불러오기
 							ArrayList<GoodsBean> getGoodsimg = goodsDb.getGoodsimg(cart.getProduct_number());
 							String stored_file_name = getGoodsimg.get(0).getStored_file_name();
-							System.out.println("@@@@@@"+stored_file_name);
+							//System.out.println("@@@@@@"+stored_file_name);
 							String path = request.getRealPath("upload");
 							File file = new File(path+"\\"+stored_file_name);
 							boolean isExists = file.exists();
-							if(isExists) { System.out.println("I find the existFile.txt"); } 
-							else { System.out.println("No, there is not a no file."); }
+							/* if(isExists) { System.out.println("I find the existFile.txt"); } 
+							else { System.out.println("No, there is not a no file."); } */
 							
 			%>			
 						<!-- 값 넘기기 위해. 나중에 해당 체크박스는 css로 보이지 않게 설정하기	-0425근지 -->
@@ -154,8 +160,11 @@
 								<td id="buyRow1_6"><%= goods.getProduct_price()*cart.getProduct_count() %> won</td>
 			<%
 								total_price += goods.getProduct_price()*cart.getProduct_count();
+			
 						}
+						
 			%>				
+					<input type="hidden" name="total_price" value="<%=total_price%>">
 							</tr>
 							<tr>
 								<td>[기본배송]</td>

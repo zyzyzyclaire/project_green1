@@ -1,5 +1,5 @@
-<%@page import="notice.NoticeDBBean"%>
 <%@page import="notice.NoticeBean"%>
+<%@page import="notice.NoticeDBBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -19,8 +19,11 @@
 	
 	NoticeDBBean db = NoticeDBBean.getInstance();
 	NoticeBean board = db.getBoard(n_num, false);
+	String pagecheck = request.getParameter("pagecheck"); 
+
 	
-	String select = request.getParameter("pageChange");
+	String select = null;
+	select = request.getParameter("pageChange");
 	boolean isAdPage = true;
 	if (select == null) {
 		isAdPage = false;
@@ -34,7 +37,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<script src="notice.js" type="text/javascript"></script>
+	<script src="../customer_service/notice.js" type="text/javascript"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
@@ -91,13 +94,13 @@
 						
 					</p>
 				</div>
-<form name="reg_frm" method="post" action="notice_write_ok.jsp">
+<form name="reg_frm" method="post" action="../customer_service/notice_write_ok.jsp?n_num=<%= n_num %>&pageNum=<%= pageNum %>&pagecheck=<%=pagecheck%>">
 <input type="hidden" name="n_num" value="<%= n_num %>">
 			<table class="table" style="width: 1280px; font-size: 12px;">
 				<tr>
 					<td style="width: 120px;">NAME</td>
 					<td>
-						<input class="form-control form-control-sm" type="text" name="user_Id" value="<%= user_id %>" size="10" maxlength="20" style="width: 200px;">
+						<input class="form-control form-control-sm" type="text" name="user_id" value="<%= user_id %>" size="10" maxlength="20" style="width: 200px;">
 					</td>
 				</tr>
 				<tr>
@@ -119,9 +122,13 @@
 				</tr>
 			</table>
 			<div style="width: 1280px;">
-				<input style="float: left; font-size: 12px;" type="button" value="글목록" onclick="location.href='notice_list.jsp?pageNum=<%= pageNum %>'" class="btn btn-outline-dark">
+				<% if(!isAdPage){ %>
+					<input style="float: left; font-size: 12px;" type="button" value="글목록" onclick="location.href='notice_list.jsp?pageNum=<%= pageNum %>'" class="btn btn-outline-dark">
+				<% } else { %>
+					<input style="float: left; font-size: 12px;" type="button" value="글목록" onclick="location.href='?pageChange=../customer_service/notice_list.jsp'" class="btn btn-outline-dark">
+				<% } %>
 				<input style="float: right; font-size: 12px;" type="reset" value="다시작성"  class="btn btn-outline-dark">
-				<button style="float: right; font-size: 12px;" class="btn btn-outline-dark" onclick="check_ok()">글쓰기</button>
+				<input style="float: right; font-size: 12px;" type="button" value="글등록" class="btn btn-outline-dark" onclick="check_ok()"> 
 			</div>
 			<br><br><br><br>
 			</form>

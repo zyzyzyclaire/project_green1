@@ -1,8 +1,8 @@
+<%@page import="notice.NoticeBean"%>
+<%@page import="notice.NoticeDBBean"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="notice.NoticeBean"%>
-<%@page import="notice.NoticeDBBean"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
@@ -13,6 +13,8 @@
 		user_id =(String)session.getAttribute("user_id");
 		System.out.print(user_id);
 	}
+	
+	String pagecheck = request.getParameter("pagecheck");
 	
 	pageNum = request.getParameter("pageNum");
 	
@@ -119,7 +121,11 @@
     	<tr>
 	      <td scope="row"><%= n_num %></td>
 	      <td>
+	      	<% if(!isAdPage){ %>
 	      	<a href="notice_show.jsp?n_num=<%= n_num %>&pageNum=<%= pageNum %>"><%= n_title %></a>
+	      	<% } else { %>
+	      	<a href="?pageChange=../customer_service/notice_show.jsp?n_num=<%= n_num %>&pageNum=<%= pageNum %>&pagecheck=<%=pagecheck%>"><%= n_title %></a>
+	      	<% } %>
 	      </td>
 	      <td style="text-align: right;">
 	      	<%  if(user_id!=null) {  //관리자 아이디로 접속할 때만 글쓰기 버튼 노출
@@ -146,22 +152,23 @@
 	<table style="width: 1280px";>
 		<tr>
 			<td align="right">
-				<input type="button" class="btn btn-outline-dark" value="글쓰기" onclick="location.href='notice_write.jsp?pageNum=<%= pageNum %>'" style="font-size: 11px;"></input>
+				<input type="button" class="btn btn-outline-dark" value="글쓰기" onclick="location.href='notice_write.jsp?pageNum=<%= pageNum %>&pagecheck=notice_list'" style="font-size: 11px;"></input>
 			</td>
 		</tr>
 	</table>
 	<% }} %>
 </div>
-
-<nav id="paging" style="font-size: 10px;"> 
-		<ul class="pagination justify-content-center"> 
-			<li class="page-item"><a class="page-link" href="#">이전</a></li> 
-			<li class="page-item"><a class="page-link" href="notice_list.jsp?pageNum=1">1</a></li> 
-			<li class="page-item"><a class="page-link" href="notice_list.jsp?pageNum=2">2</a></li> 
-			<li class="page-item"><a class="page-link" href="notice_list.jsp?pageNum=3">3</a></li> 
-			<li class="page-item"><a class="page-link" href="#">다음</a></li> 
-		</ul> 
-	</nav>
+	<div >
+		<nav id="paging" style="font-size: 10px;"> 
+			<ul class="pagination justify-content-center"> 
+				<li class="page-item"><a class="page-link" href="#">이전</a></li> 
+				<li class="page-item"><a class="page-link" href="notice_list.jsp?pageNum=1">1</a></li> 
+				<li class="page-item"><a class="page-link" href="notice_list.jsp?pageNum=2">2</a></li> 
+				<li class="page-item"><a class="page-link" href="notice_list.jsp?pageNum=3">3</a></li> 
+				<li class="page-item"><a class="page-link" href="#">다음</a></li> 
+			</ul> 
+		</nav>
+	</div>
 <% NoticeBean.pageNumber(3); %>
 	</center>
 

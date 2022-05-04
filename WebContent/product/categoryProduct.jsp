@@ -178,7 +178,7 @@
 	    
 		<div class="d-flex justify-content-between"  style="clear: both;  margin-top: 35px; padding-bottom: 10px; border-bottom: 1px rgba(0, 0, 0, 0.09) solid">
 			<div class="nav navbox" >
-				Total <%= CategoryProductList.size() %> items
+				Total <%= CategoryProductList.size() %>items
 			</div>
 			<div class="nav justify-content-end ulbox">
  				<ul id="sort" class="sort_ul">
@@ -214,17 +214,21 @@
 		
 		if(result==null) {
 			CategoryProductList = productdb.getCategoryProductList(category_code,pageNum);
+		
 		} else if(result.equals("1")) {
 			CategoryProductList = productdb.getCategoryProductList(category_code,pageNum);
+		
 		} else if(result.equals("2")) {
 			CategoryProductList = productdb.getCategoryProductList_best(category_code,pageNum);
+			
 		} else if(result.equals("3")) {
 			CategoryProductList = productdb.getCategoryProductList_hits(category_code,pageNum);
+			System.out.println("@@@CategoryProductList@@@"+CategoryProductList.size());
 		} else if(result.equals("4")) {
 			CategoryProductList = productdb.getCategoryProductList_price_desc(category_code,pageNum);
+			System.out.println("@@@CategoryProductList@@@"+CategoryProductList.size());
 		} else if(result.equals("5")) {
 			CategoryProductList = productdb.getCategoryProductList_price(category_code,pageNum);
-			
 		}
 		
 		//System.out.println("@@CategoryProductListresult@@@@@@@@"+CategoryProductList.size());
@@ -323,7 +327,7 @@
 	     	}
 	     	out.print("</table>");
  %>
- 			<div style="margin: auto;  width: 300px; text-align: center;"> 
+ 				<div style="margin: auto;  width: 300px; text-align: center;"> 
 			 		<ul class="pagination justify-content-center"> 
 			 			<%= GoodsBean.pageNumer(4,"category",category_code,result) %>
 		 			</ul> 

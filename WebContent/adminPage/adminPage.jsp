@@ -106,7 +106,7 @@
         float: left;
       }
       #ad-content {
-      	width: 1280px;
+      	width: 78%;
 		font-family: "Malgun Gothic",돋음;
         float: left;
         /* overflow-y: scroll; */
@@ -256,7 +256,7 @@
 			<jsp:include page="adminLeft.jsp"></jsp:include>
 		</div>
 		<div id="ad-content">
-			<jsp:include page="<%= select %>"></jsp:include>
+			<jsp:include page="<%=select%>"></jsp:include>
 		</div>
 	</div>			
 </body>

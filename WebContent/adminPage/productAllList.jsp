@@ -140,7 +140,7 @@ function deleteok(product_number) {
 						product_stock = productListArr.get(i).getProduct_stock();
 						product_desc = productListArr.get(i).getProduct_desc();
 						product_hits = productListArr.get(i).getProduct_hits();
-						
+						create_date = productListArr.get(i).getProduct_date();
 						
 						file_number =ProductImgListArr.get(i).getFile_number();
 						orgin_file_name = ProductImgListArr.get(i).getOrgin_file_name();
@@ -148,7 +148,7 @@ function deleteok(product_number) {
 						stored_thumbnail = ProductImgListArr.get(i).getStored_thumbnail();
 						delegate_thumbnail =ProductImgListArr.get(i).getDelegate_thumbnail();
 						file_size = ProductImgListArr.get(i).getFile_size();
-						create_date = ProductImgListArr.get(i).getCreate_date();
+						/* create_date = ProductImgListArr.get(i).getCreate_date(); */
 						delete_check = ProductImgListArr.get(i).getDelete_check();
 						
 						String orgin_file_namearr[] = orgin_file_name.split("/");

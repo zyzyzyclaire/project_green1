@@ -135,7 +135,7 @@
 	<jsp:include page="../main/mainHeader.jsp"></jsp:include> 
 	
 	<h1 class="buyH1">주문서 작성</h1>
-		<form method="post" name="re_user_frm" action="buyOk.jsp">
+		<form method="post" name="re_user_frm" action="buyOk.jsp?total_price=<%= total_price %>">
 			<input type="hidden" name="product_number" value="<%= product_number %>">
 			<input type="hidden" name="product_count" value="<%= product_count %>">
 			<input type="hidden" name="product_price" value="<%= total_price %>">

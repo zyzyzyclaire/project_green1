@@ -20,6 +20,46 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
+
+<script src="../js/jquery.js"></script>
+<script type="text/javascript">
+
+/*	
+	function refund(order_detail_number) {
+		if(confirm("환불신청하시겠습니까?")){
+			$.ajax({
+	   			url:"./userGoodsRefundOk.jsp",
+	   			type:"post",
+	   			data:{"order_detail_number":order_detail_number},
+	   			//data:{"search":send,"zipcode":"12345"},
+	   			//dataType,
+	   			success:function(data){
+	   				alert("환불신청이 접수되었습니다.");
+	   				//document.getElementById("main_stat_point2").innerHTML =data;
+	   			},
+	   			error:function(){
+	   				alert("실패");
+	   				//document.getElementById("main_stat_point2").innerHTML ="<h3>d fail</h3>";
+	   			}
+	   		});
+		}
+	}
+*/	
+	function showPopUp(order_detail_number) { 
+		
+		//창 크기 지정
+		var width = 500; 
+		var height = 300; 
+		//pc화면기준 가운데 정렬 
+		var left = (window.screen.width/2) - (width/2); var top = (window.screen.height / 4); 
+		//윈도우 속성 지정 
+		var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes'
+		var url="userGoodsRefundForm.jsp?order_detail_number="+order_detail_number;
+        window.open(url,"",windowStatus);
+    }
+
+</script>
+
 <style type="text/css">
 .mypage{
 	margin:auto;
@@ -36,8 +76,7 @@
 	border-bottom: 1px solid rgba(0, 0, 0, 0.09);
 }
 .userBuyGoodsdiv{
-clear:both;
-
+	clear:both;
 
 	margin:auto;
 	min-width : 1120px;	
@@ -50,6 +89,28 @@ clear:both;
 
 	width: 80px;
 	height: 80px;
+}
+
+
+#table_cus {
+	margin-bottom: 150px;
+}
+
+#orderList1, #orderList2, #orderList3, #orderList4, #orderList5, #orderList6, #orderList7, #orderList8, #orderList9, #orderList10 {
+	text-align: center;
+}
+#orderList1, #orderList2, #orderList3, #orderList5, #orderList6, #orderList7, #orderList8, #orderList9, #orderList10 {
+	padding-top: 35px;
+}
+#refundBtn {
+	padding: 3px 15px 3px 15px;
+	background-color: white;
+	border-color:#E0E0E0;
+	border-radius: 3px;
+}
+#refundBtn:hover {
+	background-color:#E0E0E0;
+	border-color:#E0E0E0;
 }
 </style>
 </head>
@@ -109,7 +170,7 @@ clear:both;
 <div class="userBuyGoodsdiv" style="font-size: 12px;">
 	<table class="table table-hover userBuyGoods">
   		<thead>
-		    <tr>
+		    <tr style="text-align: center;">
 	    		<th>#</th>
 				<th>주문일자</th>
 				<th>주문번호</th>
@@ -118,6 +179,7 @@ clear:both;
 				<th>수량</th>
 				<th>상품구매금액</th>
 				<th>주문처리상태</th>
+				<th>환불신청</th>
 				<th>환불처리</th>
 				
 		    </tr>
@@ -168,16 +230,19 @@ clear:both;
 	
 	
 	%>			
-		    <tr style="cursor:pointer; line-height: 80px;" onclick="location.href='userGoodsRefund.jsp?order_detail_number=<%=order_detail_number%>'">
-		      <th scope="row"><%=i+1%></th>
-		      <td><%= strNewDtFormat%></td>
-		      <td><%=i+1%></td>
-		      <td><img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%= stored_file_name%>"></td>
-		      <td><%= product_name%></td>
-		      <td><%=product_count%></td>
-		      <td> <%=product_price %></td>
-		      <td> <%=order_detail_status %></td>
-		      <td><input type="checkbox"  id="checkbox<%=i%>" disabled="disabled"></td>
+<!-- 		    <tr style="cursor:pointer; line-height: 80px;" onclick="location.href='userGoodsRefund.jsp?order_detail_number=<%=order_detail_number%>'">	 -->
+			<tr style="cursor:pointer;">
+		      <th scope="row" id="orderList1"><%=i+1%></th>
+		      <td id="orderList2"><%= strNewDtFormat%></td>
+		      <td id="orderList3"><%=i+1%></td>
+		      <td id="orderList4"><img src="<%= request.getContextPath() %><%= File.separator %>upload<%= File.separator %><%= stored_file_name%>"></td>
+		      <td id="orderList5"><%= product_name%></td>
+		      <td id="orderList6"><%=product_count%></td>
+		      <td id="orderList7"> <%=product_price %></td>
+		      <td id="orderList8"> <%=order_detail_status %></td>
+<!--		      <td id="orderList9"><input type="button" onclick="refund(<%=order_detail_number%>)" value="환불신청" id="refundBtn"> </td>  -->
+		      <td id="orderList9"><input type="button" onclick="showPopUp(<%=order_detail_number%>)" value="환불신청" id="refundBtn"> </td>
+		      <td id="orderList10"><input type="checkbox"  id="checkbox<%=i%>" disabled="disabled"></td>
 		    </tr>	
 	<%
 		    if(re == 1){
@@ -206,7 +271,7 @@ clear:both;
 
 
 <div class="userBuyGoodsdiv" style="font-size: 12px;">
-	<table class="table table-hover userBuyGoods">
+	<table class="table table-hover userBuyGoods" id="table_cus">
 		  <thead>
 		    <tr>
 	    		<th>#</th>
@@ -250,5 +315,6 @@ clear:both;
 	<a href="../login/userUpdate.jsp">회원정보수정</a>
 	<a href="./userBuygoods.jsp">구매한상품조회</a> -->
 	
+	<jsp:include page="../main/mainfooter.jsp"></jsp:include>
 </body>
 </html>

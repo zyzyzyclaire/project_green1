@@ -123,7 +123,7 @@ pageEncoding="UTF-8"%>
 										 </a>
 										<%}else{%>
 										  <a href="./../cart/goodsDisplay.jsp?product_number=<%=product_number%>">
-											<img src="../images/products/noimg.PNG"  alt="이미지없음">
+											<img src="../images/products/noimg.png"  alt="이미지없음">
 										  </a>
 										<%}%>
 									</td>

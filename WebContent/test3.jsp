@@ -5,19 +5,11 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
-<script type="text/javascript">
-
-window.onload = function(){
-	alert("gd");
-}
-function msg() {
-	alert("@@gd");
-}
-
-
-</script>
 </head>
-<body onload="msg()">
-
+<body>
+<%
+	String check = request.getParameter("check");
+		System.out.println("test3@@@@@@@@@@"+check);
+%>
 </body>
 </html>
